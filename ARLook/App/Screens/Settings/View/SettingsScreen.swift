@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct SettingsScreen: View {
-  
+extension SettingsScreen {
+
   enum AppearanceType: String, CaseIterable {
-    
+
     case icon
     case theme
     case font
-    
+
     var name: String {
       switch self {
       case .icon: "App icon"
@@ -22,7 +22,7 @@ struct SettingsScreen: View {
       case .font: "Font"
       }
     }
-    
+
     var icon: Image {
       switch self {
       case .icon: Image(systemName: "squareshape")
@@ -30,8 +30,12 @@ struct SettingsScreen: View {
       case .font: Image(systemName: "textformat.abc")
       }
     }
-    
+
   }
+
+}
+
+struct SettingsScreen: View {
 
   var body: some View {
     NavigationStack {
@@ -41,10 +45,9 @@ struct SettingsScreen: View {
       .navigationTitle("Settings")
     }
   }
-  
+
   private var sectionView: some View {
     Section {
-      // Content
       ForEach(AppearanceType.allCases, id: \.self) { appearance in
         NavigationLink {
           Text(appearance.name)
@@ -59,7 +62,6 @@ struct SettingsScreen: View {
         }
       }
     } header: {
-      // Header
       Text("Appearance")
     }
   }
@@ -69,5 +71,3 @@ struct SettingsScreen: View {
 #Preview {
   SettingsScreen()
 }
-
-
