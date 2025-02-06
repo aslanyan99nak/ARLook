@@ -13,6 +13,8 @@ class ModelManager {
   
   private init() { }
   
+  let mockFiles: [String] = ["Model1", "Model2", "Model3", "Model4"]
+  
   func saveFile(
     from sourceURL: URL,
     to destinationFileName: String,
