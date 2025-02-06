@@ -1,5 +1,5 @@
 //
-//  MainView.swift
+//  MainScreen.swift
 //  ARLook
 //
 //  Created by Narek Aslanyan on 03.02.25.
@@ -9,7 +9,7 @@ import QRCode
 import QuickLook
 import SwiftUI
 
-struct MainView: View {
+struct MainScreen: View {
 
   @StateObject private var viewModel = MainViewModel()
 
@@ -45,15 +45,14 @@ struct MainView: View {
           qrCodeView
           scanButton
           chooseButton
-          fileNames
         }
         .padding(.top, 150)
       }
 
       if viewModel.isShowScanner {
         scanner
-          .navigationBarHidden(true)
-        //            .toolbarVisibility(.hidden, for: .navigationBar)
+          .toolbar(.hidden, for: .navigationBar)
+          .toolbar(.hidden, for: .tabBar)
       }
     }
   }
@@ -186,39 +185,8 @@ struct MainView: View {
     }
   }
 
-  private var fileNames: some View {
-    VStack(alignment: .leading, spacing: 10) {
-      let files = viewModel.modelManager.loadFiles()
-      if !files.isEmpty {
-        HStack(spacing: 0) {
-          Text("Existing Models")
-            .foregroundStyle(.black)
-            .font(.title)
-            .fontWeight(.bold)
-            .padding()
-
-          Spacer()
-        }
-      }
-
-      ForEach(files, id: \.self) { file in
-        HStack(spacing: 0) {
-          Text(file)
-            .foregroundStyle(.black)
-            .padding()
-            .background(Color.gray.opacity(0.4))
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-
-          Spacer()
-        }
-        .padding(.horizontal, 16)
-      }
-    }
-    .padding(.bottom, 40)
-  }
-
 }
 
 #Preview {
-  MainView()
+  MainScreen()
 }
