@@ -9,9 +9,8 @@ import Foundation
 
 extension String {
 
-  var toBase64: String {
-    let data = Data(self.utf8)
-    return data.base64EncodedString()
+  var convertedFileNameFromURLString: String? {
+    self.components(separatedBy: "/").last
   }
 
 }

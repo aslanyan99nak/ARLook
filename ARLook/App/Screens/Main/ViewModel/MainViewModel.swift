@@ -65,18 +65,15 @@ class MainViewModel: ObservableObject {
       }
     }
   }
-  
+
   func generateQRCode(from string: String) -> UIImage {
     filter.message = Data(string.utf8)
-
-    if let outputImage = filter.outputImage {
-      if let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
-        return UIImage(cgImage: cgImage)
-      }
+    guard let outputImage = filter.outputImage,
+          let cgImage = context.createCGImage(outputImage, from: outputImage.extent)
+    else {
+      return UIImage(systemName: "xmark.circle") ?? UIImage()
     }
-
-    return UIImage(systemName: "xmark.circle") ?? UIImage()
+    return UIImage(cgImage: cgImage)
   }
-
 
 }

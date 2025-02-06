@@ -15,18 +15,18 @@ struct QRScannerView: View {
   var body: some View {
     VStack(spacing: 0) {
       Spacer()
-      
+
       Text(scannedText)
         .foregroundStyle(Color.black)
         .font(.title)
         .padding()
         .background(Color.white)
-      
+
       Image(.qrCode)
         .resizable()
         .frame(width: 300, height: 300)
         .padding(.top, 16)
-      
+
       Spacer()
     }
     .onAppear {
@@ -35,5 +35,9 @@ struct QRScannerView: View {
       scannedText = messages.count > 0 ? messages.first ?? "Scan a QR Code" : ""
     }
   }
-  
+
+}
+
+#Preview {
+  QRScannerView()
 }

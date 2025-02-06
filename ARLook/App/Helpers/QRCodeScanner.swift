@@ -15,8 +15,40 @@ struct QRCodeScanner: View {
   @Binding var isShowScanner: Bool
   @Binding var scannedCode: String?
   @Binding var scale: CGFloat
+  
+  private let modelManager = ModelManager.shared
 
   var body: some View {
+    contentView
+  }
+  
+  private var contentView: some View {
+    ZStack {
+      scannerView
+      overlayViews
+    }
+    .scaleEffect(scale)
+  }
+  
+  private var overlayViews: some View {
+    VStack(spacing: 0) {
+      HStack(spacing: 0) {
+        Spacer()
+        closeButton
+      }
+      .padding(.horizontal, 16)
+      .padding(.top, 40)
+
+      Spacer()
+
+      if scannedCode != nil && fileURL == nil {
+        fileNotFoundButton
+        Spacer()
+      }
+    }
+  }
+  
+  private var scannerView: some View {
     CodeScannerView(
       codeTypes: [.qr],
       scanMode: .continuous,
@@ -24,9 +56,9 @@ struct QRCodeScanner: View {
       shouldVibrateOnSuccess: true
     ) { response in
       if case let .success(result) = response {
-        guard let code = getFileName(from: result.string), !code.isEmpty else { return }
+        guard let code = result.string.convertedFileNameFromURLString, !code.isEmpty else { return }
         scannedCode = code
-        checkFileExists(fileName: code) { isExists, url in
+        modelManager.checkFileExists(fileName: code) { isExists, url in
           if let url, isExists {
             fileURL = url
             withAnimation(.easeInOut) {
@@ -38,37 +70,22 @@ struct QRCodeScanner: View {
         }
       }
     }
-    .overlay {
-      VStack(spacing: 0) {
-        HStack(spacing: 0) {
-          Spacer()
-          closeButton
-        }
-        .padding(.horizontal, 16)
-        .padding(.top, 40)
-
-        Spacer()
-
-        if scannedCode != nil && fileURL == nil {
-          Text("File not found")
-            .foregroundStyle(.white)
-            .padding()
-            .background(Color.purple)
-            .clipShape(Capsule())
-            .padding(.bottom, 60)
-            .onTapGesture {
-              scannedCode = nil
-            }
-
-          Spacer()
-        }
-
-      }
+  }
+  
+  private var fileNotFoundButton: some View {
+    Button {
+      scannedCode = nil
+    } label: {
+      Text("File not found")
+        .foregroundStyle(.white)
+        .padding()
+        .background(Color.purple)
+        .clipShape(Capsule())
     }
-    .scaleEffect(scale)
+    .padding(.bottom, 60)
   }
 
-  var closeButton: some View {
+  private var closeButton: some View {
     Button {
       withAnimation(.easeInOut) {
         scale = 0
@@ -86,22 +103,6 @@ struct QRCodeScanner: View {
     }
   }
 
-  func checkFileExists(fileName: String, completion: (Bool, URL?) -> Void) {
-    let fileManager = FileManager.default
-    let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    let fileURL = documentsURL.appendingPathComponent(fileName)
-    let isExists = fileManager.fileExists(atPath: fileURL.path)
-    isExists && !fileName.isEmpty ? completion(isExists, fileURL) : completion(isExists, nil)
-  }
-
-//  func getFileName(from urlString: String) -> String? {
-//    urlString.components(separatedBy: "/").last
-//  }
-
-}
-
-func getFileName(from urlString: String) -> String? {
-  urlString.components(separatedBy: "/").last
 }
 
 #Preview {

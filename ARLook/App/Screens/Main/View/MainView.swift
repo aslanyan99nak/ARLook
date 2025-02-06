@@ -6,6 +6,7 @@
 //
 
 import QRCode
+import QuickLook
 import SwiftUI
 
 struct MainView: View {
@@ -14,67 +15,76 @@ struct MainView: View {
 
   var body: some View {
     NavigationStack {
-      ZStack {
-        ScrollView {
-          VStack(spacing: 10) {
-            // scannedCodeView
-
-            if let path = viewModel.savedFilePath {
-              Text("Saved File Path:\n\(path)")
-                .padding()
-                .multilineTextAlignment(.center)
-            }
-
-            if let selectedURL = viewModel.selectedURL {
-              Button {
-                // Saving
-                if viewModel.savedFilePath == nil {
-                  let number = Int.random(in: 1...20)
-                  viewModel.modelManager.saveFile(from: selectedURL, to: "model\(number).usdz") { success, savedURL in
-                    if success {
-                      DispatchQueue.main.async {
-                        viewModel.savedFilePath = savedURL?.path
-                      }
-                    }
-                  }
-                }
-              } label: {
-                ItemRow(
-                  image: viewModel.savedFilePath == nil ? Image(systemName: "square.and.arrow.down") : Image(systemName: "checkmark.seal"),
-                  title: viewModel.savedFilePath == nil ? "Upload" : "Uploaded",
-                  description: viewModel.savedFilePath == nil ? "Upload your 3D model for using by QR" : "You have succesfully uploaded your 3D model"
-                )
-              }
-              .padding(.horizontal, 16)
-              .disabled(viewModel.savedFilePath != nil)
-            }
-
-            if viewModel.scannedCode != nil || viewModel.selectedURL != nil {
-              showModelButton
-            }
-            qrCodeView
-            scanButton
-            chooseButton
-
-            fileNames
-          }
-          .padding(.top, 150)
-        }
-
-        if viewModel.isShowScanner {
-          scanner
-            .navigationBarHidden(true)
-//            .toolbarVisibility(.hidden, for: .navigationBar)
-        }
-      }
-      .ignoresSafeArea()
-      .navigationTitle("AR LOOK")
+      contentView
+        .ignoresSafeArea()
+        .navigationTitle("AR LOOK")
     }
     .sheet(isPresented: $viewModel.isShowPicker) {
       DocumentPicker { url in
         viewModel.savedFilePath = nil
         viewModel.selectedURL = url
       }
+    }
+  }
+
+  private var contentView: some View {
+    ZStack {
+      ScrollView {
+        VStack(spacing: 10) {
+          // scannedCodeView
+          if let path = viewModel.savedFilePath {
+            Text("Saved File Path:\n\(path)")
+              .padding()
+              .multilineTextAlignment(.center)
+          }
+          uploadButton
+          if viewModel.scannedCode != nil || viewModel.selectedURL != nil {
+            showModelButton
+            //              .quickLookPreview($viewModel.previewURL)
+          }
+          qrCodeView
+          scanButton
+          chooseButton
+          fileNames
+        }
+        .padding(.top, 150)
+      }
+
+      if viewModel.isShowScanner {
+        scanner
+          .navigationBarHidden(true)
+        //            .toolbarVisibility(.hidden, for: .navigationBar)
+      }
+    }
+  }
+
+  @ViewBuilder
+  private var uploadButton: some View {
+    if let selectedURL = viewModel.selectedURL {
+      Button {
+        // Saving
+        if viewModel.savedFilePath == nil {
+          let number = Int.random(in: 1...20)
+          viewModel.modelManager.saveFile(from: selectedURL, to: "model\(number).usdz") {
+            success, savedURL in
+            if success {
+              DispatchQueue.main.async {
+                viewModel.savedFilePath = savedURL?.path
+              }
+            }
+          }
+        }
+      } label: {
+        ItemRow(
+          image: viewModel.savedFilePath == nil
+            ? Image(systemName: "square.and.arrow.down") : Image(systemName: "checkmark.seal"),
+          title: viewModel.savedFilePath == nil ? "Upload" : "Uploaded",
+          description: viewModel.savedFilePath == nil
+            ? "Upload your 3D model for using by QR" : "You have succesfully uploaded your 3D model"
+        )
+      }
+      .padding(.horizontal, 16)
+      .disabled(viewModel.savedFilePath != nil)
     }
   }
 
@@ -137,27 +147,13 @@ struct MainView: View {
     VStack(spacing: 0) {
       if let image = viewModel.image {
         Menu {
-          Button {
-            // Share Action
-            if let url = URL(string: "https://example.com/\(viewModel.scannedCode ?? "")") {
-              viewModel.shareSheet(url: url)
-            }
-          } label: {
-            HStack(spacing: 4) {
-              Text("Share")
-              
-              Image(systemName: "square.and.arrow.up")
-                .resizable()
-                .frame(width: 16, height: 16)
-            }
-          }
+          shareButton
         } label: {
           Image(uiImage: UIImage(cgImage: image))
             .resizable()
             .frame(width: 200, height: 200)
             .padding(.top, 16)
         }
-
       } else {
         Image(.qrEmpty)
           .resizable()
@@ -173,6 +169,23 @@ struct MainView: View {
     }
   }
 
+  private var shareButton: some View {
+    Button {
+      // Share Action
+      if let url = URL(string: "https://example.com/\(viewModel.scannedCode ?? "")") {
+        viewModel.shareSheet(url: url)
+      }
+    } label: {
+      HStack(spacing: 4) {
+        Text("Share")
+
+        Image(systemName: "square.and.arrow.up")
+          .resizable()
+          .frame(width: 16, height: 16)
+      }
+    }
+  }
+
   private var fileNames: some View {
     VStack(alignment: .leading, spacing: 10) {
       let files = viewModel.modelManager.loadFiles()
@@ -183,11 +196,11 @@ struct MainView: View {
             .font(.title)
             .fontWeight(.bold)
             .padding()
-          
+
           Spacer()
         }
       }
-      
+
       ForEach(files, id: \.self) { file in
         HStack(spacing: 0) {
           Text(file)
@@ -195,7 +208,7 @@ struct MainView: View {
             .padding()
             .background(Color.gray.opacity(0.4))
             .clipShape(RoundedRectangle(cornerRadius: 8))
-          
+
           Spacer()
         }
         .padding(.horizontal, 16)
@@ -203,7 +216,7 @@ struct MainView: View {
     }
     .padding(.bottom, 40)
   }
-  
+
 }
 
 #Preview {

@@ -10,6 +10,7 @@ import Foundation
 class ModelManager {
   
   static let shared = ModelManager()
+  
   private init() { }
   
   func saveFile(
