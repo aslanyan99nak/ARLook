@@ -41,7 +41,7 @@ struct QRCodeScanner: View {
 
       Spacer()
 
-      if scannedCode != nil && fileURL == nil {
+      if scannedCode.isNotNil && fileURL.isNil {
         fileNotFoundButton
         Spacer()
       }

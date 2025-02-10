@@ -38,15 +38,15 @@ struct MainScreen: View {
               .multilineTextAlignment(.center)
           }
           uploadButton
-          if viewModel.scannedCode != nil || viewModel.selectedURL != nil {
+          if viewModel.scannedCode.isNotNil || viewModel.selectedURL.isNotNil {
             showModelButton
-            //              .quickLookPreview($viewModel.previewURL)
           }
           qrCodeView
           scanButton
           chooseButton
         }
         .padding(.top, 150)
+        .padding(.bottom, 150)
       }
 
       if viewModel.isShowScanner {
@@ -62,7 +62,7 @@ struct MainScreen: View {
     if let selectedURL = viewModel.selectedURL {
       Button {
         // Saving
-        if viewModel.savedFilePath == nil {
+        if viewModel.savedFilePath.isNil {
           let number = Int.random(in: 1...20)
           viewModel.modelManager.saveFile(from: selectedURL, to: "model\(number).usdz") {
             success, savedURL in
@@ -75,15 +75,15 @@ struct MainScreen: View {
         }
       } label: {
         ItemRow(
-          image: viewModel.savedFilePath == nil
+          image: viewModel.savedFilePath.isNil
             ? Image(systemName: "square.and.arrow.down") : Image(systemName: "checkmark.seal"),
-          title: viewModel.savedFilePath == nil ? "Upload" : "Uploaded",
-          description: viewModel.savedFilePath == nil
+          title: viewModel.savedFilePath.isNil ? "Upload" : "Uploaded",
+          description: viewModel.savedFilePath.isNil
             ? "Upload your 3D model for using by QR" : "You have succesfully uploaded your 3D model"
         )
       }
       .padding(.horizontal, 16)
-      .disabled(viewModel.savedFilePath != nil)
+      .disabled(viewModel.savedFilePath.isNotNil)
     }
   }
 
@@ -118,9 +118,9 @@ struct MainScreen: View {
 
   private var showModelButton: some View {
     Button {
-      if viewModel.selectedURL != nil {
+      if viewModel.selectedURL.isNotNil {
         viewModel.previewURL = viewModel.selectedURL
-      } else if viewModel.fileURL != nil {
+      } else if viewModel.fileURL.isNotNil {
         viewModel.previewURL = viewModel.fileURL
       }
     } label: {
@@ -153,12 +153,14 @@ struct MainScreen: View {
             .frame(width: 200, height: 200)
             .padding(.top, 16)
         }
-      } else {
-        Image(.qrEmpty)
+      }
+//      } else {
+//        Image(.qrEmpty)
+        Image(.capture3D)
           .resizable()
           .frame(width: 200, height: 200)
           .padding(.top, 16)
-      }
+//      }
     }
     .padding(.horizontal, 16)
     .onChange(of: viewModel.scannedCode) { oldValue, newValue in
