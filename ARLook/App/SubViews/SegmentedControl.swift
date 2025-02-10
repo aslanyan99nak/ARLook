@@ -27,30 +27,61 @@ struct SegmentedControl: View {
 
   var body: some View {
     ZStack(alignment: .leading) {
-      Capsule()
-        .frame(width: size.width, height: size.height)
-        .foregroundColor(.gray)
-        .opacity(0.2)
-
-      Capsule()
-        .frame(width: segmentWidth(size), height: size.height - 6)
-        .foregroundColor(.black)
-        .offset(x: offsetX)
-        .animation(.easeInOut(duration: 0.3), value: selection)
-
-      HStack(spacing: 0) {
-        ForEach(SearchScreen.ModelType.allCases, id: \.self) { modelType in
-          SegmentLabel(
-            modelType: modelType,
-            textColor: selection == modelType ? Color.blue : Color.white,
-            width: segmentWidth(size)
-          )
-          .onTapGesture {
-            selection = modelType
-          }
+      bigCapsuleView
+      smallCapsuleView
+      segmentedItemView
+    }
+  }
+  
+  private var bigCapsuleView: some View {
+    Capsule()
+      .frame(width: size.width, height: size.height)
+      .foregroundStyle(.gray)
+      .opacity(0.2)
+  }
+  
+  private var smallCapsuleView: some View {
+    Capsule()
+      .frame(width: segmentWidth(size), height: size.height - 6)
+      .foregroundStyle(.black)
+      .offset(x: offsetX)
+      .animation(.easeInOut(duration: 0.3), value: selection)
+  }
+  
+  private var segmentedItemView: some View {
+    HStack(spacing: 0) {
+      ForEach(SearchScreen.ModelType.allCases, id: \.self) { modelType in
+        segmentLabelView(
+          modelType: modelType,
+          textColor: selection == modelType ? Color.blue : Color.white,
+          width: segmentWidth(size)
+        )
+        .onTapGesture {
+          selection = modelType
         }
       }
     }
+  }
+  
+  private func segmentLabelView(
+    modelType: SearchScreen.ModelType,
+    textColor: Color,
+    width: CGFloat
+  ) -> some View {
+    HStack(spacing: 8) {
+      if let icon = modelType.icon {
+        icon
+          .resizable()
+          .frame(width: 16, height: 16)
+          .foregroundStyle(textColor)
+      }
+      
+      Text(modelType.name)
+        .multilineTextAlignment(.center)
+        .fixedSize(horizontal: false, vertical: false)
+        .foregroundStyle(textColor)
+    }
+    .frame(width: width)
   }
 
   private func segmentWidth(_ mainSize: CGSize) -> CGFloat {
@@ -63,31 +94,6 @@ struct SegmentedControl: View {
 
   private func calculateSegmentOffset(_ mainSize: CGSize) -> CGFloat {
     segmentWidth(mainSize) * CGFloat(selection.id)
-  }
-  
-}
-
-fileprivate struct SegmentLabel: View {
-
-  let modelType: SearchScreen.ModelType
-  let textColor: Color
-  let width: CGFloat
-
-  var body: some View {
-    HStack(spacing: 8) {
-      if let icon = modelType.icon {
-        icon
-          .resizable()
-          .frame(width: 16, height: 16)
-          .foregroundColor(textColor)
-      }
-      
-      Text(modelType.name)
-        .multilineTextAlignment(.center)
-        .fixedSize(horizontal: false, vertical: false)
-        .foregroundColor(textColor)
-    }
-    .frame(width: width)
   }
   
 }

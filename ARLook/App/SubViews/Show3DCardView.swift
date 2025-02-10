@@ -11,22 +11,7 @@ struct Show3DCardView: View {
   
   var body: some View {
     HStack(spacing: 0) {
-      VStack(spacing: 8) {
-        Text("View in 3D mode")
-          .font(Font.system(size: 24, weight: .bold))
-          .foregroundStyle(Color.black)
-        
-        HStack(spacing: 0) {
-          Image(systemName: "cube")
-            .resizable()
-            .frame(width: 60, height: 60)
-            .foregroundStyle(.black)
-          
-          Spacer()
-        }
-        .padding()
-      }
-      
+      cardLeftSideView
       Spacer()
       
       Image(.rocket)
@@ -44,6 +29,24 @@ struct Show3DCardView: View {
     .padding()
   }
   
+  private var cardLeftSideView: some View {
+    VStack(spacing: 8) {
+      Text("View in 3D mode")
+        .font(Font.system(size: 24, weight: .bold))
+        .foregroundStyle(Color.black)
+      
+      HStack(spacing: 0) {
+        Image(systemName: "cube")
+          .resizable()
+          .frame(width: 60, height: 60)
+          .foregroundStyle(.black)
+        
+        Spacer()
+      }
+      .padding()
+    }
+  }
+
 }
 
 #Preview {

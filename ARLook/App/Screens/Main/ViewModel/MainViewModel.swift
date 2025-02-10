@@ -56,7 +56,7 @@ class MainViewModel: ObservableObject {
     let activeScene = allScenes.first(where: { $0.activationState == .foregroundActive })
     if let windowScene = activeScene as? UIWindowScene {
       let rootViewController = windowScene.keyWindow?.rootViewController
-      if UIDevice.current.userInterfaceIdiom == .pad {
+      if UIDevice.isPad {
         activityVC.popoverPresentationController?.sourceView = rootViewController?.view
         activityVC.popoverPresentationController?.sourceRect = .zero
       }

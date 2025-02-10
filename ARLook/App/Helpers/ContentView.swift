@@ -56,7 +56,7 @@ struct ContentView: View {
         }
 
         Button {
-          if selectedURL != nil {
+          if selectedURL.isNotNil {
             previewURL = selectedURL
           }
         } label: {

@@ -9,10 +9,11 @@ import SwiftUI
 
 @main
 struct ARLookApp: App {
+  
+  static let subsystem: String = "com.nak.ARLook"
 
   var body: some Scene {
     WindowGroup {
-//      MainScreen()
       MainTabBar()
     }
   }
