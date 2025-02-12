@@ -158,20 +158,20 @@ struct CaptureOverlayView: View {
 
   var cancelButton: some View {
     Button {
-      print("\(String.LocalizedString.cancel) button clicked!")
+      print("\(String.LocString.cancel) button clicked!")
       appModel.objectCaptureSession?.cancel()
     } label: {
-      Text(String.LocalizedString.cancel)
+      Text(String.LocString.cancel)
         .modifier(VisualEffectRoundedCorner())
     }
   }
 
   var nextButton: some View {
     Button {
-      print("\(String.LocalizedString.next) button clicked!")
+      print("\(String.LocString.next) button clicked!")
       appModel.setPreviewModelState(shown: true)
     } label: {
-      Text(String.LocalizedString.next)
+      Text(String.LocString.next)
         .modifier(VisualEffectRoundedCorner())
     }
   }

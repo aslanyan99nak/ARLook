@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SegmentedControl: View {
 
+  @Environment(\.colorScheme) var colorScheme
   @Binding var selection: SearchScreen.ModelType
 
   private let size: CGSize
@@ -18,6 +19,24 @@ struct SegmentedControl: View {
     let isLast = selection == SearchScreen.ModelType.allCases.last
     let offset = calculateSegmentOffset(size)
     return isFirst ? offset + 4 : isLast ? offset - 4 : offset
+  }
+  
+  private var iconOffsetX: CGFloat {
+    let isFirst = selection == SearchScreen.ModelType.allCases.first
+    let isLast = selection == SearchScreen.ModelType.allCases.last
+    return isSmall ? (isFirst ? 4 : isLast ? -4 : 0) : 0
+  }
+  
+  private var isDarkMode: Bool {
+    colorScheme == .dark
+  }
+  
+  private var capsuleColor: Color {
+    isDarkMode ? .black : .white
+  }
+  
+  private var isSmall: Bool {
+    size.width < 320
   }
   
   public init(selection: Binding<SearchScreen.ModelType>, size: CGSize) {
@@ -35,7 +54,7 @@ struct SegmentedControl: View {
   
   private var bigCapsuleView: some View {
     Capsule()
-      .frame(width: size.width, height: size.height)
+      .frame(width: abs(size.width), height: abs(size.height))
       .foregroundStyle(.gray)
       .opacity(0.2)
   }
@@ -43,7 +62,7 @@ struct SegmentedControl: View {
   private var smallCapsuleView: some View {
     Capsule()
       .frame(width: segmentWidth(size), height: size.height - 6)
-      .foregroundStyle(.black)
+      .foregroundStyle(capsuleColor)
       .offset(x: offsetX)
       .animation(.easeInOut(duration: 0.3), value: selection)
   }
@@ -53,7 +72,7 @@ struct SegmentedControl: View {
       ForEach(SearchScreen.ModelType.allCases, id: \.self) { modelType in
         segmentLabelView(
           modelType: modelType,
-          textColor: selection == modelType ? Color.blue : Color.white,
+          textColor: selection == modelType ? isDarkMode ? .white : .black : .gray,
           width: segmentWidth(size)
         )
         .onTapGesture {
@@ -74,12 +93,16 @@ struct SegmentedControl: View {
           .resizable()
           .frame(width: 16, height: 16)
           .foregroundStyle(textColor)
+          .offset(x: modelType == .recent ? 4 : 0)
       }
       
-      Text(modelType.name)
-        .multilineTextAlignment(.center)
-        .fixedSize(horizontal: false, vertical: false)
-        .foregroundStyle(textColor)
+      if modelType == .all || !isSmall {
+        Text(modelType.name)
+          .multilineTextAlignment(.center)
+          .fixedSize(horizontal: false, vertical: false)
+          .foregroundStyle(textColor)
+          .offset(x: modelType == .all ? -4 : 0)
+      }
     }
     .frame(width: width)
   }
@@ -96,4 +119,13 @@ struct SegmentedControl: View {
     segmentWidth(mainSize) * CGFloat(selection.id)
   }
   
+}
+
+#Preview {
+  @Previewable @State var selection: SearchScreen.ModelType = .all
+
+  SegmentedControl(
+    selection: $selection,
+    size: .init(width: 300, height: 40)
+  )
 }

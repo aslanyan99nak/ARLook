@@ -308,13 +308,13 @@ class AppDataModel: ObservableObject, Identifiable {
 
   func determineCurrentOnboardingState() -> OnboardingState? {
     guard let session = objectCaptureSession else { return nil }
-    let orbitCompleted = session.userCompletedScanPass
+    let isOrbitCompleted = session.userCompletedScanPass
     let currentState = OnboardingState.tooFewImages
     guard session.numberOfShotsTaken >= AppDataModel.minNumImages else { return currentState }
     return switch orbit {
-    case .orbit1: orbitCompleted ? .firstSegmentComplete : .firstSegmentNeedsWork
-    case .orbit2: orbitCompleted ? .secondSegmentComplete : .secondSegmentNeedsWork
-    case .orbit3: orbitCompleted ? .thirdSegmentComplete : .thirdSegmentNeedsWork
+    case .orbit1: isOrbitCompleted ? .firstSegmentComplete : .firstSegmentNeedsWork
+    case .orbit2: isOrbitCompleted ? .secondSegmentComplete : .secondSegmentNeedsWork
+    case .orbit3: isOrbitCompleted ? .thirdSegmentComplete : .thirdSegmentNeedsWork
     }
   }
 

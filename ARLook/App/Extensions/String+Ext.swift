@@ -12,5 +12,9 @@ extension String {
   var convertedFileNameFromURLString: String? {
     self.components(separatedBy: "/").last
   }
+  
+  var localized: String {
+    NSLocalizedString(self, comment: "")
+  }
 
 }

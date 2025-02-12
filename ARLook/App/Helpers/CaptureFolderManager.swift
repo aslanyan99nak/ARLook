@@ -215,4 +215,5 @@ class CaptureFolderManager: ObservableObject {
     }
     return documentsFolder.appendingPathComponent("Scans/", isDirectory: true)
   }
+  
 }

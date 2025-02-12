@@ -9,15 +9,36 @@ import QRCode
 import QuickLook
 import SwiftUI
 
+extension MainScreen {
+
+  enum Destination: Hashable {
+
+    case modelScanner
+
+  }
+
+}
+
 struct MainScreen: View {
 
+  @Environment(\.colorScheme) var colorScheme
   @StateObject private var viewModel = MainViewModel()
+  @State private var navigationPath = NavigationPath()
+
+  private var isDarkMode: Bool {
+    colorScheme == .dark
+  }
 
   var body: some View {
-    NavigationStack {
+    NavigationStack(path: $navigationPath) {
       contentView
+        .navigationDestination(for: Destination.self) { destination in
+          if case .modelScanner = destination {
+            ObjectScannerScreen()
+          }
+        }
         .ignoresSafeArea()
-        .navigationTitle("AR LOOK")
+        .navigationTitle(String.LocString.arLook)
     }
     .sheet(isPresented: $viewModel.isShowPicker) {
       DocumentPicker { url in
@@ -29,19 +50,15 @@ struct MainScreen: View {
 
   private var contentView: some View {
     ZStack {
-      ScrollView {
+      ScrollView(showsIndicators: false) {
         VStack(spacing: 10) {
-          // scannedCodeView
-          if let path = viewModel.savedFilePath {
-            Text("Saved File Path:\n\(path)")
-              .padding()
-              .multilineTextAlignment(.center)
-          }
+          // fileInfoDebugView
+          modelScannerButton
+          qrCodeView
           uploadButton
           if viewModel.scannedCode.isNotNil || viewModel.selectedURL.isNotNil {
             showModelButton
           }
-          qrCodeView
           scanButton
           chooseButton
         }
@@ -53,6 +70,34 @@ struct MainScreen: View {
         scanner
           .toolbar(.hidden, for: .navigationBar)
           .toolbar(.hidden, for: .tabBar)
+      } else if viewModel.isShowPopup {
+        Rectangle()
+          .background(Material.regular)
+          .ignoresSafeArea()
+
+        VStack(spacing: 20) {
+          Text(String.LocString.canNotScanModel)
+            .foregroundStyle(isDarkMode ? .white : .black)
+
+          Button {
+            withAnimation {
+              viewModel.isShowPopup = false
+            }
+          } label: {
+            Text(String.LocString.ok)
+              .foregroundStyle(.white)
+              .padding(.vertical, 8)
+              .frame(minWidth: 100, idealWidth: 100, maxWidth: 140)
+              .background(Color.purple)
+              .clipShape(Capsule())
+          }
+        }
+        .padding()
+        .background(.regularMaterial)
+        .background(isDarkMode ? Color.gray.opacity(0.15) : Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .shadow(radius: 10)
+        .padding(.horizontal, 16)
       }
     }
   }
@@ -77,18 +122,15 @@ struct MainScreen: View {
         ItemRow(
           image: viewModel.savedFilePath.isNil
             ? Image(systemName: "square.and.arrow.down") : Image(systemName: "checkmark.seal"),
-          title: viewModel.savedFilePath.isNil ? "Upload" : "Uploaded",
+          title: viewModel.savedFilePath.isNil
+            ? String.LocString.upload : String.LocString.uploaded,
           description: viewModel.savedFilePath.isNil
-            ? "Upload your 3D model for using by QR" : "You have succesfully uploaded your 3D model"
+            ? String.LocString.uploadDescription : String.LocString.uploadedDescription
         )
       }
       .padding(.horizontal, 16)
       .disabled(viewModel.savedFilePath.isNotNil)
     }
-  }
-
-  private var scannedCodeView: some View {
-    Text("Scanned Code \(viewModel.scannedCode ?? "empty")")
   }
 
   private var scanner: some View {
@@ -109,8 +151,8 @@ struct MainScreen: View {
     } label: {
       ItemRow(
         image: Image(systemName: "qrcode"),
-        title: "QR code Scanner",
-        description: "Scan QR codes with ease"
+        title: String.LocString.qrCodeScannerTitle,
+        description: String.LocString.qrCodeScannerDescription
       )
     }
     .padding(.horizontal, 16)
@@ -127,6 +169,7 @@ struct MainScreen: View {
       Show3DCardView()
     }
     .quickLookPreview($viewModel.previewURL)
+    .padding(.horizontal, 16)
   }
 
   private var chooseButton: some View {
@@ -135,8 +178,8 @@ struct MainScreen: View {
     } label: {
       ItemRow(
         image: Image(.openFile),
-        title: "File Management",
-        description: "Open and organize your files"
+        title: String.LocString.fileManagmentTitle,
+        description: String.LocString.fileManagmentDescription
       )
     }
     .padding(.horizontal, 16)
@@ -150,17 +193,13 @@ struct MainScreen: View {
         } label: {
           Image(uiImage: UIImage(cgImage: image))
             .resizable()
+            .aspectRatio(contentMode: .fit)
+            .clipShape(RoundedRectangle(cornerRadius: 24))
             .frame(width: 200, height: 200)
+            .shadow(radius: 10)
             .padding(.top, 16)
         }
       }
-//      } else {
-//        Image(.qrEmpty)
-        Image(.capture3D)
-          .resizable()
-          .frame(width: 200, height: 200)
-          .padding(.top, 16)
-//      }
     }
     .padding(.horizontal, 16)
     .onChange(of: viewModel.scannedCode) { oldValue, newValue in
@@ -168,6 +207,26 @@ struct MainScreen: View {
         viewModel.setupDocument()
       }
     }
+  }
+
+  private var modelScannerButton: some View {
+    Button {
+      if UIDevice.hasLiDAR {
+        let screen = Destination.modelScanner
+        navigationPath.append(screen)
+      } else {
+        // Show popup
+        print("Show Popup")
+        withAnimation {
+          viewModel.isShowPopup = true
+        }
+      }
+    } label: {
+      Image(.capture3D)
+        .resizable()
+        .frame(width: 100, height: 100)
+    }
+    .padding(.top, 16)
   }
 
   private var shareButton: some View {
@@ -178,7 +237,7 @@ struct MainScreen: View {
       }
     } label: {
       HStack(spacing: 4) {
-        Text("Share")
+        Text(String.LocString.share)
 
         Image(systemName: "square.and.arrow.up")
           .resizable()
@@ -186,6 +245,17 @@ struct MainScreen: View {
       }
     }
   }
+
+//  private var fileInfoDebugView: some View {
+//    VStack(spacing: 10) {
+//      Text("Scanned Code \(viewModel.scannedCode ?? "empty")")
+//      if let path = viewModel.savedFilePath {
+//        Text("Saved File Path:\n\(path)")
+//          .padding()
+//          .multilineTextAlignment(.center)
+//      }
+//    }
+//  }
 
 }
 

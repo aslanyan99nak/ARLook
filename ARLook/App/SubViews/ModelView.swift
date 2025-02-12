@@ -17,7 +17,10 @@ struct ModelView: View {
   var body: some View {
     ZStack {
       if !isLoading {
-        ARQuickLookController(modelFile: modelFile, endCaptureCallback: endCaptureCallback)
+        ARQuickLookController(
+          modelFile: modelFile,
+          endCaptureCallback: endCaptureCallback
+        )
       } else {
         
         CircularProgressView()

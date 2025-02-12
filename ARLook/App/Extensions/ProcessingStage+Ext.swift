@@ -11,12 +11,12 @@ extension PhotogrammetrySession.Output.ProcessingStage {
   
   var processingStageString: String? {
     switch self {
-    case .preProcessing: "Pre-Processing…"
-    case .imageAlignment: "Aligning Images…"
-    case .pointCloudGeneration: "Generating Point Cloud…"
-    case .meshGeneration: "Generating Mesh…"
-    case .textureMapping: "Mapping Texture…"
-    case .optimization: "Optimizing…"
+    case .preProcessing: String.LocString.preProcessing
+    case .imageAlignment: String.LocString.imageAlignment
+    case .pointCloudGeneration: String.LocString.pointCloudGeneration
+    case .meshGeneration: String.LocString.meshGeneration
+    case .textureMapping: String.LocString.textureMapping
+    case .optimization: String.LocString.optimization
     default: nil
     }
   }

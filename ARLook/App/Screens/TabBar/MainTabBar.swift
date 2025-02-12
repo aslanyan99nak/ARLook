@@ -42,9 +42,11 @@ struct MainTabBar: View {
       .tag(TabItem.home)
       .tabItem {
         VStack(spacing: 0) {
-          Image(systemName: "house")
+          Image(.scanner)
+            .renderingMode(.template)
+            .foregroundStyle(selectedTab == .home ? Color.blue : Color.gray)
 
-          Text("Home")
+          Text(String.LocString.scanner)
             .foregroundStyle(.blue)
         }
       }
@@ -57,7 +59,7 @@ struct MainTabBar: View {
         VStack(spacing: 0) {
           Image(systemName: "list.bullet.clipboard")
 
-          Text("List")
+          Text(String.LocString.list)
             .foregroundStyle(.blue)
         }
       }
@@ -70,7 +72,7 @@ struct MainTabBar: View {
         VStack(spacing: 0) {
           Image(systemName: "magnifyingglass")
 
-          Text("Search")
+          Text(String.LocString.search)
             .foregroundStyle(.blue)
         }
       }
@@ -83,7 +85,7 @@ struct MainTabBar: View {
         VStack(spacing: 0) {
           Image(systemName: "gear")
 
-          Text("Settings")
+          Text(String.LocString.settings)
             .foregroundStyle(.blue)
         }
       }

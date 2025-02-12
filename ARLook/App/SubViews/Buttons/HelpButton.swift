@@ -13,7 +13,7 @@ struct HelpButton: View {
 
   var body: some View {
     Button {
-      print("\(String.LocalizedString.help) button clicked!")
+      print("\(String.LocString.help) button clicked!")
       withAnimation {
         showInfo = true
       }
@@ -29,7 +29,7 @@ struct HelpButton: View {
         .aspectRatio(contentMode: .fit)
         .frame(width: 22)
 
-      Text(String.LocalizedString.help)
+      Text(String.LocString.help)
         .font(.footnote)
         .opacity(0.7)
         .fontWeight(.semibold)
