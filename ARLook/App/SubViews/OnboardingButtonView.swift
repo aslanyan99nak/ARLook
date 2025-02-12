@@ -20,7 +20,7 @@ struct OnboardingButtonView: View {
   var body: some View {
     VStack {
       HStack {
-        CancelButton(buttonLabel: String.LocalizedString.cancel)
+        CancelButton(buttonLabel: String.LocString.cancel)
         Spacer()
       }
 
@@ -32,7 +32,7 @@ struct OnboardingButtonView: View {
           $0 == .continue(isFlippable: false) || $0 == .continue(isFlippable: true)
         }) {
           CreateButton(
-            buttonLabel: String.LocalizedString.continue,
+            buttonLabel: String.LocString.continue,
             buttonLabelColor: .white,
             shouldApplyBackground: true
           ) {
@@ -41,7 +41,7 @@ struct OnboardingButtonView: View {
         }
         if currentStateInputs.contains(where: { $0 == .flipObjectAnyway }) {
           CreateButton(
-            buttonLabel: String.LocalizedString.flipAnyway,
+            buttonLabel: String.LocString.flipAnyway,
             buttonLabelColor: .blue
           ) {
             userHasIndicatedFlipObjectAnyway = true
@@ -52,7 +52,7 @@ struct OnboardingButtonView: View {
           $0 == .skip(isFlippable: false) || $0 == .skip(isFlippable: true)
         }) {
           CreateButton(
-            buttonLabel: String.LocalizedString.skip,
+            buttonLabel: String.LocString.skip,
             buttonLabelColor: .blue
           ) {
             transition(with: .skip(isFlippable: appModel.isObjectFlippable))
@@ -60,7 +60,7 @@ struct OnboardingButtonView: View {
         }
         if currentStateInputs.contains(where: { $0 == .finish }) {
           CreateButton(
-            buttonLabel: String.LocalizedString.finish,
+            buttonLabel: String.LocString.finish,
             buttonLabelColor: onboardingStateMachine.currentState == .thirdSegmentComplete
               ? .white : .blue,
             shouldApplyBackground: onboardingStateMachine.currentState == .thirdSegmentComplete,
@@ -71,7 +71,7 @@ struct OnboardingButtonView: View {
         }
         if currentStateInputs.contains(where: { $0 == .objectCannotBeFlipped }) {
           CreateButton(
-            buttonLabel: String.LocalizedString.cannotFlipYourObject,
+            buttonLabel: String.LocString.canNotFlipYourObject,
             buttonLabelColor: .blue
           ) {
             userHasIndicatedObjectCannotBeFlipped = true

@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import ARKit
 
 extension UIDevice {
   
   static let isPad: Bool = UIDevice.current.userInterfaceIdiom == .pad
+  
+  static let hasLiDAR: Bool = ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh)
   
 }

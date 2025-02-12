@@ -18,7 +18,7 @@ extension AppDataModel {
     }
 
     var image: String {
-      let imagesByIndex = [Constant.circle1, Constant.circle1, Constant.circle1]
+      let imagesByIndex = [Constant.circle1, Constant.circle2, Constant.circle3]
       return imagesByIndex[id]
     }
 
@@ -37,15 +37,15 @@ extension AppDataModel {
     func feedbackString(isObjectFlippable: Bool) -> String {
       switch self {
       case .orbit1:
-        return String.LocalizedString.segment1FeedbackString
+        return String.LocString.segment1Feedback
       case .orbit2, .orbit3:
         if isObjectFlippable {
-          return String.LocalizedString.segment2And3FlippableFeedbackString
+          return String.LocString.segment2And3FlippableFeedback
         } else {
           if case .orbit2 = self {
-            return String.LocalizedString.segment2UnflippableFeedbackString
+            return String.LocString.segment2UnflippableFeedback
           }
-          return String.LocalizedString.segment3UnflippableFeedbackString
+          return String.LocString.segment3UnflippableFeedback
         }
       }
     }

@@ -6,11 +6,13 @@
 //
 
 import QRCode
+import CoreImage.CIFilterBuiltins
 import SwiftUI
 
 class MainViewModel: ObservableObject {
 
   @Published var isShowScanner = false
+  @Published var isShowPopup = false
   @Published var scannedCode: String?
   @Published var scale: CGFloat = 0
   @Published var isShowPicker: Bool = false
@@ -33,7 +35,7 @@ class MainViewModel: ObservableObject {
     doc?.design.shape.onPixels = QRCode.PixelShape.Horizontal(
       insetFraction: 0.1, cornerRadiusFraction: 1)
 
-    guard let logoImage = UIImage(named: "icon")?.cgImage else { return }
+    guard let logoImage = UIImage(named: "appIcon")?.cgImage else { return }
     doc?.logoTemplate = QRCode.LogoTemplate(
       image: logoImage,
       path: CGPath(

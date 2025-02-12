@@ -9,37 +9,40 @@ import SwiftUI
 
 struct Show3DCardView: View {
   
+  @Environment(\.colorScheme) var colorScheme
+  
+  private var isDarkMode: Bool {
+    colorScheme == .dark
+  }
+  
   var body: some View {
     HStack(spacing: 0) {
       cardLeftSideView
       Spacer()
       
-      Image(.rocket)
+      Image(.qrEmpty)
         .resizable()
         .frame(width: 100, height: 100)
       
     }
     .padding()
-    .background(
-      RoundedRectangle(cornerRadius: 8)
-        .foregroundStyle(.white)
-    )
-    .compositingGroup()
-    .shadow(color: .black, radius: 10, x: 10, y: 10)
-    .padding()
+    .background(.regularMaterial)
+    .background(isDarkMode ? Color.gray.opacity(0.15) : Color.white)
+    .clipShape(RoundedRectangle(cornerRadius: 24))
+    .shadow(radius: 10)
   }
   
   private var cardLeftSideView: some View {
     VStack(spacing: 8) {
-      Text("View in 3D mode")
+      Text(String.LocString.view3DMode)
         .font(Font.system(size: 24, weight: .bold))
-        .foregroundStyle(Color.black)
+        .foregroundStyle(isDarkMode ? Color.white : Color.black)
       
       HStack(spacing: 0) {
         Image(systemName: "cube")
           .resizable()
           .frame(width: 60, height: 60)
-          .foregroundStyle(.black)
+          .foregroundStyle(isDarkMode ? Color.white : Color.black)
         
         Spacer()
       }
@@ -51,4 +54,5 @@ struct Show3DCardView: View {
 
 #Preview {
   Show3DCardView()
+    .padding()
 }

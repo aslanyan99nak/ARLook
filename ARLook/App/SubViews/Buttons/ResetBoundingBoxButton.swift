@@ -29,7 +29,7 @@ struct ResetBoundingBoxButton: View {
         .frame(width: 30)
         .foregroundStyle(.white)
 
-      Text(String.LocalizedString.resetBox)
+      Text(String.LocString.resetBox)
         .font(.footnote)
         .opacity(0.7)
     }

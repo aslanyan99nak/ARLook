@@ -14,7 +14,7 @@ struct ObjectScannerScreen: View {
   @Environment(\.colorScheme) private var colorScheme
   @State private var showReconstructionView: Bool = false
   @State private var showErrorAlert: Bool = false
-  
+
   private var tintColor: Color { colorScheme == .light ? .black : .white }
 
   private var showProgressView: Bool {
@@ -22,6 +22,36 @@ struct ObjectScannerScreen: View {
   }
 
   var body: some View {
+    contentView
+      .toolbar(.hidden, for: .tabBar)
+      .onChange(of: appModel.state) { _, newState in
+        appStateChanged(newState)
+      }
+      .sheet(isPresented: $showReconstructionView) {
+        if let folderManager = appModel.scanFolderManager {
+          ReconstructionPrimaryView(
+            outputFile: folderManager.modelsFolder.appendingPathComponent("model-mobile.usdz")
+          )
+        }
+      }
+      .alert(
+        String.LocString.failed + (appModel.error.isNotNil ? " \(String(describing: appModel.error!))" : ""),
+        isPresented: $showErrorAlert
+      ) {
+        alertOkButton
+      }
+      .environmentObject(appModel)
+      .onAppear {
+        appModel.objectCaptureSession = .init()
+        appModel.state = .ready
+      }
+      .onDisappear {
+        appModel.objectCaptureSession?.pause()
+        appModel.objectCaptureSession = nil
+      }
+  }
+
+  private var contentView: some View {
     VStack {
       if appModel.state == .capturing {
         if let session = appModel.objectCaptureSession {
@@ -31,23 +61,6 @@ struct ObjectScannerScreen: View {
         CircularProgressView(tintColor: tintColor)
       }
     }
-    .onChange(of: appModel.state) { _, newState in
-      appStateChanged(newState)
-    }
-    .sheet(isPresented: $showReconstructionView) {
-      if let folderManager = appModel.scanFolderManager {
-        ReconstructionPrimaryView(
-          outputFile: folderManager.modelsFolder.appendingPathComponent("model-mobile.usdz")
-        )
-      }
-    }
-    .alert(
-      "Failed:  " + (appModel.error.isNotNil ? "\(String(describing: appModel.error!))" : ""),
-      isPresented: $showErrorAlert
-    ) {
-      alertOkButton
-    }
-    .environmentObject(appModel)
   }
 
   private func appStateChanged(_ newState: AppDataModel.ModelState) {
@@ -59,13 +72,13 @@ struct ObjectScannerScreen: View {
       showReconstructionView = newState == .reconstructing || newState == .viewing
     }
   }
-  
+
   private var alertOkButton: some View {
     Button {
       print("Calling restart...")
       appModel.state = .restart
     } label: {
-      Text("OK")
+      Text(String.LocString.ok)
     }
   }
 

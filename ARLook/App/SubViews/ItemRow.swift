@@ -9,6 +9,12 @@ import SwiftUI
 
 struct ItemRow: View {
   
+  @Environment(\.colorScheme) var colorScheme
+  
+  private var isDarkMode: Bool {
+    colorScheme == .dark
+  }
+  
   let image: Image
   let title: String
   let description: String
@@ -21,27 +27,30 @@ struct ItemRow: View {
       Spacer()
     }
     .padding()
-    .background(Color.gray.opacity(0.4))
-    .clipShape(RoundedRectangle(cornerRadius: 8))
+    .background(.regularMaterial)
+    .background(isDarkMode ? Color.gray.opacity(0.15) : Color.white)
+    .clipShape(RoundedRectangle(cornerRadius: 24))
+    .shadow(radius: 10)
   }
   
   private var icon: some View {
     image
+      .renderingMode(.template)
       .resizable()
       .frame(width: 40, height: 40)
-      .foregroundStyle(.black)
+      .foregroundStyle(isDarkMode ? Color.white : Color.black)
   }
   
   private var infoView: some View {
     VStack(alignment: .leading, spacing: 8) {
       Text(title)
         .font(Font.system(size: 20, weight: .bold))
-        .foregroundStyle(Color.black)
+        .foregroundStyle(isDarkMode ? Color.white : Color.black)
         .multilineTextAlignment(.leading)
       
       Text(description)
         .font(Font.system(size: 16, weight: .regular))
-        .foregroundStyle(Color.black)
+        .foregroundStyle(isDarkMode ? Color.white : Color.black)
         .multilineTextAlignment(.leading)
     }
   }

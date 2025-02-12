@@ -30,8 +30,8 @@ struct ProgressBarView: View {
 
   private var remainingTimeString: String {
     String.localizedStringWithFormat(
-      String.LocalizedString.estimatedRemainingTime,
-      formattedEstimatedRemainingTime ?? String.LocalizedString.calculating)
+      String.LocString.estimatedRemainingTime,
+      formattedEstimatedRemainingTime ?? String.LocString.calculating)
   }
 
   private var numOfImages: Int {
@@ -60,7 +60,7 @@ struct ProgressBarView: View {
 
   private var headerView: some View {
     HStack(spacing: 0) {
-      Text(processingStageDescription ?? String.LocalizedString.processing)
+      Text(processingStageDescription ?? String.LocString.processing)
 
       Spacer()
 
@@ -85,7 +85,7 @@ struct ProgressBarView: View {
       .padding(.trailing, 16)
 
       VStack(alignment: .leading) {
-        Text(String.LocalizedString.processingModelDescription)
+        Text(String.LocString.processingModelDescription)
 
         Text(remainingTimeString)
       }

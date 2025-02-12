@@ -17,9 +17,9 @@ extension SettingsScreen {
 
     var name: String {
       switch self {
-      case .icon: "App icon"
-      case .theme: "Theme"
-      case .font: "Font"
+      case .icon: String.LocString.icon
+      case .theme: String.LocString.theme
+      case .font: String.LocString.font
       }
     }
 
@@ -42,7 +42,7 @@ struct SettingsScreen: View {
       Form {
         sectionView
       }
-      .navigationTitle("Settings")
+      .navigationTitle(String.LocString.settings)
     }
   }
 
@@ -62,7 +62,7 @@ struct SettingsScreen: View {
         }
       }
     } header: {
-      Text("Appearance")
+      Text(String.LocString.appearance)
     }
   }
 

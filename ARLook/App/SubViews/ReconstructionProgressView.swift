@@ -40,7 +40,7 @@ struct ReconstructionProgressView: View {
 
       Spacer()
 
-      Text(String.LocalizedString.processingTitle)
+      Text(String.LocString.processingTitle)
         .font(.largeTitle)
         .fontWeight(.bold)
 
@@ -54,7 +54,7 @@ struct ReconstructionProgressView: View {
     .frame(maxWidth: .infinity)
     .padding(.bottom, 20)
     .alert(
-      "Failed:  " + (error.isNotNil ? "\(String(describing: error!))" : ""),
+      String.LocString.failed + (error.isNotNil ? " \(String(describing: error!))" : ""),
       isPresented: $gotError
     ) {
       alertOkButton
@@ -78,7 +78,7 @@ struct ReconstructionProgressView: View {
       isCancelling = true
       appModel.photogrammetrySession?.cancel()
     } label: {
-      Text(String.LocalizedString.cancel)
+      Text(String.LocString.cancel)
         .font(.headline)
         .bold()
         .padding(30)
@@ -91,7 +91,7 @@ struct ReconstructionProgressView: View {
       print("Calling restart...")
       appModel.state = .restart
     } label: {
-      Text("OK")
+      Text(String.LocString.ok)
     }
   }
   

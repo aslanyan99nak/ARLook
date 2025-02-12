@@ -32,12 +32,12 @@ struct CaptureButton: View {
 
   private var buttonLabel: String {
     if case .ready = session.state {
-      String.LocalizedString.continue
+      String.LocString.continue
     } else {
       if !isObjectFlipped {
-        String.LocalizedString.startCapture
+        String.LocString.startCapture
       } else {
-        String.LocalizedString.continue
+        String.LocString.continue
       }
     }
   }

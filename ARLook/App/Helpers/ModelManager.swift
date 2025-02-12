@@ -6,15 +6,23 @@
 //
 
 import Foundation
+import SceneKit
+import UIKit
 
 class ModelManager {
-  
+
   static let shared = ModelManager()
-  
-  private init() { }
-  
-  let mockFiles: [String] = ["Model1", "Model2", "Model3", "Model4"]
-  
+
+  private init() {}
+
+  let mockFiles: [String] = [
+    "Model1", "Model2", "Model3", "Model4",
+    "Model5", "Model6", "Model7", "Model8",
+    "Model9", "Model10", "Model11", "Model12",
+    "Model13", "Model14", "Model15", "Model16",
+    "Model17", "Model18", "Model19", "Model20",
+  ]
+
   func saveFile(
     from sourceURL: URL,
     to destinationFileName: String,
@@ -87,5 +95,29 @@ class ModelManager {
     let isExists = fileManager.fileExists(atPath: fileURL.path)
     isExists ? completion(isExists, fileURL) : completion(isExists, nil)
   }
-  
+
+  func thumbnail(for modelName: String, size: CGSize, time: TimeInterval = 0) -> UIImage? {
+    let device = MTLCreateSystemDefaultDevice()
+    let renderer = SCNRenderer(device: device, options: [:])
+    renderer.autoenablesDefaultLighting = true
+
+    guard let scene = SCNScene(named: modelName) else { return nil }
+    renderer.scene = scene
+    let image = renderer.snapshot(atTime: time, with: size, antialiasingMode: .multisampling4X)
+    return image
+  }
+
+  func thumbnail(for url: URL, size: CGSize, time: TimeInterval = 0) -> UIImage? {
+    let device = MTLCreateSystemDefaultDevice()
+    let renderer = SCNRenderer(device: device, options: [:])
+    renderer.autoenablesDefaultLighting = true
+
+    guard let scene = try? SCNScene(url: url, options: nil)
+    else { return nil }
+    renderer.scene = scene
+
+    let image = renderer.snapshot(atTime: time, with: size, antialiasingMode: .multisampling4X)
+    return image
+  }
+
 }

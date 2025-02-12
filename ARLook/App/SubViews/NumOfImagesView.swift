@@ -14,7 +14,7 @@ struct NumOfImagesView: View {
 
   private var numOfImagesString: String {
     String(
-      format: String.LocalizedString.numOfImages,
+      format: String.LocString.numOfImages,
       session.numberOfShotsTaken,
       session.maximumNumberOfInputImages
     )

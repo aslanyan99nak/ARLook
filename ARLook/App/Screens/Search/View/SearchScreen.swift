@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension SearchScreen {
-  
+
   enum ModelType: String, CaseIterable {
 
     case recent
@@ -17,12 +17,12 @@ extension SearchScreen {
 
     var name: String {
       switch self {
-      case .recent: "Recent"
-      case .favorite: "Favorite"
-      case .all: "All"
+      case .recent: String.LocString.recent
+      case .favorite: String.LocString.favorite
+      case .all: String.LocString.all
       }
     }
-    
+
     var icon: Image? {
       switch self {
       case .recent: Image(systemName: "memories")
@@ -30,7 +30,7 @@ extension SearchScreen {
       case .all: nil
       }
     }
-    
+
     var id: Int {
       switch self {
       case .recent: 0
@@ -40,62 +40,74 @@ extension SearchScreen {
     }
 
   }
-  
+
 }
 
 struct SearchScreen: View {
 
-  @State private var searchText = ""
-  @State private var selectedModelType = ModelType.all
-
-  private let names = ["Holly", "Josh", "Rhonda", "Ted"]
+  @Environment(\.colorScheme) var colorScheme
+  @StateObject var viewModel = SearchViewModel()
   
-  private var searchResults: [String] {
-    if searchText.isEmpty {
-      return names
-    } else {
-      return names.filter { $0.contains(searchText) }
-    }
+  var columns: [GridItem] {
+    viewModel.isList ? [GridItem(.flexible())] : [GridItem(.flexible()), GridItem(.flexible())]
   }
 
   var body: some View {
     NavigationStack {
       contentView
-      .navigationTitle("Search 3D")
+        .navigationTitle(String.LocString.search3D)
+        .navigationBarTitleDisplayMode(.inline)
     }
-    .searchable(text: $searchText)
+    .searchable(text: $viewModel.searchText)
   }
-  
+
   private var contentView: some View {
     VStack(spacing: 0) {
       segmentedControlView
         .padding(.bottom, 8)
         .padding(.horizontal, 16)
 
-      listView
+      gridView
     }
   }
-  
-  // TODO: - Change it using LazyGrid
 
-  private var listView: some View {
-    List {
-      ForEach(searchResults, id: \.self) { name in
-        NavigationLink {
-          Text(name)
-        } label: {
-          Text(name)
+  private var gridView: some View {
+    ScrollView(showsIndicators: false) {
+      LazyVGrid(columns: columns, spacing: 20) {
+        ForEach(viewModel.searchResults, id: \.self) { modelName in
+          Button {
+            viewModel.selectedModelName = modelName
+            if let selectedModelName = viewModel.selectedModelName {
+              viewModel.modelManager.checkFileExists(fileName: selectedModelName) { isExists, url in
+                if let url, isExists {
+                  viewModel.previewURL = url
+                }
+              }
+            }
+          } label: {
+            ModelItemView(isList: $viewModel.isList, title: modelName)
+          }
+          .quickLookPreview($viewModel.previewURL)
         }
       }
+      .padding(.bottom, 40)
+      .padding(.top, 40)
+      .padding(.horizontal, 16)
     }
   }
 
   private var segmentedControlView: some View {
     GeometryReader { geo in
-      SegmentedControl(
-        selection: $selectedModelType,
-        size: .init(width: geo.size.width, height: 40)
-      )
+      HStack(spacing: 0) {
+        SegmentedControl(
+          selection: $viewModel.selectedModelType,
+          size: .init(width: geo.size.width - 96, height: 40)
+        )
+        .padding(.trailing, 16)
+
+        SwitchButton(isList: $viewModel.isList)
+          .frame(width: 80, height: 34)
+      }
     }
     .frame(height: 40)
   }
@@ -105,4 +117,3 @@ struct SearchScreen: View {
 #Preview {
   SearchScreen()
 }
-

@@ -1,0 +1,1791 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "all" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Բոլորը"
+          }
+        }
+      }
+    },
+    "appearance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Արտաքին տեսք"
+          }
+        }
+      }
+    },
+    "ar_look" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AR LOOK"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AR LOOK"
+          }
+        }
+      }
+    },
+    "calculating" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculating…"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Հաշվարկվում է…"
+          }
+        }
+      }
+    },
+    "can_not_flip_your_object" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Can't flip your object?"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Չե՞ք կարողանում շրջել ձեր առարկան:"
+          }
+        }
+      }
+    },
+    "can_not_scan_model" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can't scan a model. Your device don't have LIDAR Scanner."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Դուք չեք կարող սկանավորել մոդելը: Ձեր սարքը չունի LIDAR սկաներ:"
+          }
+        }
+      }
+    },
+    "cancel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Չեղարկել"
+          }
+        }
+      }
+    },
+    "capture_from_higher_angle_detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move above your object and make sure that areas you captured previously can still be seen."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Տեղածարժվեք ձեր օբյեկտի վերևում և համոզվեք, որ նախկինում նկարահանված հատվածները դեռ տեսանելի են:"
+          }
+        }
+      }
+    },
+    "capture_from_higher_angle_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capture your object again from a higher angle."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Կրկին լուսանկարեք ձեր առարկան ավելի բարձր անկյունից:"
+          }
+        }
+      }
+    },
+    "capture_from_lower_angle_detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move down to be level with the base of your object and capture again."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Տեղաշարժվեք ներքև՝ ձեր օբյեկտի հիմքի հետ հավասար լինելու համար և նորից նկարեք:"
+          }
+        }
+      }
+    },
+    "capture_from_lower_angle_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capture your object again from a lower angle."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Կրկին լուսանկարեք ձեր առարկան ավելի ցածր անկյան տակ:"
+          }
+        }
+      }
+    },
+    "capture_help" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capture Help"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Նկարահանման օգնություն"
+          }
+        }
+      }
+    },
+    "continue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Շարունակել"
+          }
+        }
+      }
+    },
+    "detection_failed_guidance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Can‘t find your object. It should be larger than 3in (8cm) in each dimension."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Հնարավոր չէ գտնել ձեր օբյեկտը: Այն պետք է լինի ավելի մեծ, քան 3 դյույմ (8 սմ) յուրաքանչյուր հարթությունում:"
+          }
+        }
+      }
+    },
+    "detection_guidance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move around to ensure that the whole object is inside the box. Drag handles to manually resize."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Շարժվեք շուրջը՝ համոզվելու համար, որ ամբողջ առարկան գտնվում է բոքսի ներսում: Քաշեք բռնակները՝ ձեռքով չափերը փոխելու համար:"
+          }
+        }
+      }
+    },
+    "detection_successed_guidance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move close and center the dot on your object, then tap Continue."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Մոտեցրեք և կետը կենտրոնացրեք ձեր օբյեկտի վրա, այնուհետև սեղմեք Շարունակել:"
+          }
+        }
+      }
+    },
+    "env_cons_1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunny, directional lighting"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Արևկող, ուղղորդված լուսավորություն"
+          }
+        }
+      }
+    },
+    "env_cons_2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inconsistent shadows"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Անհամապատասխան ստվերներ"
+          }
+        }
+      }
+    },
+    "env_cons_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "May Reduce Quality"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Կարող է նվազեցնել որակը"
+          }
+        }
+      }
+    },
+    "env_help_page_name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Environment"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Միջավայր"
+          }
+        }
+      }
+    },
+    "env_pros_1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diffuse, consistent lighting"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ցրված, հետևողական լուսավորություն"
+          }
+        }
+      }
+    },
+    "env_pros_2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Space around intended object"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Տարածություն նախատեսված օբյեկտի շուրջ"
+          }
+        }
+      }
+    },
+    "env_pros_3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " "
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " "
+          }
+        }
+      }
+    },
+    "env_pros_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ideal Environment Characteristics"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Իդեալական միջավայրի բնութագրերը"
+          }
+        }
+      }
+    },
+    "environment_help_caption" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make sure you have even, good lighting and a stable environment for scanning.  If scanning outdoors, cloudy days work best.\\n"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Համոզվեք, որ ունեք հավասարաչափ լավ լուսավորություն և սկանավորման համար կայուն միջավայր: Եթե ​​սկանավորում եք դրսում, ապա ամպամած օրերը լավագույնս են աշխատում են։\\n."
+          }
+        }
+      }
+    },
+    "environment_light_required" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More Light Required"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Պահանջվում է ավելի շատ լուսավորություն"
+          }
+        }
+      }
+    },
+    "estimated_remaining_time" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estimated time remaining: %@"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Մնացած մոտավոր ժամանակը՝ %@"
+          }
+        }
+      }
+    },
+    "existing_models" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Existing Models"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Հասանելի մոդելներ"
+          }
+        }
+      }
+    },
+    "failed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Չհաջողվեց"
+          }
+        }
+      }
+    },
+    "favorite" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favorite"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Հավանած"
+          }
+        }
+      }
+    },
+    "file_managment_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open and organize your files"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Բացեք և կազմակերպեք ձեր ֆայլերը"
+          }
+        }
+      }
+    },
+    "file_managment_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File Management"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ֆայլերի կառավարում"
+          }
+        }
+      }
+    },
+    "file_not_found" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File not found"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ֆայլը չի ​​գտնվել"
+          }
+        }
+      }
+    },
+    "finish" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finish"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Վերջացնել"
+          }
+        }
+      }
+    },
+    "first_segment_complete_detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For best quality, caputure three segments."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Լավագույն որակի համար նկարահանեք երեք հատված:"
+          }
+        }
+      }
+    },
+    "first_segment_complete_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "First segment complete."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Առաջին հատվածն ավարտված է."
+          }
+        }
+      }
+    },
+    "first_segment_needs_work_detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " For best quality, capture three segments.\\n Tap Skip if you can't make it all the way around, but your final model may have missing areas."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Լավագույն որակի համար նկարահանեք երեք հատված։\\n Հպեք «Բաց թողնել», եթե չեք կարողանում մինչև վերջ հասնել, բայց ձեր վերջնական մոդելը կարող է բացակայող հատվածներ ունենալ։"
+          }
+        }
+      }
+    },
+    "first_segment_needs_work_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep going to complete the first segment."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Շարունակեք, որպեսզի ավարտեք առաջին հատվածը:"
+          }
+        }
+      }
+    },
+    "flip_anyway" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flip object anyway"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Միևնույն է, շրջել օբյեկտը"
+          }
+        }
+      }
+    },
+    "flip_object_a_second_time_detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make sure that areas you captured previously can still be seen. Avoid flipping your object if it changes the shape."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Համոզվեք, որ նախկինում նկարված հատվածները դեռ տեսանելի են: Խուսափեք շրջել ձեր առարկան, եթե այն փոխում է իր ձևը:"
+          }
+        }
+      }
+    },
+    "flip_object_a_second_time_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flip object on the opposite side and capture again"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Շրջեք առարկան հակառակ կողմում և նորից նկարեք"
+          }
+        }
+      }
+    },
+    "flip_object_detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make sure that areas you captured previously can still be seen. Avoid flipping your object if it changes the shape."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Համոզվեք, որ նախկինում նկարված հատվածները դեռ տեսանելի են: Խուսափեք շրջել ձեր առարկան, եթե այն փոխում է իր ձևը:"
+          }
+        }
+      }
+    },
+    "flip_object_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flip object on its side and capture again."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Պտտեք առարկան իր շուրջը և նորից նկարեք:"
+          }
+        }
+      }
+    },
+    "flipping_object_not_recommended_detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your object may have single color surfaces or be too reflective to add more segments.\n        Tap Continue to capture more detail without flipping, or Flip Object Anyway."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ձեր օբյեկտը կարող է ունենալ միատոն մակերեսներ կամ չափազանց արտացոլող լինել՝ ավելի շատ հատվածներ ավելացնելու համար:\n Սեղմեք Շարունակել՝ առանց շրջելու ավելի մանրամասներ լուսանկարելու համար, կամ Շրջել օբյեկտը, այնուամենայնիվ:"
+          }
+        }
+      }
+    },
+    "flipping_object_not_recommended_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flipping this object is not recommended."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Այս օբյեկտը շրջել խորհուրդ չի տրվում:"
+          }
+        }
+      }
+    },
+    "font" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Font"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Տառատեսակ"
+          }
+        }
+      }
+    },
+    "help" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Օգնություն"
+          }
+        }
+      }
+    },
+    "icon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App icon"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Հավելվածի պատկերակ"
+          }
+        }
+      }
+    },
+    "image_alignment" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aligning Images…"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Պատկերների հավասարեցում…"
+          }
+        }
+      }
+    },
+    "list" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "List"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ցուցակ"
+          }
+        }
+      }
+    },
+    "mesh_generation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generating Mesh…"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ստեղծվում է ցանց…"
+          }
+        }
+      }
+    },
+    "moving_too_fast" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move slower"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Շարժվեք ավելի դանդաղ"
+          }
+        }
+      }
+    },
+    "next" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Հաջորդը"
+          }
+        }
+      }
+    },
+    "num_of_images" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d/%d"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d/%d"
+          }
+        }
+      }
+    },
+    "object_cons_1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shiny materials"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Փայլուն նյութեր"
+          }
+        }
+      }
+    },
+    "object_cons_2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transparent, transluscent objects"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Թափանցիկ, կիսաթափանցիկ առարկաներ"
+          }
+        }
+      }
+    },
+    "object_cons_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "May Reduce Quality"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Կարող է նվազեցնել որակը"
+          }
+        }
+      }
+    },
+    "object_help_caption" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opaque, matte objects with varied surface textures scan best. Capture all sides of your object in a series of orbits.\\n"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Անթափանց, փայլատ առարկաները տարբեր մակերևույթի տեքստուրաներով սկանավորում են լավագույնս: Նկարեք ձեր օբյեկտի բոլոր կողմերը ուղեծրերով:\\n"
+          }
+        }
+      }
+    },
+    "object_help_page_name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capturing Objects"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Օբյեկտների լուսանկարում"
+          }
+        }
+      }
+    },
+    "object_pros_1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varied Surface Texture"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Մակերևույթի բազմազան տեքստուրա"
+          }
+        }
+      }
+    },
+    "object_pros_2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non-reflective, matte surface"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Չարտացոլող, փայլատ մակերես"
+          }
+        }
+      }
+    },
+    "object_pros_3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solid, opaque"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Կոշտ, անթափանց"
+          }
+        }
+      }
+    },
+    "object_pros_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ideal Object Characteristics"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Իդեալական օբյեկտի բնութագրերը"
+          }
+        }
+      }
+    },
+    "object_too_close" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move Farther Away"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Տեղաշարժվել ավելի հեռու"
+          }
+        }
+      }
+    },
+    "object_too_far" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move Closer"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Տեղաշարժվել ավելի մոտ"
+          }
+        }
+      }
+    },
+    "ok" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ok"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Լավ"
+          }
+        }
+      }
+    },
+    "optimization" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optimizing…"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Օպտիմալացում…"
+          }
+        }
+      }
+    },
+    "out_of_field_of_view" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aim at your object"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Նպատակը դեպի ձեր օբյեկտը"
+          }
+        }
+      }
+    },
+    "point_cloud_generation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generating Point Cloud…"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Կետային ամպի առաջացում…"
+          }
+        }
+      }
+    },
+    "pre_processing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pre-Processing…"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Նախնական մշակում…"
+          }
+        }
+      }
+    },
+    "processing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Processing…"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Մշակում…"
+          }
+        }
+      }
+    },
+    "processing_model_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep app running while processing."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Շարունակեք գործարկել հավելվածը մշակման ընթացքում:"
+          }
+        }
+      }
+    },
+    "processing_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Processing"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Մշակում"
+          }
+        }
+      }
+    },
+    "qr_code_scanner_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan QR codes with ease"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan QR codes with ease"
+          }
+        }
+      }
+    },
+    "qr_code_scanner_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QR code Scanner"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QR կոդի սկաներ"
+          }
+        }
+      }
+    },
+    "recent" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Վերջերս"
+          }
+        }
+      }
+    },
+    "reset_box" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset Box"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Վերականգնել բոքսը"
+          }
+        }
+      }
+    },
+    "scanner" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanner"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Սկաներ"
+          }
+        }
+      }
+    },
+    "scanning_info" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanning Info"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Սկանավորման տեղեկատվություն"
+          }
+        }
+      }
+    },
+    "search" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Որոնում"
+          }
+        }
+      }
+    },
+    "search_3d" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search 3D"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Որոնել 3D"
+          }
+        }
+      }
+    },
+    "second_segment_complete_detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For best quality, capture three segments."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Լավագույն որակի համար նկարահանեք երեք հատված:"
+          }
+        }
+      }
+    },
+    "second_segment_complete_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Second segment complete."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Երկրորդ հատվածն ավարտված է."
+          }
+        }
+      }
+    },
+    "second_segment_needs_work_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep going to complete the second segment."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Շարունակեք ավարտել երկրորդ հատվածը:"
+          }
+        }
+      }
+    },
+    "segment_1_feedback" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move slowly around your object."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Դանդաղ տեղաշարժվեք ձեր օբյեկտի շուրջը:"
+          }
+        }
+      }
+    },
+    "segment_2_and_3_flippable_feedback" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flip object on its side and move around."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Շրջեք առարկան և շարժվեք շուրջը:"
+          }
+        }
+      }
+    },
+    "segment_2_unflippable_feedback" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move low and capture again."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Տեղաշարժվեք ցածր և նորից նկարեք:"
+          }
+        }
+      }
+    },
+    "segment_3_unflippable_feedback" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move above your object and capture again."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Տեղաշարժվեք ձեր օբյեկտի վերևում և նորից նկարեք:"
+          }
+        }
+      }
+    },
+    "settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Կարգավորումներ"
+          }
+        }
+      }
+    },
+    "share" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Կիսվել"
+          }
+        }
+      }
+    },
+    "skip" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Բաց թողնել"
+          }
+        }
+      }
+    },
+    "start_capture" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Capture"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Սկսեք նկարել"
+          }
+        }
+      }
+    },
+    "texture_mapping" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapping Texture…"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Քարտեզագրման տեքստւրա…"
+          }
+        }
+      }
+    },
+    "theme" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Theme"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Երանգ"
+          }
+        }
+      }
+    },
+    "third_segment_complete_detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap Finish to process your object."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Սեղմեք Ավարտել՝ ձեր օբյեկտը մշակելու համար:"
+          }
+        }
+      }
+    },
+    "third_segment_complete_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All segments complete."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Բոլոր հատվածներն ավարտված են:"
+          }
+        }
+      }
+    },
+    "third_segment_needs_work_detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For best quality, capture three segments.\n        Tap Skip if you can't make it all the way around but your final model may have missing areas."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Լավագույն որակի համար նկարահանեք երեք հատված:\n Սեղմեք «Բաց թողնել», եթե չեք կարողանում մինչև վերջ անցնել, բայց ձեր վերջնական մոդելը կարող է բացակայող հատվածներ ունենալ:"
+          }
+        }
+      }
+    },
+    "third_segment_needs_work_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep going to complete the final segment."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Շարունակեք ավարտել վերջին հատվածը:"
+          }
+        }
+      }
+    },
+    "too_few_images_detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You need at least %d images of your object to create a model."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Մոդել ստեղծելու համար անհրաժեշտ է ձեր օբյեկտի առնվազն %d պատկեր:"
+          }
+        }
+      }
+    },
+    "too_few_images_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep moving around your object."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Շարունակեք տեղաշարժվել ձեր օբյեկտի շուրջը:"
+          }
+        }
+      }
+    },
+    "upload" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upload"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Վերբեռնել"
+          }
+        }
+      }
+    },
+    "upload_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upload your 3D model for using by QR."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Վերբեռնեք ձեր 3D մոդելը՝ QR-ով օգտագործելու համար:"
+          }
+        }
+      }
+    },
+    "uploaded" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uploaded"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Վերբեռնված է"
+          }
+        }
+      }
+    },
+    "uploaded_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have succesfully uploaded your 3D model."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Դուք հաջողությամբ բեռնել եք ձեր 3D մոդելը:"
+          }
+        }
+      }
+    },
+    "view_3d_mode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View in 3D mode"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Դիտել 3D ռեժիմով"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

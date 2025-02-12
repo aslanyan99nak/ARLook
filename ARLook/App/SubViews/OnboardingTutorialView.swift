@@ -44,28 +44,28 @@ struct OnboardingTutorialView: View {
     if UIDevice.isPad {
       videoName =
         onboardingStateToTutorialNameMapOnIpad[onboardingStateMachine.currentState]
-        ?? "ScanPasses-iPad-FixedHeight-1"
+      ?? Constant.iPadFixedHeight1
     } else {
       videoName =
         onboardingStateToTutorialNameMapOnIphone[onboardingStateMachine.currentState]
-        ?? "ScanPasses-iPhone-FixedHeight-1"
+        ?? Constant.iPhoneFixedHeight1
     }
     return Bundle.main.url(forResource: videoName, withExtension: "mp4")
   }
 
   private let onboardingStateToTitleMap: [OnboardingState: String] = [
-    .tooFewImages: String.LocalizedString.tooFewImagesTitle,
-    .firstSegmentNeedsWork: String.LocalizedString.firstSegmentNeedsWorkTitle,
-    .firstSegmentComplete: String.LocalizedString.firstSegmentCompleteTitle,
-    .secondSegmentNeedsWork: String.LocalizedString.secondSegmentNeedsWorkTitle,
-    .secondSegmentComplete: String.LocalizedString.secondSegmentCompleteTitle,
-    .thirdSegmentNeedsWork: String.LocalizedString.thirdSegmentNeedsWorkTitle,
-    .thirdSegmentComplete: String.LocalizedString.thirdSegmentCompleteTitle,
-    .flipObject: String.LocalizedString.flipObjectTitle,
-    .flipObjectASecondTime: String.LocalizedString.flipObjectASecondTimeTitle,
-    .flippingObjectNotRecommended: String.LocalizedString.flippingObjectNotRecommendedTitle,
-    .captureFromLowerAngle: String.LocalizedString.captureFromLowerAngleTitle,
-    .captureFromHigherAngle: String.LocalizedString.captureFromHigherAngleTitle,
+    .tooFewImages: String.LocString.tooFewImagesTitle,
+    .firstSegmentNeedsWork: String.LocString.firstSegmentNeedsWorkTitle,
+    .firstSegmentComplete: String.LocString.firstSegmentCompleteTitle,
+    .secondSegmentNeedsWork: String.LocString.secondSegmentNeedsWorkTitle,
+    .secondSegmentComplete: String.LocString.secondSegmentCompleteTitle,
+    .thirdSegmentNeedsWork: String.LocString.thirdSegmentNeedsWorkTitle,
+    .thirdSegmentComplete: String.LocString.thirdSegmentCompleteTitle,
+    .flipObject: String.LocString.flipObjectTitle,
+    .flipObjectASecondTime: String.LocString.flipObjectASecondTimeTitle,
+    .flippingObjectNotRecommended: String.LocString.flippingObjectNotRecommendedTitle,
+    .captureFromLowerAngle: String.LocString.captureFromLowerAngleTitle,
+    .captureFromHigherAngle: String.LocString.captureFromHigherAngleTitle,
   ]
 
   private var title: String {
@@ -74,18 +74,18 @@ struct OnboardingTutorialView: View {
 
   private let onboardingStateTodetailTextMap: [OnboardingState: String] = [
     .tooFewImages: String(
-      format: String.LocalizedString.tooFewImagesDetailText, AppDataModel.minNumImages),
-    .firstSegmentNeedsWork: String.LocalizedString.firstSegmentNeedsWorkDetailText,
-    .firstSegmentComplete: String.LocalizedString.firstSegmentCompleteDetailText,
-    .secondSegmentNeedsWork: String.LocalizedString.secondSegmentNeedsWorkDetailText,
-    .secondSegmentComplete: String.LocalizedString.secondSegmentCompleteDetailText,
-    .thirdSegmentNeedsWork: String.LocalizedString.thirdSegmentNeedsWorkDetailText,
-    .thirdSegmentComplete: String.LocalizedString.thirdSegmentCompleteDetailText,
-    .flipObject: String.LocalizedString.flipObjectDetailText,
-    .flipObjectASecondTime: String.LocalizedString.flipObjectASecondTimeDetailText,
-    .flippingObjectNotRecommended: String.LocalizedString.flippingObjectNotRecommendedDetailText,
-    .captureFromLowerAngle: String.LocalizedString.captureFromLowerAngleDetailText,
-    .captureFromHigherAngle: String.LocalizedString.captureFromHigherAngleDetailText,
+      format: String.LocString.tooFewImagesDetail, AppDataModel.minNumImages),
+    .firstSegmentNeedsWork: String.LocString.firstSegmentNeedsWorkDetail,
+    .firstSegmentComplete: String.LocString.firstSegmentCompleteDetail,
+    .secondSegmentNeedsWork: String.LocString.secondSegmentNeedsWorkDetail,
+    .secondSegmentComplete: String.LocString.secondSegmentCompleteDetail,
+    .thirdSegmentNeedsWork: String.LocString.thirdSegmentNeedsWorkDetail,
+    .thirdSegmentComplete: String.LocString.thirdSegmentCompleteDetail,
+    .flipObject: String.LocString.flipObjectDetail,
+    .flipObjectASecondTime: String.LocString.flipObjectASecondTimeDetail,
+    .flippingObjectNotRecommended: String.LocString.flippingObjectNotRecommendedDetail,
+    .captureFromLowerAngle: String.LocString.captureFromLowerAngleDetail,
+    .captureFromHigherAngle: String.LocString.captureFromHigherAngleDetail,
   ]
 
   private var detailText: String {

@@ -15,7 +15,7 @@ struct HelpPageScreen: View {
     ZStack {
       VStack(alignment: .leading) {
         HStack {
-          Text("Capture Help")
+          Text(String.LocString.captureHelp)
             .foregroundStyle(.secondary)
           Spacer()
           closeButton
@@ -24,7 +24,7 @@ struct HelpPageScreen: View {
       }
       .padding()
     }
-    .navigationTitle("Scanning Info")
+    .navigationTitle(String.LocString.scanningInfo)
     .navigationViewStyle(StackNavigationViewStyle())
   }
   
@@ -54,37 +54,37 @@ struct HelpPageScreen: View {
 
   private var objectHelpPageView: some View {
     TutorialPageView(
-      pageName: String.LocalizedString.objectHelpPageName,
+      pageName: String.LocString.objectHelpPageName,
       imageName: Constant.objectHelpImageName,
-      imageCaption: String.LocalizedString.objectHelpCaption,
-      prosTitle: String.LocalizedString.objectProsTitle,
+      imageCaption: String.LocString.objectHelpCaption,
+      prosTitle: String.LocString.objectProsTitle,
       pros: [
-        String.LocalizedString.objectPros1,
-        String.LocalizedString.objectPros2,
-        String.LocalizedString.objectPros3,
+        String.LocString.objectPros1,
+        String.LocString.objectPros2,
+        String.LocString.objectPros3,
       ],
-      consTitle: String.LocalizedString.objectConsTitle,
+      consTitle: String.LocString.objectConsTitle,
       cons: [
-        String.LocalizedString.objectCons1,
-        String.LocalizedString.objectCons2,
+        String.LocString.objectCons1,
+        String.LocString.objectCons2,
       ])
   }
 
   private var environmentHelpPageView: some View {
     TutorialPageView(
-      pageName: String.LocalizedString.envHelpPageName,
+      pageName: String.LocString.envHelpPageName,
       imageName: Constant.envHelpImageName,
-      imageCaption: String.LocalizedString.environmentHelpCaption,
-      prosTitle: String.LocalizedString.envProsTitle,
+      imageCaption: String.LocString.environmentHelpCaption,
+      prosTitle: String.LocString.envProsTitle,
       pros: [
-        String.LocalizedString.envPros1,
-        String.LocalizedString.envPros2,
-        String.LocalizedString.envPros3,
+        String.LocString.envPros1,
+        String.LocString.envPros2,
+        String.LocString.envPros3,
       ],
-      consTitle: String.LocalizedString.envConsTitle,
+      consTitle: String.LocString.envConsTitle,
       cons: [
-        String.LocalizedString.envCons1,
-        String.LocalizedString.envCons2,
+        String.LocString.envCons1,
+        String.LocString.envCons2,
       ])
   }
 

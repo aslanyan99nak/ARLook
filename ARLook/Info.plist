@@ -4,8 +4,10 @@
 <dict>
 <key>UIRequiredDeviceCapabilities</key>
 <array>
-    <string>arkit</string> <!-- Ensures ARKit support -->
-    <string>lidar-scanner</string> <!-- Limits to iPhone 12 Pro and newer -->
+    <string>arkit</string>
+    <string>lidar-scanner</string>
 </array>
+<key>method</key>
+<string>app-store</string>
 </dict>
 </plist>
