@@ -11,17 +11,16 @@ import SwiftUI
 @MainActor
 struct CaptureButton: View {
 
+  @Binding var hasDetectionFailed: Bool
   var session: ObjectCaptureSession
   var isObjectFlipped: Bool
-  @Binding var hasDetectionFailed: Bool
 
   var body: some View {
     Button {
       performAction()
     } label: {
       Text(buttonLabel)
-        .font(.body)
-        .fontWeight(.bold)
+        .dynamicFont(weight: .bold)
         .foregroundStyle(.white)
         .padding(.horizontal, 25)
         .padding(.vertical, 20)

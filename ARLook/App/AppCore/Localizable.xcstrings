@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Accent Color" : {
+
+    },
     "all" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -35,6 +38,9 @@
         }
       }
     },
+    "Appearance" : {
+
+    },
     "ar_look" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -51,6 +57,9 @@
           }
         }
       }
+    },
+    "Background Color" : {
+
     },
     "calculating" : {
       "extractionState" : "manual",
@@ -201,6 +210,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Նկարահանման օգնություն"
+          }
+        }
+      }
+    },
+    "completed_process" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The process has been successfully completed."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Գործընթացը հաջողությամբ ավարտվել է։"
           }
         }
       }
@@ -1564,6 +1590,9 @@
           }
         }
       }
+    },
+    "Text Size" : {
+
     },
     "texture_mapping" : {
       "extractionState" : "manual",

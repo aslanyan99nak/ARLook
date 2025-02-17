@@ -21,11 +21,11 @@ struct TutorialPageView: View {
     GeometryReader { geomReader in
       VStack(alignment: .leading) {
         Text(pageName)
+          .dynamicFont(size: 20, weight: .bold)
           .foregroundStyle(.primary)
-          .font(.largeTitle)
-          .bold()
 
         Text(imageCaption)
+          .dynamicFont()
           .foregroundStyle(.secondary)
 
         Image(imageName)

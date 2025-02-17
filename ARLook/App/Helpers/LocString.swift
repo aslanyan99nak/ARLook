@@ -56,6 +56,7 @@ extension String {
     static let segment2UnflippableFeedback = "segment_2_unflippable_feedback".localized
     static let segment3UnflippableFeedback = "segment_3_unflippable_feedback".localized
     static let processingTitle = "processing_title".localized
+    static let completedProcess = "completed_process".localized
     static let detectionFailedGuidance = "detection_failed_guidance".localized
     static let detectionSuccessedGuidance = "detection_successed_guidance".localized
     static let detectionGuidance = "detection_guidance".localized

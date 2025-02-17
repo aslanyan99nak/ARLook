@@ -15,15 +15,8 @@ struct OnboardingTutorialView: View {
 
   @EnvironmentObject var appModel: AppDataModel
   @ObservedObject var onboardingStateMachine: OnboardingStateMachine
-  
-  var session: ObjectCaptureSession
 
-  private var shouldShowTutorialInReview: Bool {
-    switch onboardingStateMachine.currentState {
-    case .flipObject, .flipObjectASecondTime, .captureFromLowerAngle, .captureFromHigherAngle: true
-    default: false
-    }
-  }
+  var session: ObjectCaptureSession
 
   private let onboardingStateToTutorialNameMapOnIphone: [OnboardingState: String] = [
     .flipObject: Constant.iPhoneFixedHeight2,
@@ -38,20 +31,6 @@ struct OnboardingTutorialView: View {
     .captureFromLowerAngle: Constant.iPadFixedHeightUnflippableLow,
     .captureFromHigherAngle: Constant.iPadFixedHeightUnflippableHigh,
   ]
-
-  private var tutorialUrl: URL? {
-    let videoName: String
-    if UIDevice.isPad {
-      videoName =
-        onboardingStateToTutorialNameMapOnIpad[onboardingStateMachine.currentState]
-      ?? Constant.iPadFixedHeight1
-    } else {
-      videoName =
-        onboardingStateToTutorialNameMapOnIphone[onboardingStateMachine.currentState]
-        ?? Constant.iPhoneFixedHeight1
-    }
-    return Bundle.main.url(forResource: videoName, withExtension: "mp4")
-  }
 
   private let onboardingStateToTitleMap: [OnboardingState: String] = [
     .tooFewImages: String.LocString.tooFewImagesTitle,
@@ -68,13 +47,8 @@ struct OnboardingTutorialView: View {
     .captureFromHigherAngle: String.LocString.captureFromHigherAngleTitle,
   ]
 
-  private var title: String {
-    onboardingStateToTitleMap[onboardingStateMachine.currentState] ?? ""
-  }
-
   private let onboardingStateTodetailTextMap: [OnboardingState: String] = [
-    .tooFewImages: String(
-      format: String.LocString.tooFewImagesDetail, AppDataModel.minNumImages),
+    .tooFewImages: String(format: String.LocString.tooFewImagesDetail, AppDataModel.minNumImages),
     .firstSegmentNeedsWork: String.LocString.firstSegmentNeedsWorkDetail,
     .firstSegmentComplete: String.LocString.firstSegmentCompleteDetail,
     .secondSegmentNeedsWork: String.LocString.secondSegmentNeedsWorkDetail,
@@ -87,9 +61,34 @@ struct OnboardingTutorialView: View {
     .captureFromLowerAngle: String.LocString.captureFromLowerAngleDetail,
     .captureFromHigherAngle: String.LocString.captureFromHigherAngleDetail,
   ]
+  
+  private var shouldShowTutorialInReview: Bool {
+    switch onboardingStateMachine.currentState {
+    case .flipObject, .flipObjectASecondTime, .captureFromLowerAngle, .captureFromHigherAngle: true
+    default: false
+    }
+  }
 
   private var detailText: String {
     onboardingStateTodetailTextMap[onboardingStateMachine.currentState] ?? ""
+  }
+  
+  private var title: String {
+    onboardingStateToTitleMap[onboardingStateMachine.currentState] ?? ""
+  }
+  
+  private var tutorialUrl: URL? {
+    let videoName: String
+    if UIDevice.isPad {
+      videoName =
+        onboardingStateToTutorialNameMapOnIpad[onboardingStateMachine.currentState]
+        ?? Constant.iPadFixedHeight1
+    } else {
+      videoName =
+        onboardingStateToTutorialNameMapOnIphone[onboardingStateMachine.currentState]
+        ?? Constant.iPhoneFixedHeight1
+    }
+    return Bundle.main.url(forResource: videoName, withExtension: "mp4")
   }
 
   var body: some View {
@@ -128,15 +127,15 @@ struct OnboardingTutorialView: View {
   private var infoView: some View {
     VStack {
       Text(title)
-        .font(.largeTitle)
+        .dynamicFont(size: 20, weight: .bold)
         .lineLimit(3)
         .minimumScaleFactor(0.5)
-        .bold()
         .multilineTextAlignment(.center)
         .padding(.bottom)
         .frame(maxWidth: .infinity)
 
       Text(detailText)
+        .dynamicFont()
         .font(.body)
         .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity)

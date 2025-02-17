@@ -8,35 +8,51 @@
 import SwiftUI
 
 extension MainTabBar {
-  
+
   enum TabItem: Hashable {
-    
+
     case home
     case list
     case search
     case settings
-    
+
   }
-  
+
 }
 
 struct MainTabBar: View {
 
+  @AppStorage(CustomColorScheme.defaultKey) var customColorScheme = CustomColorScheme.defaultValue
+  @AppStorage(AccentColorType.defaultKey) var accentColorType: AccentColorType = AccentColorType.defaultValue
+  @StateObject private var popupVM = PopupViewModel()
   @State private var selectedTab: TabItem = .home
+
+  @Environment(\.colorScheme) var colorScheme
 
   var body: some View {
     contentView
   }
 
   private var contentView: some View {
-    TabView(selection: $selectedTab) {
-      mainScreen
-      modelsListScreen
-      searchScreen
-      settingsScreen
+    ZStack {
+      TabView(selection: $selectedTab) {
+        mainScreen
+        modelsListScreen
+        searchScreen
+        settingsScreen
+      }
+      .accentColor(accentColorType.color)
+      .blur(radius: popupVM.isShowPopup ? 5 : 0)
+      .disabled(popupVM.isShowPopup)
+
+      if popupVM.isShowPopup {
+        popupVM.popupContent
+      }
     }
+    .environmentObject(popupVM)
+    .customColorScheme($customColorScheme)
   }
-  
+
   private var mainScreen: some View {
     MainScreen()
       .tag(TabItem.home)
@@ -44,14 +60,15 @@ struct MainTabBar: View {
         VStack(spacing: 0) {
           Image(.scanner)
             .renderingMode(.template)
-            .foregroundStyle(selectedTab == .home ? Color.blue : Color.gray)
+            .foregroundStyle(selectedTab == .home ? accentColorType.color : Color.gray)
 
           Text(String.LocString.scanner)
             .foregroundStyle(.blue)
+            .dynamicFont()
         }
       }
   }
-  
+
   private var modelsListScreen: some View {
     ModelsListScreen()
       .tag(TabItem.list)
@@ -61,10 +78,11 @@ struct MainTabBar: View {
 
           Text(String.LocString.list)
             .foregroundStyle(.blue)
+            .dynamicFont()
         }
       }
   }
-  
+
   private var searchScreen: some View {
     SearchScreen()
       .tag(TabItem.search)
@@ -74,10 +92,11 @@ struct MainTabBar: View {
 
           Text(String.LocString.search)
             .foregroundStyle(.blue)
+            .dynamicFont()
         }
       }
   }
-  
+
   private var settingsScreen: some View {
     SettingsScreen()
       .tag(TabItem.settings)
@@ -87,6 +106,7 @@ struct MainTabBar: View {
 
           Text(String.LocString.settings)
             .foregroundStyle(.blue)
+            .dynamicFont()
         }
       }
   }

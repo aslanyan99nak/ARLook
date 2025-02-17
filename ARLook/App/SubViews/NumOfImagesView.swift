@@ -25,10 +25,7 @@ struct NumOfImagesView: View {
       Text(Image(systemName: "photo"))
 
       Text(numOfImagesString)
-        .font(.footnote)
-        .fontWidth(.condensed)
-        .fontDesign(.rounded)
-        .bold()
+        .dynamicFont(weight: .bold, design: .rounded)
     }
     .foregroundStyle(session.feedback.contains(.overCapturing) ? .red : .white)
   }

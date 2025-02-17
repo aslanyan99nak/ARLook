@@ -21,13 +21,10 @@ extension MainScreen {
 
 struct MainScreen: View {
 
-  @Environment(\.colorScheme) var colorScheme
   @StateObject private var viewModel = MainViewModel()
+  @EnvironmentObject private var popupVM: PopupViewModel
+  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @State private var navigationPath = NavigationPath()
-
-  private var isDarkMode: Bool {
-    colorScheme == .dark
-  }
 
   var body: some View {
     NavigationStack(path: $navigationPath) {
@@ -70,34 +67,6 @@ struct MainScreen: View {
         scanner
           .toolbar(.hidden, for: .navigationBar)
           .toolbar(.hidden, for: .tabBar)
-      } else if viewModel.isShowPopup {
-        Rectangle()
-          .background(Material.regular)
-          .ignoresSafeArea()
-
-        VStack(spacing: 20) {
-          Text(String.LocString.canNotScanModel)
-            .foregroundStyle(isDarkMode ? .white : .black)
-
-          Button {
-            withAnimation {
-              viewModel.isShowPopup = false
-            }
-          } label: {
-            Text(String.LocString.ok)
-              .foregroundStyle(.white)
-              .padding(.vertical, 8)
-              .frame(minWidth: 100, idealWidth: 100, maxWidth: 140)
-              .background(Color.purple)
-              .clipShape(Capsule())
-          }
-        }
-        .padding()
-        .background(.regularMaterial)
-        .background(isDarkMode ? Color.gray.opacity(0.15) : Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 24))
-        .shadow(radius: 10)
-        .padding(.horizontal, 16)
       }
     }
   }
@@ -217,8 +186,9 @@ struct MainScreen: View {
       } else {
         // Show popup
         print("Show Popup")
-        withAnimation {
-          viewModel.isShowPopup = true
+        withAnimation(.easeInOut(duration: 0.5)) {
+          popupVM.isShowPopup = true
+          popupVM.popupContent = AnyView(popupView)
         }
       }
     } label: {
@@ -238,10 +208,20 @@ struct MainScreen: View {
     } label: {
       HStack(spacing: 4) {
         Text(String.LocString.share)
+          .dynamicFont()
 
         Image(systemName: "square.and.arrow.up")
           .resizable()
           .frame(width: 16, height: 16)
+      }
+    }
+  }
+  
+  private var popupView: some View {
+    PopupView {
+      withAnimation(.easeInOut(duration: 0.5)) {
+        popupVM.isShowPopup = false
+        popupVM.popupContent = AnyView(EmptyView())
       }
     }
   }

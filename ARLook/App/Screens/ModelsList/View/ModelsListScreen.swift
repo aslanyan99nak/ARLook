@@ -9,33 +9,39 @@ import SwiftUI
 
 struct ModelsListScreen: View {
 
-  @Environment(\.colorScheme) var colorScheme
+  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @StateObject var viewModel = ModelsListViewModel()
 
-  var columns: [GridItem] {
+  private var columns: [GridItem] {
     viewModel.isList ? [GridItem(.flexible())] : [GridItem(.flexible()), GridItem(.flexible())]
+  }
+  
+  private var isDarkMode: Bool {
+    colorScheme == .dark
   }
 
   var body: some View {
     NavigationStack {
-      VStack(spacing: 0) {
-        navigationBar
-        gridView
+      ZStack {
+        VStack(spacing: 0) {
+          navigationBar
+          gridView
+        }
       }
       .toolbar(.hidden, for: .navigationBar)
     }
   }
-  
+
   private var navigationBar: some View {
     VStack(spacing: 8) {
       HStack(spacing: 0) {
         Spacer()
-        
+
         Text(String.LocString.existingModels)
           .offset(x: 40)
-        
+
         Spacer()
-        
+
         SwitchButton(isList: $viewModel.isList)
           .frame(width: 80, height: 30)
       }
@@ -66,11 +72,11 @@ struct ModelsListScreen: View {
         }
       }
       .padding(.bottom, 40)
-      .padding(.top, 40)
+      .padding(.top, 20)
       .padding(.horizontal, 16)
     }
   }
-  
+
 }
 
 #Preview {

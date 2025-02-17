@@ -33,17 +33,19 @@ struct ProConListView: View {
     VStack(alignment: .leading, spacing: 4) {
       HStack {
         Text(prosTitle)
+          .dynamicFont(weight: .bold)
           .bold()
 
         Spacer()
 
         Text(Image(systemName: "checkmark.circle"))
-          .bold()
+          .dynamicFont(weight: .bold)
           .foregroundStyle(.green)
       }
 
       ForEach(pros, id: \.self) { pro in
         Text(pro)
+          .dynamicFont()
           .foregroundStyle(.secondary)
       }
     }
@@ -53,17 +55,18 @@ struct ProConListView: View {
     VStack(alignment: .leading, spacing: 4) {
       HStack {
         Text(consTitle)
-          .bold()
+          .dynamicFont(weight: .bold)
 
         Spacer()
 
         Text(Image(systemName: "xmark.circle"))
-          .bold()
+          .dynamicFont(weight: .bold)
           .foregroundStyle(.red)
       }
 
       ForEach(cons, id: \.self) { con in
         Text(con)
+          .dynamicFont()
           .foregroundStyle(.secondary)
       }
     }

@@ -9,7 +9,12 @@ import SwiftUI
 
 struct HelpPageScreen: View {
 
+  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @Binding var showInfo: Bool
+  
+  private var isDarkMode: Bool {
+    colorScheme == .dark
+  }
 
   var body: some View {
     ZStack {
@@ -17,6 +22,8 @@ struct HelpPageScreen: View {
         HStack {
           Text(String.LocString.captureHelp)
             .foregroundStyle(.secondary)
+            .dynamicFont()
+
           Spacer()
           closeButton
         }

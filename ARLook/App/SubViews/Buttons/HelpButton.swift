@@ -30,9 +30,8 @@ struct HelpButton: View {
         .frame(width: 22)
 
       Text(String.LocString.help)
-        .font(.footnote)
+        .dynamicFont(weight: .semibold)
         .opacity(0.7)
-        .fontWeight(.semibold)
     }
     .foregroundStyle(.white)
   }

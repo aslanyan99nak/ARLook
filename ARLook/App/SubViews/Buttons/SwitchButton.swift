@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SwitchButton: View {
   
+  @AppStorage(AccentColorType.defaultKey) var accentColorType: AccentColorType = AccentColorType.defaultValue
   @Environment(\.colorScheme) var colorScheme
   @Binding var isList: Bool
   
@@ -42,7 +43,7 @@ struct SwitchButton: View {
           .renderingMode(.template)
           .resizable()
           .frame(width: 20, height: 12)
-          .foregroundStyle(isList ? Color.purple : Color.gray.opacity(0.5))
+          .foregroundStyle(isList ? accentColorType.color : Color.gray.opacity(0.5))
       }
     }
   }
@@ -60,7 +61,7 @@ struct SwitchButton: View {
           .renderingMode(.template)
           .resizable()
           .frame(width: 20, height: 20)
-          .foregroundStyle(isList ? Color.gray.opacity(0.5) : Color.purple)
+          .foregroundStyle(isList ? Color.gray.opacity(0.5) : accentColorType.color)
       }
     }
   }

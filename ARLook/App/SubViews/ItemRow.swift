@@ -44,12 +44,12 @@ struct ItemRow: View {
   private var infoView: some View {
     VStack(alignment: .leading, spacing: 8) {
       Text(title)
-        .font(Font.system(size: 20, weight: .bold))
+        .dynamicFont(size: 20, weight: .bold)
         .foregroundStyle(isDarkMode ? Color.white : Color.black)
         .multilineTextAlignment(.leading)
       
       Text(description)
-        .font(Font.system(size: 16, weight: .regular))
+        .dynamicFont(weight: .regular)
         .foregroundStyle(isDarkMode ? Color.white : Color.black)
         .multilineTextAlignment(.leading)
     }

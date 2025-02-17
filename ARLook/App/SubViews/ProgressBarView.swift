@@ -48,27 +48,20 @@ struct ProgressBarView: View {
   }
 
   var body: some View {
-    VStack(spacing: 12) {
+    VStack(spacing: 40) {
       headerView
-
-      ProgressView(value: progress)
-
+      ActivityProgressView(progress: progress)
       footerView
-        .padding(.top, 10)
     }
   }
 
   private var headerView: some View {
     HStack(spacing: 0) {
       Text(processingStageDescription ?? String.LocString.processing)
+        .dynamicFont()
 
       Spacer()
-
-      Text(progress, format: .percent.precision(.fractionLength(0)))
-        .bold()
-        .monospacedDigit()
     }
-    .font(.body)
   }
 
   private var footerView: some View {
@@ -77,21 +70,29 @@ struct ProgressBarView: View {
         Image(systemName: "photo")
 
         Text(String(numOfImages))
+          .dynamicFont(weight: .bold)
           .frame(alignment: .bottom)
-          .font(.caption)
-          .bold()
       }
-      .font(.subheadline)
       .padding(.trailing, 16)
 
       VStack(alignment: .leading) {
         Text(String.LocString.processingModelDescription)
+          .dynamicFont()
 
         Text(remainingTimeString)
+          .dynamicFont()
       }
       .font(.subheadline)
     }
     .foregroundStyle(.secondary)
   }
 
+}
+
+#Preview {
+  ProgressBarView(
+    progress: 1,
+    estimatedRemainingTime: TimeInterval(100),
+    processingStageDescription: "dfdsgdfgdfg"
+  )
 }

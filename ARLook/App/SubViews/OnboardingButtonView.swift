@@ -31,52 +31,21 @@ struct OnboardingButtonView: View {
         if currentStateInputs.contains(where: {
           $0 == .continue(isFlippable: false) || $0 == .continue(isFlippable: true)
         }) {
-          CreateButton(
-            buttonLabel: String.LocString.continue,
-            buttonLabelColor: .white,
-            shouldApplyBackground: true
-          ) {
-            transition(with: .continue(isFlippable: appModel.isObjectFlippable))
-          }
+          continueButton
         }
         if currentStateInputs.contains(where: { $0 == .flipObjectAnyway }) {
-          CreateButton(
-            buttonLabel: String.LocString.flipAnyway,
-            buttonLabelColor: .blue
-          ) {
-            userHasIndicatedFlipObjectAnyway = true
-            transition(with: .flipObjectAnyway)
-          }
+          flipAnyway
         }
         if currentStateInputs.contains(where: {
           $0 == .skip(isFlippable: false) || $0 == .skip(isFlippable: true)
         }) {
-          CreateButton(
-            buttonLabel: String.LocString.skip,
-            buttonLabelColor: .blue
-          ) {
-            transition(with: .skip(isFlippable: appModel.isObjectFlippable))
-          }
+          skipButton
         }
         if currentStateInputs.contains(where: { $0 == .finish }) {
-          CreateButton(
-            buttonLabel: String.LocString.finish,
-            buttonLabelColor: onboardingStateMachine.currentState == .thirdSegmentComplete
-              ? .white : .blue,
-            shouldApplyBackground: onboardingStateMachine.currentState == .thirdSegmentComplete,
-            showBusyIndicator: session.state == .finishing
-          ) {
-            [weak session] in session?.finish()
-          }
+          finishButton
         }
         if currentStateInputs.contains(where: { $0 == .objectCannotBeFlipped }) {
-          CreateButton(
-            buttonLabel: String.LocString.canNotFlipYourObject,
-            buttonLabelColor: .blue
-          ) {
-            userHasIndicatedObjectCannotBeFlipped = true
-            transition(with: .objectCannotBeFlipped)
-          }
+          canNotFlipYourObjectButton
         }
         if onboardingStateMachine.currentState == OnboardingState.tooFewImages
           || onboardingStateMachine.currentState == .secondSegmentComplete
@@ -86,6 +55,57 @@ struct OnboardingButtonView: View {
         }
       }
       .padding(.bottom)
+    }
+  }
+  
+  private var continueButton: some View {
+    CreateButton(
+      buttonLabel: String.LocString.continue,
+      buttonLabelColor: .white,
+      shouldApplyBackground: true
+    ) {
+      transition(with: .continue(isFlippable: appModel.isObjectFlippable))
+    }
+  }
+    
+  private var flipAnyway: some View {
+    CreateButton(
+      buttonLabel: String.LocString.flipAnyway,
+      buttonLabelColor: .blue
+    ) {
+      userHasIndicatedFlipObjectAnyway = true
+      transition(with: .flipObjectAnyway)
+    }
+  }
+  
+  private var skipButton: some View {
+    CreateButton(
+      buttonLabel: String.LocString.skip,
+      buttonLabelColor: .blue
+    ) {
+      transition(with: .skip(isFlippable: appModel.isObjectFlippable))
+    }
+  }
+  
+  private var finishButton: some View {
+    CreateButton(
+      buttonLabel: String.LocString.finish,
+      buttonLabelColor: onboardingStateMachine.currentState == .thirdSegmentComplete
+        ? .white : .blue,
+      shouldApplyBackground: onboardingStateMachine.currentState == .thirdSegmentComplete,
+      showBusyIndicator: session.state == .finishing
+    ) {
+      [weak session] in session?.finish()
+    }
+  }
+  
+  private var canNotFlipYourObjectButton: some View {
+    CreateButton(
+      buttonLabel: String.LocString.canNotFlipYourObject,
+      buttonLabelColor: .blue
+    ) {
+      userHasIndicatedObjectCannotBeFlipped = true
+      transition(with: .objectCannotBeFlipped)
     }
   }
 

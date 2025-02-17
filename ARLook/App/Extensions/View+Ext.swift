@@ -19,3 +19,22 @@ extension View {
   }
 }
 
+extension View {
+  
+  func customColorScheme(_ customColorScheme: Binding<CustomColorScheme>) -> some View {
+    self.modifier(CustomColorSchemeViewModifier(customColorScheme))
+  }
+  
+}
+
+extension View {
+  
+  func dynamicFont(
+    size: CGFloat = 16,
+    weight: Font.Weight = .regular,
+    design: Font.Design = .default
+  ) -> some View {
+    modifier(DynamicTextModifer(size: size, weight: weight, design: design))
+  }
+  
+}

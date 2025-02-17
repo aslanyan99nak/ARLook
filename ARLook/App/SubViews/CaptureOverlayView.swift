@@ -15,6 +15,7 @@ struct CaptureOverlayView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   @State private var deviceOrientation: UIDeviceOrientation = UIDevice.current.orientation
   @State private var hasDetectionFailed = false
+  @State private var selectedURL: URL?
   @Binding var showInfo: Bool
 
   var session: ObjectCaptureSession
@@ -95,18 +96,24 @@ struct CaptureOverlayView: View {
             ResetBoundingBoxButton(session: session)
               .transition(.opacity)
           } else if case .ready = session.state {
-            FilesButton()
+            FilesButton(selectedURL: $selectedURL)
               .transition(.opacity)
           }
 
           Spacer()
         }
         .frame(maxWidth: .infinity)
+        .onChange(of: selectedURL) { oldValue, newValue in
+          if oldValue != newValue {
+//            session.
+          }
+        }
 
         if !capturingStarted {
           CaptureButton(
-            session: session, isObjectFlipped: appModel.isObjectFlipped,
-            hasDetectionFailed: $hasDetectionFailed
+            hasDetectionFailed: $hasDetectionFailed,
+            session: session,
+            isObjectFlipped: appModel.isObjectFlipped
           )
           .layoutPriority(1)
         }
@@ -162,6 +169,7 @@ struct CaptureOverlayView: View {
       appModel.objectCaptureSession?.cancel()
     } label: {
       Text(String.LocString.cancel)
+        .dynamicFont()
         .modifier(VisualEffectRoundedCorner())
     }
   }
@@ -172,6 +180,7 @@ struct CaptureOverlayView: View {
       appModel.setPreviewModelState(shown: true)
     } label: {
       Text(String.LocString.next)
+        .dynamicFont()
         .modifier(VisualEffectRoundedCorner())
     }
   }

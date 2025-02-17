@@ -17,6 +17,7 @@ struct QRScannerView: View {
       Spacer()
 
       Text(scannedText)
+        .dynamicFont(size: 18)
         .foregroundStyle(Color.black)
         .font(.title)
         .padding()

@@ -5,8 +5,8 @@
 //  Created by Narek Aslanyan on 07.02.25.
 //
 
-import SwiftUI
 import RealityKit
+import SwiftUI
 
 struct ReconstructionProgressView: View {
 
@@ -19,6 +19,8 @@ struct ReconstructionProgressView: View {
   @State private var gotError: Bool = false
   @State private var error: Error?
   @State private var isCancelling: Bool = false
+  @State private var isProgressCompeted: Bool = false
+  @State private var isAnimate: Bool = false
   @Binding var completed: Bool
   @Binding var cancelled: Bool
 
@@ -38,21 +40,27 @@ struct ReconstructionProgressView: View {
         }
       }
 
-      Spacer()
-
-      Text(String.LocString.processingTitle)
-        .font(.largeTitle)
-        .fontWeight(.bold)
-
-      Spacer()
-
-      progressBarView
-        .padding(horizontalSizeClass == .regular ? 60.0 : 24.0)
+      if !isProgressCompeted {
+        VStack(spacing: 20) {
+          Text(String.LocString.processingTitle)
+            .dynamicFont(size: 20, weight: .bold)
+          
+          progressBarView
+            .padding(horizontalSizeClass == .regular ? 60.0 : 24.0)
+        }
+      } else {
+        VStack(spacing: 16) {
+          completedView
+          uploadButton
+          viewIn3DModeButton
+        }
+        .frame(maxWidth: 300)
+        .padding(.top, 80)
+      }
 
       Spacer()
     }
     .frame(maxWidth: .infinity)
-    .padding(.bottom, 20)
     .alert(
       String.LocString.failed + (error.isNotNil ? " \(String(describing: error!))" : ""),
       isPresented: $gotError
@@ -79,8 +87,7 @@ struct ReconstructionProgressView: View {
       appModel.photogrammetrySession?.cancel()
     } label: {
       Text(String.LocString.cancel)
-        .font(.headline)
-        .bold()
+        .dynamicFont(weight: .bold)
         .padding(30)
         .foregroundStyle(.blue)
     }
@@ -92,24 +99,101 @@ struct ReconstructionProgressView: View {
       appModel.state = .restart
     } label: {
       Text(String.LocString.ok)
+        .dynamicFont(weight: .bold)
     }
   }
-  
+
+  private var completedView: some View {
+    VStack(spacing: 16) {
+      Text(String.LocString.completedProcess)
+        .dynamicFont()
+
+      Image(systemName: "checkmark.seal.fill")
+        .renderingMode(.template)
+        .resizable()
+        .frame(width: 150, height: 150)
+        .foregroundStyle(.green)
+        .symbolEffect(.bounce, value: isAnimate)
+        .onAppear {
+          isAnimate = true
+        }
+        .onDisappear {
+          isAnimate = false
+        }
+    }
+  }
+
+  private var uploadButton: some View {
+    Button {
+      print("Upload Action")
+    } label: {
+      HStack(spacing: 8) {
+        Spacer()
+
+        Image(systemName: "square.and.arrow.down")
+          .renderingMode(.template)
+          .resizable()
+          .frame(width: 16, height: 16)
+          .foregroundStyle(.white)
+
+        Text(String.LocString.upload)
+          .dynamicFont()
+          .foregroundColor(.white)
+
+        Spacer()
+      }
+      .padding()
+      .background(Color.blue)
+      .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+  }
+
+  private var viewIn3DModeButton: some View {
+    Button {
+      print("View in 3D mode Action")
+      completed = true
+      appModel.state = .viewing
+      print("OutputFile: ", outputFile)
+    } label: {
+      HStack(spacing: 8) {
+        Spacer()
+
+        Image(systemName: "arkit")
+          .renderingMode(.template)
+          .resizable()
+          .frame(width: 16, height: 16)
+          .foregroundStyle(.white)
+
+        Text(String.LocString.view3DMode)
+          .dynamicFont(weight: .bold)
+          .foregroundColor(.white)
+
+        Spacer()
+      }
+      .padding()
+      .background(Color.blue)
+      .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+  }
+
   private func startReconstructionTask() async {
     precondition(appModel.state == .reconstructing)
     assert(appModel.photogrammetrySession.isNotNil)
     let session = appModel.photogrammetrySession!
 
     let outputs = UntilProcessingCompleteFilter(input: session.outputs)
+    
+    let request = PhotogrammetrySession.Request.modelFile(url: outputFile, detail: .reduced)
     do {
-      try session.process(requests: [.modelFile(url: outputFile)])
+      try session.process(requests: [request])
     } catch {
       print("Processing the session failed!")
     }
+    
     await listenSessionUpdates(outputs)
     print(">>>>>>>>>> RECONSTRUCTION TASK EXIT >>>>>>>>>>>>>>>>>")
   }
-  
+
   private func listenSessionUpdates(
     _ outputs: UntilProcessingCompleteFilter<PhotogrammetrySession.Outputs>
   ) async {
@@ -142,8 +226,7 @@ struct ReconstructionProgressView: View {
         }
       case .processingComplete:
         if !gotError {
-          completed = true
-          appModel.state = .viewing
+          isProgressCompeted = true
         }
       case .processingCancelled:
         cancelled = true

@@ -11,7 +11,7 @@ import SwiftUI
 struct ObjectScannerScreen: View {
 
   @StateObject var appModel: AppDataModel = AppDataModel.instance
-  @Environment(\.colorScheme) private var colorScheme
+  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @State private var showReconstructionView: Bool = false
   @State private var showErrorAlert: Bool = false
 
@@ -19,6 +19,10 @@ struct ObjectScannerScreen: View {
 
   private var showProgressView: Bool {
     appModel.state == .completed || appModel.state == .restart || appModel.state == .ready
+  }
+
+  private var isDarkMode: Bool {
+    colorScheme == .dark
   }
 
   var body: some View {
@@ -35,7 +39,8 @@ struct ObjectScannerScreen: View {
         }
       }
       .alert(
-        String.LocString.failed + (appModel.error.isNotNil ? " \(String(describing: appModel.error!))" : ""),
+        String.LocString.failed
+          + (appModel.error.isNotNil ? " \(String(describing: appModel.error!))" : ""),
         isPresented: $showErrorAlert
       ) {
         alertOkButton
@@ -52,14 +57,20 @@ struct ObjectScannerScreen: View {
   }
 
   private var contentView: some View {
-    VStack {
-      if appModel.state == .capturing {
-        if let session = appModel.objectCaptureSession {
-          CapturePrimaryView(session: session)
+    ZStack {
+      VStack {
+        if appModel.state == .capturing {
+          if let session = appModel.objectCaptureSession {
+            CapturePrimaryView(session: session)
+          }
+        } else if showProgressView {
+          CircularProgressView(tintColor: tintColor)
         }
-      } else if showProgressView {
-        CircularProgressView(tintColor: tintColor)
       }
+    }
+    // TODO: - Delete
+    .onAppear {
+      appModel.state = .capturing
     }
   }
 
@@ -79,6 +90,7 @@ struct ObjectScannerScreen: View {
       appModel.state = .restart
     } label: {
       Text(String.LocString.ok)
+        .dynamicFont()
     }
   }
 

@@ -16,8 +16,7 @@ struct FeedbackView: View {
     VStack {
       if let activeMessage = messageList.activeMessage {
         Text(activeMessage.message)
-          .font(.headline)
-          .fontWeight(.bold)
+          .dynamicFont(weight: .bold)
           .foregroundStyle(.white)
           .environment(\.colorScheme, .dark)
           .transition(.opacity)

@@ -18,11 +18,11 @@ struct ManualShotButton: View {
     } label: {
       if session.canRequestImageCapture {
         Text(Image(systemName: "button.programmable"))
-          .font(.largeTitle)
+          .dynamicFont(size: 20)
           .foregroundStyle(.white)
       } else {
         Text(Image(systemName: "button.programmable"))
-          .font(.largeTitle)
+          .dynamicFont(size: 20)
           .foregroundStyle(.gray)
       }
     }

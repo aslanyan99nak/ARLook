@@ -77,6 +77,7 @@ struct QRCodeScanner: View {
       scannedCode = nil
     } label: {
       Text(String.LocString.fileNotFound)
+        .dynamicFont()
         .foregroundStyle(.white)
         .padding()
         .background(Color.purple)

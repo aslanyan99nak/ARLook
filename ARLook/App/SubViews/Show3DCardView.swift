@@ -35,7 +35,7 @@ struct Show3DCardView: View {
   private var cardLeftSideView: some View {
     VStack(spacing: 8) {
       Text(String.LocString.view3DMode)
-        .font(Font.system(size: 24, weight: .bold))
+        .dynamicFont(size: 24, weight: .bold)
         .foregroundStyle(isDarkMode ? Color.white : Color.black)
       
       HStack(spacing: 0) {

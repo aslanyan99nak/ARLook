@@ -19,8 +19,7 @@ struct CancelButton: View {
       appModel.setPreviewModelState(shown: false)
     } label: {
       Text(buttonLabel)
-        .font(.headline)
-        .bold()
+        .dynamicFont(weight: .bold)
         .padding(30)
         .foregroundStyle(.blue)
     }
