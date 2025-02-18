@@ -86,69 +86,19 @@ struct CaptureOverlayView: View {
         )
       }
 
-      HStack(alignment: .bottom, spacing: 0) {
-        HStack(spacing: 0) {
-          if case .capturing = session.state {
-            NumOfImagesView(session: session)
-              .rotationEffect(rotationAngle)
-              .transition(.opacity)
-          } else if case .detecting = session.state {
-            ResetBoundingBoxButton(session: session)
-              .transition(.opacity)
-          } else if case .ready = session.state {
-            FilesButton(selectedURL: $selectedURL)
-              .transition(.opacity)
-          }
-
-          Spacer()
-        }
-        .frame(maxWidth: .infinity)
-        .onChange(of: selectedURL) { oldValue, newValue in
-          if oldValue != newValue {
-//            session.
-          }
-        }
-
-        if !capturingStarted {
-          CaptureButton(
-            hasDetectionFailed: $hasDetectionFailed,
-            session: session,
-            isObjectFlipped: appModel.isObjectFlipped
-          )
-          .layoutPriority(1)
-        }
-
-        HStack {
-          Spacer()
-
-          if !capturingStarted {
-            HelpButton(showInfo: $showInfo)
-              .transition(.opacity)
-          } else if case .capturing = session.state {
-            ManualShotButton(session: session)
-              .transition(.opacity)
-          }
-        }
-        .frame(maxWidth: .infinity)
-      }
-      .opacity(shouldShowTutorial ? 0 : 1)  // Keeps tutorial view centered.
+      bottomButtons
     }
     .padding()
-    .padding(.horizontal, 15)
+    .padding(.horizontal, 16)
     .background(shouldShowTutorial ? Color.black.opacity(0.5) : .clear)
     .allowsHitTesting(!shouldShowTutorial)
     .animation(.default, value: shouldShowTutorial)
     .background {
       if !shouldShowTutorial && appModel.messageList.activeMessage.isNotNil {
-        VStack {
-          Rectangle()
-            .frame(height: 130)
-            .hidden()
-
-          FeedbackView(messageList: appModel.messageList)
-            .layoutPriority(1)
-        }
-        .rotationEffect(rotationAngle)
+        FeedbackView(messageList: appModel.messageList)
+          .padding(.top, 100)
+          .layoutPriority(1)
+          .rotationEffect(rotationAngle)
       }
     }
     .task {
@@ -163,25 +113,74 @@ struct CaptureOverlayView: View {
     }
   }
 
-  var cancelButton: some View {
+  private var cancelButton: some View {
     Button {
-      print("\(String.LocString.cancel) button clicked!")
+      print("\(LocString.cancel) button clicked!")
       appModel.objectCaptureSession?.cancel()
     } label: {
-      Text(String.LocString.cancel)
+      Text(LocString.cancel)
         .dynamicFont()
         .modifier(VisualEffectRoundedCorner())
     }
   }
 
-  var nextButton: some View {
+  private var nextButton: some View {
     Button {
-      print("\(String.LocString.next) button clicked!")
+      print("\(LocString.next) button clicked!")
       appModel.setPreviewModelState(shown: true)
     } label: {
-      Text(String.LocString.next)
+      Text(LocString.next)
         .dynamicFont()
         .modifier(VisualEffectRoundedCorner())
+    }
+  }
+
+  private var bottomButtons: some View {
+    VStack(spacing: 8) {
+      if !capturingStarted {
+        CaptureButton(
+          hasDetectionFailed: $hasDetectionFailed,
+          session: session,
+          isObjectFlipped: appModel.isObjectFlipped
+        )
+        .layoutPriority(1)
+      }
+
+      HStack(alignment: .top, spacing: 0) {
+        if case .capturing = session.state {
+          NumOfImagesView(session: session)
+            .rotationEffect(rotationAngle)
+            .transition(.opacity)
+
+          Spacer()
+
+          ManualShotButton(session: session)
+            .transition(.opacity)
+
+        } else if case .detecting = session.state {
+          ResetBoundingBoxButton(session: session)
+            .transition(.opacity)
+
+          Spacer()
+        } else if case .ready = session.state {
+          FilesButton(selectedURL: $selectedURL)
+            .transition(.opacity)
+
+          Spacer()
+        }
+
+        if !capturingStarted {
+          HelpButton(showInfo: $showInfo)
+            .transition(.opacity)
+        }
+      }
+      .frame(maxWidth: .infinity)
+      .opacity(shouldShowTutorial ? 0 : 1)  // Keeps tutorial view centered.
+      .onChange(of: selectedURL) { oldValue, newValue in
+        if oldValue != newValue {
+          // Action
+        }
+      }
     }
   }
 

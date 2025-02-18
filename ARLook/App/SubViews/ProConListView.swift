@@ -37,9 +37,11 @@ struct ProConListView: View {
           .bold()
 
         Spacer()
-
-        Text(Image(systemName: "checkmark.circle"))
-          .dynamicFont(weight: .bold)
+        
+        Image(systemName: Image.checkMarkCircle)
+          .renderingMode(.template)
+          .resizable()
+          .frame(width: 24, height: 24)
           .foregroundStyle(.green)
       }
 
@@ -58,10 +60,13 @@ struct ProConListView: View {
           .dynamicFont(weight: .bold)
 
         Spacer()
-
-        Text(Image(systemName: "xmark.circle"))
-          .dynamicFont(weight: .bold)
+        
+        Image(systemName: Image.xMarkCircle)
+          .renderingMode(.template)
+          .resizable()
+          .frame(width: 24, height: 24)
           .foregroundStyle(.red)
+        
       }
 
       ForEach(cons, id: \.self) { con in

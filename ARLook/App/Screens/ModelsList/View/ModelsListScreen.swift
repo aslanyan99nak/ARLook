@@ -29,6 +29,11 @@ struct ModelsListScreen: View {
         }
       }
       .toolbar(.hidden, for: .navigationBar)
+      .onLoad {
+        Task {
+          await viewModel.getModels()
+        }
+      }
     }
   }
 
@@ -37,7 +42,7 @@ struct ModelsListScreen: View {
       HStack(spacing: 0) {
         Spacer()
 
-        Text(String.LocString.existingModels)
+        Text(LocString.existingModels)
           .offset(x: 40)
 
         Spacer()

@@ -13,7 +13,7 @@ struct HelpButton: View {
 
   var body: some View {
     Button {
-      print("\(String.LocString.help) button clicked!")
+      print("\(LocString.help) button clicked!")
       withAnimation {
         showInfo = true
       }
@@ -24,13 +24,13 @@ struct HelpButton: View {
   
   private var buttonContentView: some View {
     VStack(spacing: 10) {
-      Image(systemName: "questionmark.circle")
+      Image(systemName: Image.questionMark)
         .resizable()
         .aspectRatio(contentMode: .fit)
-        .frame(width: 22)
+        .frame(width: 32, height: 32)
 
-      Text(String.LocString.help)
-        .dynamicFont(weight: .semibold)
+      Text(LocString.help)
+        .fontWeight(.semibold)
         .opacity(0.7)
     }
     .foregroundStyle(.white)

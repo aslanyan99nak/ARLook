@@ -29,7 +29,7 @@ struct TextSizeRow: View {
   }
   
   private var sliderView: some View {
-    Slider(value: $textSize, in: 0...12, step: 1)
+    Slider(value: $textSize, in: 0...10, step: 1)
       .background {
         HStack {
           ForEach(0..<5) { i in

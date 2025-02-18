@@ -35,7 +35,7 @@ struct SettingsScreen: View {
         }
         .padding(.horizontal, 16)
       }
-      .navigationTitle(String.LocString.settings)
+      .navigationTitle(LocString.settings)
     }
   }
   

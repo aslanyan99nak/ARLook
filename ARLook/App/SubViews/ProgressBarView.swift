@@ -14,7 +14,6 @@ struct ProgressBarView: View {
   @EnvironmentObject var appModel: AppDataModel
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
-  // The progress value from 0 to 1 which describes how much coverage is done.
   var progress: Float
   var estimatedRemainingTime: TimeInterval?
   var processingStageDescription: String?
@@ -30,8 +29,9 @@ struct ProgressBarView: View {
 
   private var remainingTimeString: String {
     String.localizedStringWithFormat(
-      String.LocString.estimatedRemainingTime,
-      formattedEstimatedRemainingTime ?? String.LocString.calculating)
+      LocString.estimatedRemainingTime,
+      formattedEstimatedRemainingTime ?? LocString.calculating
+    )
   }
 
   private var numOfImages: Int {
@@ -57,7 +57,7 @@ struct ProgressBarView: View {
 
   private var headerView: some View {
     HStack(spacing: 0) {
-      Text(processingStageDescription ?? String.LocString.processing)
+      Text(processingStageDescription ?? LocString.processing)
         .dynamicFont()
 
       Spacer()
@@ -67,7 +67,7 @@ struct ProgressBarView: View {
   private var footerView: some View {
     HStack(alignment: .center, spacing: 0) {
       VStack(alignment: .center) {
-        Image(systemName: "photo")
+        Image(systemName: Image.photo)
 
         Text(String(numOfImages))
           .dynamicFont(weight: .bold)
@@ -76,7 +76,7 @@ struct ProgressBarView: View {
       .padding(.trailing, 16)
 
       VStack(alignment: .leading) {
-        Text(String.LocString.processingModelDescription)
+        Text(LocString.processingModelDescription)
           .dynamicFont()
 
         Text(remainingTimeString)

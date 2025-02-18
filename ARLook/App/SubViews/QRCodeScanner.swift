@@ -37,7 +37,7 @@ struct QRCodeScanner: View {
         closeButton
       }
       .padding(.horizontal, 16)
-      .padding(.top, 40)
+      .padding(.top, 50)
 
       Spacer()
 
@@ -76,7 +76,7 @@ struct QRCodeScanner: View {
     Button {
       scannedCode = nil
     } label: {
-      Text(String.LocString.fileNotFound)
+      Text(LocString.fileNotFound)
         .dynamicFont()
         .foregroundStyle(.white)
         .padding()
@@ -94,12 +94,12 @@ struct QRCodeScanner: View {
         isShowScanner = false
       }
     } label: {
-      Image(systemName: "xmark")
+      Image(systemName: Image.xMarkCircle)
+        .renderingMode(.template)
         .resizable()
-        .frame(width: 20, height: 20)
-        .foregroundStyle(.black)
-        .padding(8)
-        .background(.white)
+        .frame(width: 40, height: 40)
+        .foregroundStyle(.white)
+        .background(.regularMaterial)
         .clipShape(Circle())
     }
   }
@@ -111,6 +111,6 @@ struct QRCodeScanner: View {
     fileURL: .constant(nil),
     isShowScanner: .constant(false),
     scannedCode: .constant(""),
-    scale: .constant(0)
+    scale: .constant(1)
   )
 }

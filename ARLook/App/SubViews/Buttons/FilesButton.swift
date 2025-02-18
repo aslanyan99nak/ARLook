@@ -9,7 +9,6 @@ import SwiftUI
 
 struct FilesButton: View {
 
-//  @EnvironmentObject var appModel: AppDataModel
   @State private var showDocumentBrowser = false
   @Binding var selectedURL: URL?
 
@@ -22,14 +21,11 @@ struct FilesButton: View {
         showDocumentBrowser = true
       }
     } label: {
-      Image(systemName: "folder")
+      Image(systemName: Image.folder)
         .resizable()
         .aspectRatio(contentMode: .fit)
-        .frame(width: 22)
+        .frame(width: 32, height: 32)
         .foregroundStyle(.white)
-        .padding(20)
-        .background(Material.regular)
-        .clipShape(Circle())
     }
     .sheet(isPresented: $showDocumentBrowser) {
       DocumentPicker { url in

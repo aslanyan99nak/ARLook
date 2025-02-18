@@ -16,11 +16,11 @@ final class FeedbackMessages {
   @MainActor
   static func getFeedbackString(for feedback: ObjectCaptureSession.Feedback) -> String? {
     return switch feedback {
-    case .objectTooFar: String.LocString.objectTooFar
-    case .objectTooClose: String.LocString.objectTooClose
-    case .environmentTooDark, .environmentLowLight: String.LocString.environmentLightRequired
-    case .movingTooFast: String.LocString.movingTooFast
-    case .outOfFieldOfView: String.LocString.outOfFieldOfView
+    case .objectTooFar: LocString.objectTooFar
+    case .objectTooClose: LocString.objectTooClose
+    case .environmentTooDark, .environmentLowLight: LocString.environmentLightRequired
+    case .movingTooFast: LocString.movingTooFast
+    case .outOfFieldOfView: LocString.outOfFieldOfView
     default: nil
     }
   }

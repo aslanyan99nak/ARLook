@@ -20,7 +20,7 @@ struct CaptureButton: View {
       performAction()
     } label: {
       Text(buttonLabel)
-        .dynamicFont(weight: .bold)
+        .fontWeight(.bold)
         .foregroundStyle(.white)
         .padding(.horizontal, 25)
         .padding(.vertical, 20)
@@ -31,13 +31,9 @@ struct CaptureButton: View {
 
   private var buttonLabel: String {
     if case .ready = session.state {
-      String.LocString.continue
+      LocString.continue
     } else {
-      if !isObjectFlipped {
-        String.LocString.startCapture
-      } else {
-        String.LocString.continue
-      }
+      !isObjectFlipped ? LocString.startCapture : LocString.continue
     }
   }
 

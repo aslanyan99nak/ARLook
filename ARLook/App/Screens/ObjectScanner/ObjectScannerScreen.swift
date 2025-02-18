@@ -39,7 +39,7 @@ struct ObjectScannerScreen: View {
         }
       }
       .alert(
-        String.LocString.failed
+        LocString.failed
           + (appModel.error.isNotNil ? " \(String(describing: appModel.error!))" : ""),
         isPresented: $showErrorAlert
       ) {
@@ -89,7 +89,7 @@ struct ObjectScannerScreen: View {
       print("Calling restart...")
       appModel.state = .restart
     } label: {
-      Text(String.LocString.ok)
+      Text(LocString.ok)
         .dynamicFont()
     }
   }

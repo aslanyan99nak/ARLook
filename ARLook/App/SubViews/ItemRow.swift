@@ -9,8 +9,9 @@ import SwiftUI
 
 struct ItemRow: View {
   
-  @Environment(\.colorScheme) var colorScheme
-  
+//  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
+  @Environment(\.colorScheme) private var colorScheme
+
   private var isDarkMode: Bool {
     colorScheme == .dark
   }
@@ -59,7 +60,7 @@ struct ItemRow: View {
 
 #Preview {
   ItemRow(
-    image: Image(systemName: "qrcode"),
+    image: Image(systemName: Image.qrCode),
     title: "QR code title",
     description: "QR code description"
   )

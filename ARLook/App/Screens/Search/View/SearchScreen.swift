@@ -17,16 +17,16 @@ extension SearchScreen {
 
     var name: String {
       switch self {
-      case .recent: String.LocString.recent
-      case .favorite: String.LocString.favorite
-      case .all: String.LocString.all
+      case .recent: LocString.recent
+      case .favorite: LocString.favorite
+      case .all: LocString.all
       }
     }
 
     var icon: Image? {
       switch self {
-      case .recent: Image(systemName: "memories")
-      case .favorite: Image(systemName: "heart")
+      case .recent: Image(systemName: Image.recent)
+      case .favorite: Image(systemName: Image.favorite)
       case .all: nil
       }
     }
@@ -59,7 +59,7 @@ struct SearchScreen: View {
   var body: some View {
     NavigationStack {
       contentView
-        .navigationTitle(String.LocString.search3D)
+        .navigationTitle(LocString.search3D)
         .navigationBarTitleDisplayMode(.inline)
     }
     .searchable(text: $viewModel.searchText)

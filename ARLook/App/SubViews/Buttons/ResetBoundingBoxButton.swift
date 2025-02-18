@@ -25,12 +25,10 @@ struct ResetBoundingBoxButton: View {
       Image(.resetBox)
         .renderingMode(.template)
         .resizable()
-        .aspectRatio(contentMode: .fit)
-        .frame(width: 30)
+        .frame(width: 40, height: 40)
         .foregroundStyle(.white)
 
-      Text(String.LocString.resetBox)
-        .dynamicFont()
+      Text(LocString.resetBox)
         .opacity(0.7)
     }
     .foregroundStyle(.white)

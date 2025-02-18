@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CustomColorSchemeViewModifier: ViewModifier {
 
-  @Environment(\.colorScheme) var colorScheme
+  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @State private var tempColorScheme: ColorScheme? = nil
   @Binding var customColorScheme: CustomColorScheme
 
@@ -34,7 +34,7 @@ struct CustomColorSchemeViewModifier: ViewModifier {
       ) { _ in
         if customColorScheme == .system {
           let systemColorScheme = getSystemColorScheme()
-          if systemColorScheme != colorScheme {
+          if systemColorScheme != colorScheme.colorScheme {
             tempColorScheme = systemColorScheme
           }
         }

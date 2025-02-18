@@ -14,7 +14,7 @@ struct NumOfImagesView: View {
 
   private var numOfImagesString: String {
     String(
-      format: String.LocString.numOfImages,
+      format: LocString.numOfImages,
       session.numberOfShotsTaken,
       session.maximumNumberOfInputImages
     )
@@ -22,7 +22,9 @@ struct NumOfImagesView: View {
 
   var body: some View {
     VStack(spacing: 8) {
-      Text(Image(systemName: "photo"))
+      Image(systemName: Image.photo)
+        .resizable()
+        .frame(width: 24, height: 24)
 
       Text(numOfImagesString)
         .dynamicFont(weight: .bold, design: .rounded)

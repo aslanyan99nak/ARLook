@@ -9,8 +9,9 @@ import SwiftUI
 
 struct PopupView: View {
   
-  @Environment(\.colorScheme) var colorScheme
-  
+//  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
+  @Environment(\.colorScheme) private var colorScheme
+
   let action: () -> Void
   
   private var isDarkMode: Bool {
@@ -38,7 +39,7 @@ struct PopupView: View {
   }
   
   private var titleView: some View {
-    Text(String.LocString.canNotScanModel)
+    Text(LocString.canNotScanModel)
       .dynamicFont()
       .multilineTextAlignment(.center)
       .foregroundStyle(isDarkMode ? .white : .black)
@@ -48,7 +49,7 @@ struct PopupView: View {
     Button {
       action()
     } label: {
-      Text(String.LocString.ok)
+      Text(LocString.ok)
         .dynamicFont()
         .foregroundStyle(.white)
         .padding(.vertical, 8)

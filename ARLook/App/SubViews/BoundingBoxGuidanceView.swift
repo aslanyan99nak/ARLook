@@ -31,14 +31,8 @@ struct BoundingBoxGuidanceView: View {
 
   private var guidanceText: String? {
     switch session.state {
-    case .ready:
-      if hasDetectionFailed {
-        String.LocString.detectionFailedGuidance
-      } else {
-        String.LocString.detectionSuccessedGuidance
-      }
-    case .detecting:
-      String.LocString.detectionGuidance
+    case .ready: hasDetectionFailed ? LocString.detectionFailedGuidance : LocString.detectionSuccessedGuidance
+    case .detecting: LocString.detectionGuidance
     default: nil
     }
   }

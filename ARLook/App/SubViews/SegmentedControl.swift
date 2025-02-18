@@ -10,7 +10,7 @@ import SwiftUI
 struct SegmentedControl: View {
 
   @AppStorage(AccentColorType.defaultKey) var accentColorType: AccentColorType = AccentColorType.defaultValue
-  @Environment(\.colorScheme) var colorScheme
+  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @Binding var selection: SearchScreen.ModelType
 
   private let size: CGSize

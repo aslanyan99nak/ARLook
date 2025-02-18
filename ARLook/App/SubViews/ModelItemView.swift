@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ModelItemView: View {
 
-  @Environment(\.colorScheme) var colorScheme
+  @Environment(\.colorScheme) private var colorScheme
+//  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @Binding var isList: Bool
 
   let modelManager = ModelManager.shared
@@ -92,7 +93,7 @@ struct ModelItemView: View {
 
   private var viewCount: some View {
     HStack(spacing: 8) {
-      Image(systemName: "eye")
+      Image(systemName: Image.eye)
         .renderingMode(.template)
         .resizable()
         .frame(width: 20, height: 12)

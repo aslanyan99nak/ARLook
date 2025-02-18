@@ -26,7 +26,7 @@ struct ThemeRow: View {
       Spacer()
 
       if mode == colorScheme {
-        Image(systemName: "checkmark.circle")
+        Image(systemName: Image.checkMarkCircle)
           .renderingMode(.template)
           .resizable()
           .frame(width: 16, height: 16)

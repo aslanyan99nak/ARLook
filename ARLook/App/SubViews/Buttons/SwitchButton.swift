@@ -39,7 +39,7 @@ struct SwitchButton: View {
       ZStack {
         Color.gray.opacity(isList ? 0.3 : 0.1)
         
-        Image(systemName: "rectangle")
+        Image(systemName: Image.row)
           .renderingMode(.template)
           .resizable()
           .frame(width: 20, height: 12)
@@ -57,7 +57,7 @@ struct SwitchButton: View {
       ZStack {
         Color.gray.opacity(isList ? 0.1 : 0.3)
 
-        Image(systemName: "square.grid.2x2")
+        Image(systemName: Image.grid)
           .renderingMode(.template)
           .resizable()
           .frame(width: 20, height: 20)

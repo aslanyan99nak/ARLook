@@ -38,9 +38,9 @@ enum CustomColorScheme: Int, CaseIterable, Identifiable, Codable {
   
   var icon: Image {
     switch self {
-    case .system: Image(systemName: "circle.righthalf.fill")
-    case .light: Image(systemName: "sun.max")
-    case .dark: Image(systemName: "moon")
+    case .system: Image(systemName: Image.systemColorScheme)
+    case .light: Image(systemName: Image.lightColorScheme)
+    case .dark: Image(systemName: Image.darkColorScheme)
     }
   }
   

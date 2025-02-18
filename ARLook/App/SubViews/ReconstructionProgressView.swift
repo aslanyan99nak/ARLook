@@ -42,7 +42,7 @@ struct ReconstructionProgressView: View {
 
       if !isProgressCompeted {
         VStack(spacing: 20) {
-          Text(String.LocString.processingTitle)
+          Text(LocString.processingTitle)
             .dynamicFont(size: 20, weight: .bold)
           
           progressBarView
@@ -62,7 +62,7 @@ struct ReconstructionProgressView: View {
     }
     .frame(maxWidth: .infinity)
     .alert(
-      String.LocString.failed + (error.isNotNil ? " \(String(describing: error!))" : ""),
+      LocString.failed + (error.isNotNil ? " \(String(describing: error!))" : ""),
       isPresented: $gotError
     ) {
       alertOkButton
@@ -85,8 +85,10 @@ struct ReconstructionProgressView: View {
       print("Cancelling...")
       isCancelling = true
       appModel.photogrammetrySession?.cancel()
+      cancelled = true
+      appModel.state = .restart
     } label: {
-      Text(String.LocString.cancel)
+      Text(LocString.cancel)
         .dynamicFont(weight: .bold)
         .padding(30)
         .foregroundStyle(.blue)
@@ -98,17 +100,17 @@ struct ReconstructionProgressView: View {
       print("Calling restart...")
       appModel.state = .restart
     } label: {
-      Text(String.LocString.ok)
+      Text(LocString.ok)
         .dynamicFont(weight: .bold)
     }
   }
 
   private var completedView: some View {
     VStack(spacing: 16) {
-      Text(String.LocString.completedProcess)
+      Text(LocString.completedProcess)
         .dynamicFont()
 
-      Image(systemName: "checkmark.seal.fill")
+      Image(systemName: Image.checkmarkSealFill)
         .renderingMode(.template)
         .resizable()
         .frame(width: 150, height: 150)
@@ -130,13 +132,13 @@ struct ReconstructionProgressView: View {
       HStack(spacing: 8) {
         Spacer()
 
-        Image(systemName: "square.and.arrow.down")
+        Image(systemName: Image.download)
           .renderingMode(.template)
           .resizable()
           .frame(width: 16, height: 16)
           .foregroundStyle(.white)
 
-        Text(String.LocString.upload)
+        Text(LocString.upload)
           .dynamicFont()
           .foregroundColor(.white)
 
@@ -158,13 +160,13 @@ struct ReconstructionProgressView: View {
       HStack(spacing: 8) {
         Spacer()
 
-        Image(systemName: "arkit")
+        Image(systemName: Image.arkit)
           .renderingMode(.template)
           .resizable()
           .frame(width: 16, height: 16)
           .foregroundStyle(.white)
 
-        Text(String.LocString.view3DMode)
+        Text(LocString.view3DMode)
           .dynamicFont(weight: .bold)
           .foregroundColor(.white)
 

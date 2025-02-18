@@ -68,7 +68,7 @@ struct ColorPicker: View {
     Button {
       isColorSheetPresented = false
     } label: {
-      Image(systemName: "xmark.circle.fill")
+      Image(systemName: Image.xMarkCircleFill)
         .font(.system(size: 24))
         .fontDesign(.rounded)
         .symbolRenderingMode(.hierarchical)

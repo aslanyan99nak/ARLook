@@ -84,7 +84,7 @@
 //      }
 //    }
 //
-//    return UIImage(systemName: "xmark.circle") ?? UIImage()
+//    return UIImage(Image.xMarkImageName) ?? UIImage()
 //  }
 //
 //  func decodeQRCode(from image: UIImage) -> String? {

@@ -22,12 +22,10 @@ extension MainTabBar {
 
 struct MainTabBar: View {
 
-  @AppStorage(CustomColorScheme.defaultKey) var customColorScheme = CustomColorScheme.defaultValue
+  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @AppStorage(AccentColorType.defaultKey) var accentColorType: AccentColorType = AccentColorType.defaultValue
   @StateObject private var popupVM = PopupViewModel()
   @State private var selectedTab: TabItem = .home
-
-  @Environment(\.colorScheme) var colorScheme
 
   var body: some View {
     contentView
@@ -50,7 +48,7 @@ struct MainTabBar: View {
       }
     }
     .environmentObject(popupVM)
-    .customColorScheme($customColorScheme)
+    .customColorScheme($colorScheme)
   }
 
   private var mainScreen: some View {
@@ -62,7 +60,7 @@ struct MainTabBar: View {
             .renderingMode(.template)
             .foregroundStyle(selectedTab == .home ? accentColorType.color : Color.gray)
 
-          Text(String.LocString.scanner)
+          Text(LocString.scanner)
             .foregroundStyle(.blue)
             .dynamicFont()
         }
@@ -74,9 +72,9 @@ struct MainTabBar: View {
       .tag(TabItem.list)
       .tabItem {
         VStack(spacing: 0) {
-          Image(systemName: "list.bullet.clipboard")
+          Image(systemName: Image.list)
 
-          Text(String.LocString.list)
+          Text(LocString.list)
             .foregroundStyle(.blue)
             .dynamicFont()
         }
@@ -88,9 +86,9 @@ struct MainTabBar: View {
       .tag(TabItem.search)
       .tabItem {
         VStack(spacing: 0) {
-          Image(systemName: "magnifyingglass")
+          Image(systemName: Image.search)
 
-          Text(String.LocString.search)
+          Text(LocString.search)
             .foregroundStyle(.blue)
             .dynamicFont()
         }
@@ -102,9 +100,9 @@ struct MainTabBar: View {
       .tag(TabItem.settings)
       .tabItem {
         VStack(spacing: 0) {
-          Image(systemName: "gear")
+          Image(systemName: Image.settings)
 
-          Text(String.LocString.settings)
+          Text(LocString.settings)
             .foregroundStyle(.blue)
             .dynamicFont()
         }

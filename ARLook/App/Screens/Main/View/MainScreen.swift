@@ -29,13 +29,18 @@ struct MainScreen: View {
   var body: some View {
     NavigationStack(path: $navigationPath) {
       contentView
+        .onLoad {
+          Task {
+            await viewModel.getModels()
+          }
+        }
         .navigationDestination(for: Destination.self) { destination in
           if case .modelScanner = destination {
             ObjectScannerScreen()
           }
         }
         .ignoresSafeArea()
-        .navigationTitle(String.LocString.arLook)
+        .navigationTitle(LocString.arLook)
     }
     .sheet(isPresented: $viewModel.isShowPicker) {
       DocumentPicker { url in
@@ -90,11 +95,11 @@ struct MainScreen: View {
       } label: {
         ItemRow(
           image: viewModel.savedFilePath.isNil
-            ? Image(systemName: "square.and.arrow.down") : Image(systemName: "checkmark.seal"),
+          ? Image(systemName: Image.upload) : Image(systemName: Image.checkMarkCircle),
           title: viewModel.savedFilePath.isNil
-            ? String.LocString.upload : String.LocString.uploaded,
+            ? LocString.upload : LocString.uploaded,
           description: viewModel.savedFilePath.isNil
-            ? String.LocString.uploadDescription : String.LocString.uploadedDescription
+            ? LocString.uploadDescription : LocString.uploadedDescription
         )
       }
       .padding(.horizontal, 16)
@@ -119,9 +124,9 @@ struct MainScreen: View {
       }
     } label: {
       ItemRow(
-        image: Image(systemName: "qrcode"),
-        title: String.LocString.qrCodeScannerTitle,
-        description: String.LocString.qrCodeScannerDescription
+        image: Image(systemName: Image.qrCode),
+        title: LocString.qrCodeScannerTitle,
+        description: LocString.qrCodeScannerDescription
       )
     }
     .padding(.horizontal, 16)
@@ -147,8 +152,8 @@ struct MainScreen: View {
     } label: {
       ItemRow(
         image: Image(.openFile),
-        title: String.LocString.fileManagmentTitle,
-        description: String.LocString.fileManagmentDescription
+        title: LocString.fileManagmentTitle,
+        description: LocString.fileManagmentDescription
       )
     }
     .padding(.horizontal, 16)
@@ -207,10 +212,10 @@ struct MainScreen: View {
       }
     } label: {
       HStack(spacing: 4) {
-        Text(String.LocString.share)
+        Text(LocString.share)
           .dynamicFont()
 
-        Image(systemName: "square.and.arrow.up")
+        Image(systemName: Image.download)
           .resizable()
           .frame(width: 16, height: 16)
       }

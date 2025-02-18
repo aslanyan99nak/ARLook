@@ -5,28 +5,24 @@
 //  Created by Narek Aslanyan on 07.02.25.
 //
 
-import SwiftUI
 import RealityKit
+import SwiftUI
 
 struct ManualShotButton: View {
-  
+
   var session: ObjectCaptureSession
 
   var body: some View {
     Button {
       session.requestImageCapture()
     } label: {
-      if session.canRequestImageCapture {
-        Text(Image(systemName: "button.programmable"))
-          .dynamicFont(size: 20)
-          .foregroundStyle(.white)
-      } else {
-        Text(Image(systemName: "button.programmable"))
-          .dynamicFont(size: 20)
-          .foregroundStyle(.gray)
-      }
+      Image(systemName: Image.shoot)
+        .renderingMode(.template)
+        .resizable()
+        .frame(width: 40, height: 40)
+        .foregroundStyle(session.canRequestImageCapture ? .white : .gray)
     }
     .disabled(!session.canRequestImageCapture)
   }
-  
+
 }
