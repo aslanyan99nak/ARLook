@@ -21,11 +21,17 @@ struct FilesButton: View {
         showDocumentBrowser = true
       }
     } label: {
-      Image(systemName: Image.folder)
-        .resizable()
-        .aspectRatio(contentMode: .fit)
-        .frame(width: 32, height: 32)
-        .foregroundStyle(.white)
+      VStack(spacing: 10) {
+        Image(systemName: Image.folder)
+          .resizable()
+          .aspectRatio(contentMode: .fit)
+          .frame(width: 32, height: 32)
+        
+        Text(LocString.files)
+          .fontWeight(.semibold)
+          .opacity(0.7)
+      }
+      .foregroundStyle(.white)
     }
     .sheet(isPresented: $showDocumentBrowser) {
       DocumentPicker { url in

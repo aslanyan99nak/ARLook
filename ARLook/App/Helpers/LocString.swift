@@ -116,5 +116,12 @@ enum LocString {
   static let search = "search".localized
   static let view3DMode = "view_3d_mode".localized
   static let fileNotFound = "file_not_found".localized
+  static let backgroundColor = "background_color".localized
+  static let textSize = "text_size".localized
+  static let accentColor = "accent_color".localized
+  static let files = "files".localized
+  static let system = "system".localized
+  static let light = "light".localized
+  static let dark = "dark".localized
 
 }

@@ -10,7 +10,8 @@ import SwiftUI
 struct SegmentedControl: View {
 
   @AppStorage(AccentColorType.defaultKey) var accentColorType: AccentColorType = AccentColorType.defaultValue
-  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
+  @AppStorage(CustomColorScheme.defaultKey) var customColorScheme = CustomColorScheme.defaultValue
+  @Environment(\.colorScheme) var colorScheme
   @Binding var selection: SearchScreen.ModelType
 
   private let size: CGSize
@@ -29,7 +30,7 @@ struct SegmentedControl: View {
   }
   
   private var isDarkMode: Bool {
-    colorScheme == .dark
+    customColorScheme == .dark || customColorScheme == .system && colorScheme == .dark
   }
   
   private var capsuleColor: Color {

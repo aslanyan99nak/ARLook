@@ -24,7 +24,7 @@ struct SettingsScreen: View {
     NavigationStack {
       ScrollView {
         LazyVStack(alignment: .leading, spacing: 16) {
-          Text("Appearance")
+          Text(LocString.appearance)
             .dynamicFont()
             .foregroundStyle(.gray)
             .padding(.leading, 8)
@@ -64,7 +64,7 @@ struct SettingsScreen: View {
 
   private var accentColorRow: some View {
     HStack(spacing: 0) {
-      Text("Accent Color")
+      Text(LocString.accentColor)
         .minimumScaleFactor(0.5)
         .dynamicFont()
 

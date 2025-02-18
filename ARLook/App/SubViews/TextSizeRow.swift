@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct TextSizeRow: View {
-  
-  @AppStorage("textSize") private var textSize: Double = 0 // Default
-  
+
+  @AppStorage("textSize") private var textSize: Double = 0
+
   var body: some View {
     HStack(spacing: 0) {
-      Text("Text Size")
+      Text(LocString.textSize)
         .dynamicFont()
         .minimumScaleFactor(0.5)
         .padding(.trailing, 8)
@@ -27,7 +27,7 @@ struct TextSizeRow: View {
     .background(Material.regular)
     .clipShape(RoundedRectangle(cornerRadius: 16))
   }
-  
+
   private var sliderView: some View {
     Slider(value: $textSize, in: 0...10, step: 1)
       .background {
@@ -43,5 +43,9 @@ struct TextSizeRow: View {
         .padding(.horizontal, 12)
       }
   }
-  
+
+}
+
+#Preview {
+  TextSizeRow()
 }

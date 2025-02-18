@@ -30,9 +30,9 @@ enum CustomColorScheme: Int, CaseIterable, Identifiable, Codable {
 
   var label: String {
     switch self {
-    case .system: "System"
-    case .light: "Light"
-    case .dark: "Dark"
+    case .system: LocString.system
+    case .light: LocString.light
+    case .dark: LocString.dark
     }
   }
   

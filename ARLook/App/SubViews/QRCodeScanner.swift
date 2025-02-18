@@ -11,12 +11,13 @@ import SwiftUI
 struct QRCodeScanner: View {
 
   @State private var isShow: Bool = false
+  @State private var scannedCode: String?
   @Binding var fileURL: URL?
   @Binding var isShowScanner: Bool
-  @Binding var scannedCode: String?
   @Binding var scale: CGFloat
   
   private let modelManager = ModelManager.shared
+  var scannedCodeCompletion: (String?) -> Void
 
   var body: some View {
     contentView
@@ -65,6 +66,7 @@ struct QRCodeScanner: View {
               scale = 0
             } completion: {
               isShowScanner = false
+              scannedCodeCompletion(scannedCode)
             }
           }
         }
@@ -91,6 +93,10 @@ struct QRCodeScanner: View {
       withAnimation(.easeInOut) {
         scale = 0
       } completion: {
+        if scannedCode.isNotNil && fileURL.isNil {
+          scannedCode = nil
+          scannedCodeCompletion(nil)
+        }
         isShowScanner = false
       }
     } label: {
@@ -110,7 +116,7 @@ struct QRCodeScanner: View {
   QRCodeScanner(
     fileURL: .constant(nil),
     isShowScanner: .constant(false),
-    scannedCode: .constant(""),
-    scale: .constant(1)
+    scale: .constant(1),
+    scannedCodeCompletion: { _ in }
   )
 }

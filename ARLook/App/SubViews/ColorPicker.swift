@@ -22,7 +22,7 @@ struct ColorPicker: View {
         NavigationStack {
           colorGridView
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("Background Color")
+            .navigationTitle(LocString.backgroundColor)
         }
         .presentationDetents([.fraction(0.4)])
         .presentationCornerRadius(32)

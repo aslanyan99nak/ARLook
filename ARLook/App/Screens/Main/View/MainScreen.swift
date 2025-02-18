@@ -111,9 +111,10 @@ struct MainScreen: View {
     QRCodeScanner(
       fileURL: $viewModel.fileURL,
       isShowScanner: $viewModel.isShowScanner,
-      scannedCode: $viewModel.scannedCode,
       scale: $viewModel.scale
-    )
+    ) { code in
+      viewModel.scannedCode = code
+    }
   }
 
   private var scanButton: some View {
