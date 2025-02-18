@@ -441,13 +441,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Make sure you have even, good lighting and a stable environment for scanning.  If scanning outdoors, cloudy days work best.\\n"
+            "value" : "Make sure you have even, good lighting and a stable environment for scanning.  If scanning outdoors, cloudy days work best."
           }
         },
         "hy-AM" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Համոզվեք, որ ունեք հավասարաչափ լավ լուսավորություն և սկանավորման համար կայուն միջավայր: Եթե ​​սկանավորում եք դրսում, ապա ամպամած օրերը լավագույնս են աշխատում են։\\n."
+            "state" : "needs_review",
+            "value" : "Համոզվեք, որ ունեք հավասարաչափ լավ լուսավորություն և սկանավորման համար կայուն միջավայր: Եթե ​​սկանավորում եք դրսում, ապա ամպամած օրերը լավագույնս են աշխատում են։"
           }
         }
       }
@@ -645,12 +645,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " For best quality, capture three segments.\\n Tap Skip if you can't make it all the way around, but your final model may have missing areas."
+            "value" : " For best quality, capture three segments. Tap Skip if you can't make it all the way around, but your final model may have missing areas."
           }
         },
         "hy-AM" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Լավագույն որակի համար նկարահանեք երեք հատված։\\n Հպեք «Բաց թողնել», եթե չեք կարողանում մինչև վերջ հասնել, բայց ձեր վերջնական մոդելը կարող է բացակայող հատվածներ ունենալ։"
           }
         }
@@ -1002,13 +1002,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opaque, matte objects with varied surface textures scan best. Capture all sides of your object in a series of orbits.\\n"
+            "value" : "Opaque, matte objects with varied surface textures scan best. Capture all sides of your object in a series of orbits."
           }
         },
         "hy-AM" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Անթափանց, փայլատ առարկաները տարբեր մակերևույթի տեքստուրաներով սկանավորում են լավագույնս: Նկարեք ձեր օբյեկտի բոլոր կողմերը ուղեծրերով:\\n"
+            "value" : "Անթափանց, փայլատ առարկաները տարբեր մակերևույթի տեքստուրաներով սկանավորում են լավագույնս: Նկարեք ձեր օբյեկտի բոլոր կողմերը ուղեծրերով:"
           }
         }
       }
@@ -1668,12 +1668,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "For best quality, capture three segments.\n        Tap Skip if you can't make it all the way around but your final model may have missing areas."
+            "value" : "For best quality, capture three segments. Tap Skip if you can't make it all the way around but your final model may have missing areas."
           }
         },
         "hy-AM" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Լավագույն որակի համար նկարահանեք երեք հատված:\n Սեղմեք «Բաց թողնել», եթե չեք կարողանում մինչև վերջ անցնել, բայց ձեր վերջնական մոդելը կարող է բացակայող հատվածներ ունենալ:"
           }
         }

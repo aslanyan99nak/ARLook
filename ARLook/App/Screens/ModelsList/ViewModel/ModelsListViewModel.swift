@@ -14,7 +14,20 @@ class ModelsListViewModel: ObservableObject {
   @Published var previewURL: URL? = nil
   @Published var selectedURL: URL?
   @Published var selectedModelName: String?
+  @Published var models: [Model] = []
   
   let modelManager = ModelManager.shared
+  private let modelEnvironment: Provider = Provider<ModelEndpoint>()
+  
+  @MainActor
+  func getModels() async {
+    do {
+      let models: [Model] = try await modelEnvironment.request(.getList)
+      self.models = models
+      models.forEach { print("File name 📁: \($0.fileName ?? "Not found")") }
+    } catch {
+      print("Can't get models")
+    }
+  }
   
 }
