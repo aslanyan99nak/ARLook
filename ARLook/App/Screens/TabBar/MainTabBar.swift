@@ -8,20 +8,23 @@
 import SwiftUI
 
 extension MainTabBar {
-  
+
   enum TabItem: Hashable {
-    
+
     case home
     case list
     case search
     case settings
-    
+
   }
-  
+
 }
 
 struct MainTabBar: View {
 
+  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
+  @AppStorage(AccentColorType.defaultKey) var accentColorType: AccentColorType = AccentColorType.defaultValue
+  @StateObject private var popupVM = PopupViewModel()
   @State private var selectedTab: TabItem = .home
 
   var body: some View {
@@ -29,14 +32,25 @@ struct MainTabBar: View {
   }
 
   private var contentView: some View {
-    TabView(selection: $selectedTab) {
-      mainScreen
-      modelsListScreen
-      searchScreen
-      settingsScreen
+    ZStack {
+      TabView(selection: $selectedTab) {
+        mainScreen
+        modelsListScreen
+        searchScreen
+        settingsScreen
+      }
+      .accentColor(accentColorType.color)
+      .blur(radius: popupVM.isShowPopup ? 5 : 0)
+      .disabled(popupVM.isShowPopup)
+
+      if popupVM.isShowPopup {
+        popupVM.popupContent
+      }
     }
+    .environmentObject(popupVM)
+    .customColorScheme($colorScheme)
   }
-  
+
   private var mainScreen: some View {
     MainScreen()
       .tag(TabItem.home)
@@ -44,49 +58,53 @@ struct MainTabBar: View {
         VStack(spacing: 0) {
           Image(.scanner)
             .renderingMode(.template)
-            .foregroundStyle(selectedTab == .home ? Color.blue : Color.gray)
+            .foregroundStyle(selectedTab == .home ? accentColorType.color : Color.gray)
 
-          Text(String.LocString.scanner)
+          Text(LocString.scanner)
             .foregroundStyle(.blue)
+            .dynamicFont()
         }
       }
   }
-  
+
   private var modelsListScreen: some View {
     ModelsListScreen()
       .tag(TabItem.list)
       .tabItem {
         VStack(spacing: 0) {
-          Image(systemName: "list.bullet.clipboard")
+          Image(systemName: Image.list)
 
-          Text(String.LocString.list)
+          Text(LocString.list)
             .foregroundStyle(.blue)
+            .dynamicFont()
         }
       }
   }
-  
+
   private var searchScreen: some View {
     SearchScreen()
       .tag(TabItem.search)
       .tabItem {
         VStack(spacing: 0) {
-          Image(systemName: "magnifyingglass")
+          Image(systemName: Image.search)
 
-          Text(String.LocString.search)
+          Text(LocString.search)
             .foregroundStyle(.blue)
+            .dynamicFont()
         }
       }
   }
-  
+
   private var settingsScreen: some View {
     SettingsScreen()
       .tag(TabItem.settings)
       .tabItem {
         VStack(spacing: 0) {
-          Image(systemName: "gear")
+          Image(systemName: Image.settings)
 
-          Text(String.LocString.settings)
+          Text(LocString.settings)
             .foregroundStyle(.blue)
+            .dynamicFont()
         }
       }
   }

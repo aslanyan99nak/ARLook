@@ -1,6 +1,23 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "accent_color" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accent Color"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Հիմնական գույն"
+          }
+        }
+      }
+    },
     "all" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -48,6 +65,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "AR LOOK"
+          }
+        }
+      }
+    },
+    "background_color" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Background Color"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ֆոնի գույնը"
           }
         }
       }
@@ -205,6 +239,23 @@
         }
       }
     },
+    "completed_process" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The process has been successfully completed."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Գործընթացը հաջողությամբ ավարտվել է։"
+          }
+        }
+      }
+    },
     "continue" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -218,6 +269,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Շարունակել"
+          }
+        }
+      }
+    },
+    "dark" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dark"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Մուգ"
           }
         }
       }
@@ -415,13 +483,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Make sure you have even, good lighting and a stable environment for scanning.  If scanning outdoors, cloudy days work best.\\n"
+            "value" : "Make sure you have even, good lighting and a stable environment for scanning.  If scanning outdoors, cloudy days work best."
           }
         },
         "hy-AM" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Համոզվեք, որ ունեք հավասարաչափ լավ լուսավորություն և սկանավորման համար կայուն միջավայր: Եթե ​​սկանավորում եք դրսում, ապա ամպամած օրերը լավագույնս են աշխատում են։\\n."
+            "value" : "Համոզվեք, որ ունեք հավասարաչափ լավ լուսավորություն և սկանավորման համար կայուն միջավայր: Եթե ​​սկանավորում եք դրսում, ապա ամպամած օրերը լավագույնս են աշխատում են։"
           }
         }
       }
@@ -562,6 +630,23 @@
         }
       }
     },
+    "files" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Files"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ֆայլեր"
+          }
+        }
+      }
+    },
     "finish" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -619,13 +704,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " For best quality, capture three segments.\\n Tap Skip if you can't make it all the way around, but your final model may have missing areas."
+            "value" : " For best quality, capture three segments. Tap Skip if you can't make it all the way around, but your final model may have missing areas."
           }
         },
         "hy-AM" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Լավագույն որակի համար նկարահանեք երեք հատված։\\n Հպեք «Բաց թողնել», եթե չեք կարողանում մինչև վերջ հասնել, բայց ձեր վերջնական մոդելը կարող է բացակայող հատվածներ ունենալ։"
+            "value" : "Լավագույն որակի համար նկարահանեք երեք հատված։ Հպեք «Բաց թողնել», եթե չեք կարողանում մինչև վերջ հասնել, բայց ձեր վերջնական մոդելը կարող է բացակայող հատվածներ ունենալ։"
           }
         }
       }
@@ -834,6 +919,23 @@
         }
       }
     },
+    "light" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Լուսավոր"
+          }
+        }
+      }
+    },
     "list" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -976,13 +1078,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opaque, matte objects with varied surface textures scan best. Capture all sides of your object in a series of orbits.\\n"
+            "value" : "Opaque, matte objects with varied surface textures scan best. Capture all sides of your object in a series of orbits."
           }
         },
         "hy-AM" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Անթափանց, փայլատ առարկաները տարբեր մակերևույթի տեքստուրաներով սկանավորում են լավագույնս: Նկարեք ձեր օբյեկտի բոլոր կողմերը ուղեծրերով:\\n"
+            "value" : "Անթափանց, փայլատ առարկաները տարբեր մակերևույթի տեքստուրաներով սկանավորում են լավագույնս: Նկարեք ձեր օբյեկտի բոլոր կողմերը ուղեծրերով:"
           }
         }
       }
@@ -1254,7 +1356,7 @@
         "hy-AM" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scan QR codes with ease"
+            "value" : "Հեշտությամբ սկանավորեք QR կոդերը"
           }
         }
       }
@@ -1565,6 +1667,40 @@
         }
       }
     },
+    "system" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Համարգային"
+          }
+        }
+      }
+    },
+    "text_size" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text Size"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Տառաչափ"
+          }
+        }
+      }
+    },
     "texture_mapping" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1639,13 +1775,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "For best quality, capture three segments.\n        Tap Skip if you can't make it all the way around but your final model may have missing areas."
+            "value" : "For best quality, capture three segments. Tap Skip if you can't make it all the way around but your final model may have missing areas."
           }
         },
         "hy-AM" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Լավագույն որակի համար նկարահանեք երեք հատված:\n Սեղմեք «Բաց թողնել», եթե չեք կարողանում մինչև վերջ անցնել, բայց ձեր վերջնական մոդելը կարող է բացակայող հատվածներ ունենալ:"
+            "value" : "Լավագույն որակի համար նկարահանեք երեք հատված: Սեղմեք «Բաց թողնել», եթե չեք կարողանում մինչև վերջ անցնել, բայց ձեր վերջնական մոդելը կարող է բացակայող հատվածներ ունենալ:"
           }
         }
       }

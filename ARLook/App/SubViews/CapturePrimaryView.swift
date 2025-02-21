@@ -40,6 +40,7 @@ struct CapturePrimaryView: View {
       )
       .blur(radius: appModel.showPreviewModel ? 45 : 0)
       .transition(.opacity)
+      .ignoresSafeArea()
       if shouldShowOverlayView {
         CaptureOverlayView(showInfo: $showInfo, session: session)
       }

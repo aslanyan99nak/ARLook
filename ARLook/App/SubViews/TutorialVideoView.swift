@@ -18,6 +18,10 @@ struct TutorialVideoView: View {
 
   private let textDelay: TimeInterval = 0.3
   private let animationDuration: TimeInterval = 4
+  
+  private var isDarkMode: Bool {
+    colorScheme == .dark
+  }
 
   var body: some View {
     contentView
@@ -42,7 +46,7 @@ struct TutorialVideoView: View {
         .overlay(alignment: .bottom) {
           if !isInReviewSheet {
             Text(appModel.orbit.feedbackString(isObjectFlippable: appModel.isObjectFlippable))
-              .font(.headline)
+              .dynamicFont()
               .opacity(isShowing ? 1 : 0)
               .padding(.bottom, 16)
           }

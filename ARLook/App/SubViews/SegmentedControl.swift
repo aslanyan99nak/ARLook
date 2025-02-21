@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SegmentedControl: View {
 
+  @AppStorage(AccentColorType.defaultKey) var accentColorType: AccentColorType = AccentColorType.defaultValue
+  @AppStorage(CustomColorScheme.defaultKey) var customColorScheme = CustomColorScheme.defaultValue
   @Environment(\.colorScheme) var colorScheme
   @Binding var selection: SearchScreen.ModelType
 
@@ -28,7 +30,7 @@ struct SegmentedControl: View {
   }
   
   private var isDarkMode: Bool {
-    colorScheme == .dark
+    customColorScheme == .dark || customColorScheme == .system && colorScheme == .dark
   }
   
   private var capsuleColor: Color {
@@ -72,7 +74,7 @@ struct SegmentedControl: View {
       ForEach(SearchScreen.ModelType.allCases, id: \.self) { modelType in
         segmentLabelView(
           modelType: modelType,
-          textColor: selection == modelType ? isDarkMode ? .white : .black : .gray,
+          textColor: selection == modelType ? accentColorType.color : .gray,
           width: segmentWidth(size)
         )
         .onTapGesture {

@@ -18,34 +18,50 @@ struct TutorialPageView: View {
   let cons: [String]
 
   var body: some View {
-    GeometryReader { geomReader in
-      VStack(alignment: .leading) {
-        Text(pageName)
-          .foregroundStyle(.primary)
-          .font(.largeTitle)
-          .bold()
+    VStack(alignment: .leading) {
+      Text(pageName)
+        .dynamicFont(size: 20, weight: .bold)
+        .foregroundStyle(.primary)
 
-        Text(imageCaption)
-          .foregroundStyle(.secondary)
+      Text(imageCaption)
+        .dynamicFont()
+        .foregroundStyle(.secondary)
 
-        Image(imageName)
-          .resizable()
-          .aspectRatio(contentMode: .fit)
-          .frame(width: 0.85 * geomReader.size.width) // Leaves 15% margins.
-          .padding(.leading)
+      Image(imageName)
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .padding(.leading)
 
-        ProConListView(
-          prosTitle: prosTitle,
-          pros: pros,
-          consTitle: consTitle,
-          cons: cons
-        )
+      ProConListView(
+        prosTitle: prosTitle,
+        pros: pros,
+        consTitle: consTitle,
+        cons: cons
+      )
 
-        Spacer()
-      }
-      .frame(width: geomReader.size.width, height: geomReader.size.height)
+      Spacer()
     }
     .navigationBarTitle(pageName, displayMode: .inline)
   }
 
+}
+
+#Preview {
+  TutorialPageView(
+    pageName: LocString.envHelpPageName,
+    imageName: Image.envHelp,
+    imageCaption: LocString.environmentHelpCaption,
+    prosTitle: LocString.envProsTitle,
+    pros: [
+      LocString.envPros1,
+      LocString.envPros2,
+      LocString.envPros3,
+    ],
+    consTitle: LocString.envConsTitle,
+    cons: [
+      LocString.envCons1,
+      LocString.envCons2,
+    ]
+  )
+  .padding()
 }

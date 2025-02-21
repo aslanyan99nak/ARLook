@@ -5,12 +5,12 @@
 //  Created by Narek Aslanyan on 03.02.25.
 //
 
-import QRCode
 import CoreImage.CIFilterBuiltins
+import QRCode
 import SwiftUI
 
 class MainViewModel: ObservableObject {
-
+  
   @Published var isShowScanner = false
   @Published var isShowPopup = false
   @Published var scannedCode: String?
@@ -26,6 +26,7 @@ class MainViewModel: ObservableObject {
   let context = CIContext()
   let filter = CIFilter.qrCodeGenerator()
   let modelManager = ModelManager.shared
+  private let modelEnvironment: Provider = Provider<ModelEndpoint>()
 
   func setupDocument() {
     guard let scannedCode else { return }
@@ -33,7 +34,8 @@ class MainViewModel: ObservableObject {
     doc?.design.shape.eye = QRCode.EyeShape.RoundedPointingIn()
 
     doc?.design.shape.onPixels = QRCode.PixelShape.Horizontal(
-      insetFraction: 0.1, cornerRadiusFraction: 1)
+      insetFraction: 0.1, cornerRadiusFraction: 1
+    )
 
     guard let logoImage = UIImage(named: "appIcon")?.cgImage else { return }
     doc?.logoTemplate = QRCode.LogoTemplate(
@@ -49,7 +51,7 @@ class MainViewModel: ObservableObject {
       )
     )
     self.doc = doc
-    self.image = try? doc?.cgImage(CGSize(width: 800, height: 800))
+    image = try? doc?.cgImage(CGSize(width: 800, height: 800))
   }
 
   func shareSheet(url: URL) {
@@ -73,9 +75,21 @@ class MainViewModel: ObservableObject {
     guard let outputImage = filter.outputImage,
           let cgImage = context.createCGImage(outputImage, from: outputImage.extent)
     else {
-      return UIImage(systemName: "xmark.circle") ?? UIImage()
+      return UIImage(systemName: Image.xMarkCircleFill) ?? UIImage()
     }
     return UIImage(cgImage: cgImage)
   }
 
+  func getModels() async {
+    do {
+      let response: [Model?] = try await modelEnvironment.request(.getList)
+      let models = response.compactMap(\.self)
+      models.forEach { print("File name 📁: \($0.fileName ?? "Not found")") }
+    } catch {
+      print("Can't get models")
+    }
+  }
+
+  func uploadModel() async {}
+  
 }

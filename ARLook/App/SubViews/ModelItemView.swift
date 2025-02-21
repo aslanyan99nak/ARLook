@@ -9,12 +9,13 @@ import SwiftUI
 
 struct ModelItemView: View {
 
-  @Environment(\.colorScheme) var colorScheme
+  @Environment(\.colorScheme) private var colorScheme
+//  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @Binding var isList: Bool
 
   let modelManager = ModelManager.shared
   let title: String
-  var description: String = "Description Description Description Description Description Description Description"
+  var description: String = "Description Description"
   var viewCountString: String = "167K"
 
   private var isDarkMode: Bool {
@@ -92,7 +93,7 @@ struct ModelItemView: View {
 
   private var viewCount: some View {
     HStack(spacing: 8) {
-      Image(systemName: "eye")
+      Image(systemName: Image.eye)
         .renderingMode(.template)
         .resizable()
         .frame(width: 20, height: 12)
@@ -100,23 +101,23 @@ struct ModelItemView: View {
 
       Text(viewCountString)
         .multilineTextAlignment(.leading)
-        .font(.headline)
+        .dynamicFont()
         .foregroundStyle(isDarkMode ? .white : .black)
     }
   }
 
   private var modelNameView: some View {
     Text(title)
+      .dynamicFont(size: isList ? 16 : 14, weight: .medium, design: .rounded)
       .lineLimit(3)
       .multilineTextAlignment(.leading)
-      .font(Font.system(size: isList ? 16 : 14, weight: .medium, design: .rounded))
       .foregroundStyle(isDarkMode ? .white : .black)
   }
 
   private var modelDescriptionView: some View {
     Text(description)
       .multilineTextAlignment(.leading)
-      .font(Font.system(size: 14, weight: .regular, design: .rounded))
+      .dynamicFont(size: 14, weight: .regular, design: .rounded)
       .foregroundStyle(isDarkMode ? .white : .black)
   }
 
@@ -129,4 +130,5 @@ struct ModelItemView: View {
     isList: $isList,
     title: "Model1"
   )
+  .padding()
 }

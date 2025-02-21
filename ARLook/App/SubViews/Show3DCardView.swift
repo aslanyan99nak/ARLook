@@ -9,8 +9,8 @@ import SwiftUI
 
 struct Show3DCardView: View {
   
-  @Environment(\.colorScheme) var colorScheme
-  
+  @Environment(\.colorScheme) private var colorScheme
+
   private var isDarkMode: Bool {
     colorScheme == .dark
   }
@@ -34,12 +34,12 @@ struct Show3DCardView: View {
   
   private var cardLeftSideView: some View {
     VStack(spacing: 8) {
-      Text(String.LocString.view3DMode)
-        .font(Font.system(size: 24, weight: .bold))
+      Text(LocString.view3DMode)
+        .dynamicFont(size: 24, weight: .bold)
         .foregroundStyle(isDarkMode ? Color.white : Color.black)
       
       HStack(spacing: 0) {
-        Image(systemName: "cube")
+        Image(systemName: Image.cube)
           .resizable()
           .frame(width: 60, height: 60)
           .foregroundStyle(isDarkMode ? Color.white : Color.black)

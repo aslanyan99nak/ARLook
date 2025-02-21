@@ -7,63 +7,75 @@
 
 import SwiftUI
 
-extension SettingsScreen {
-
-  enum AppearanceType: String, CaseIterable {
-
-    case icon
-    case theme
-    case font
-
-    var name: String {
-      switch self {
-      case .icon: String.LocString.icon
-      case .theme: String.LocString.theme
-      case .font: String.LocString.font
-      }
-    }
-
-    var icon: Image {
-      switch self {
-      case .icon: Image(systemName: "squareshape")
-      case .theme: Image(systemName: "paintbrush")
-      case .font: Image(systemName: "textformat.abc")
-      }
-    }
-
-  }
-
-}
-
 struct SettingsScreen: View {
+  
+  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
+  @AppStorage("textSize") private var textSize: Double = 0
+  @AppStorage(AccentColorType.defaultKey) var accentColorType: AccentColorType = AccentColorType.defaultValue
+
+  @State private var isColorSheetPresented = false
+  @State private var brightness: CGFloat = 0
+  
+  private var isDarkMode: Bool {
+    colorScheme == .dark
+  }
 
   var body: some View {
     NavigationStack {
-      Form {
-        sectionView
+      ScrollView {
+        LazyVStack(alignment: .leading, spacing: 16) {
+          Text(LocString.appearance)
+            .dynamicFont()
+            .foregroundStyle(.gray)
+            .padding(.leading, 8)
+          
+          themeList
+          accentColorRow
+          TextSizeRow()
+        }
+        .padding(.horizontal, 16)
       }
-      .navigationTitle(String.LocString.settings)
+      .navigationTitle(LocString.settings)
     }
   }
+  
+  private var themeList: some View {
+    VStack(spacing: 0) {
+      ForEach(CustomColorScheme.allCases, id: \.self) { mode in
+        VStack(spacing: 0) {
+          ThemeRow(mode: mode)
+            .padding(.vertical, 10)
 
-  private var sectionView: some View {
-    Section {
-      ForEach(AppearanceType.allCases, id: \.self) { appearance in
-        NavigationLink {
-          Text(appearance.name)
-        } label: {
-          Label {
-            Text(appearance.name)
-          } icon: {
-            appearance.icon
-              .resizable()
-              .frame(width: 24, height: 24)
+          if mode != CustomColorScheme.allCases.last {
+            Divider().overlay { Color.gray }
+          }
+        }
+        .onTapGesture {
+          withAnimation {
+            colorScheme = mode
           }
         }
       }
-    } header: {
-      Text(String.LocString.appearance)
     }
+    .padding(.horizontal, 16)
+    .background(Material.regular)
+    .clipShape(RoundedRectangle(cornerRadius: 16))
+  }
+
+  private var accentColorRow: some View {
+    HStack(spacing: 0) {
+      Text(LocString.accentColor)
+        .minimumScaleFactor(0.5)
+        .dynamicFont()
+
+      Spacer()
+
+      ColorPicker(accentColorType: $accentColorType)
+    }
+    .padding(.horizontal, 16)
+    .padding(.vertical, 10)
+    .background(Material.regular)
+    .clipShape(RoundedRectangle(cornerRadius: 16))
   }
 
 }

@@ -5,7 +5,7 @@
 //  Created by Narek Aslanyan on 06.02.25.
 //
 
-import UIKit
+import SwiftUI
 
 extension AppDataModel {
 
@@ -18,12 +18,12 @@ extension AppDataModel {
     }
 
     var image: String {
-      let imagesByIndex = [Constant.circle1, Constant.circle2, Constant.circle3]
+      let imagesByIndex = [Image.circle1, Image.circle2, Image.circle3]
       return imagesByIndex[id]
     }
 
     var imageSelected: String {
-      let imagesByIndex = [Constant.circle1Fill, Constant.circle2Fill, Constant.circle3Fill]
+      let imagesByIndex = [Image.circle1Fill, Image.circle2Fill, Image.circle3Fill]
       return imagesByIndex[id]
     }
 
@@ -37,15 +37,15 @@ extension AppDataModel {
     func feedbackString(isObjectFlippable: Bool) -> String {
       switch self {
       case .orbit1:
-        return String.LocString.segment1Feedback
+        return LocString.segment1Feedback
       case .orbit2, .orbit3:
         if isObjectFlippable {
-          return String.LocString.segment2And3FlippableFeedback
+          return LocString.segment2And3FlippableFeedback
         } else {
           if case .orbit2 = self {
-            return String.LocString.segment2UnflippableFeedback
+            return LocString.segment2UnflippableFeedback
           }
-          return String.LocString.segment3UnflippableFeedback
+          return LocString.segment3UnflippableFeedback
         }
       }
     }
@@ -56,21 +56,21 @@ extension AppDataModel {
     ) -> String {
       switch self {
       case .orbit1:
-        return UIDevice.isPad ? Constant.iPadFixedHeight1 : Constant.iPhoneFixedHeight1
+        return UIDevice.isPad ? Video.iPadFixedHeight1 : Video.iPhoneFixedHeight1
       case .orbit2:
         let iPhoneVideoName =
-          isObjectFlippable ? Constant.iPhoneFixedHeight2 : Constant.iPhoneFixedHeightUnflippableLow
+          isObjectFlippable ? Video.iPhoneFixedHeight2 : Video.iPhoneFixedHeightUnflippableLow
         let iPadVideoName =
           isObjectFlippable
-          ? Constant.iPadFixedHeight2 : Constant.iPadFixedHeightUnflippableLow
+          ? Video.iPadFixedHeight2 : Video.iPadFixedHeightUnflippableLow
         return UIDevice.isPad ? iPadVideoName : iPhoneVideoName
       case .orbit3:
         let iPhoneVideoName =
           isObjectFlippable
-          ? Constant.iPhoneFixedHeight3 : Constant.iPhoneFixedHeightUnflippableHigh
+          ? Video.iPhoneFixedHeight3 : Video.iPhoneFixedHeightUnflippableHigh
         let iPadVideoName =
           isObjectFlippable
-          ? Constant.iPadFixedHeight3 : Constant.iPadFixedHeightUnflippableHigh
+          ? Video.iPadFixedHeight3 : Video.iPadFixedHeightUnflippableHigh
         return UIDevice.isPad ? iPadVideoName : iPhoneVideoName
       }
     }

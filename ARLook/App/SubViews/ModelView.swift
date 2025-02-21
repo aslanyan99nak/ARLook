@@ -24,7 +24,7 @@ struct ModelView: View {
       } else {
         
         CircularProgressView()
-          .scaleEffect(3)
+          .scaleEffect(2)
       }
     }
     .onAppear {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CircularProgressView: View {
 
-  @Environment(\.colorScheme) var colorScheme
+  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
 
   var tintColor: Color?
 

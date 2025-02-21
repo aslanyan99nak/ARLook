@@ -9,8 +9,9 @@ import SwiftUI
 
 struct ItemRow: View {
   
-  @Environment(\.colorScheme) var colorScheme
-  
+//  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
+  @Environment(\.colorScheme) private var colorScheme
+
   private var isDarkMode: Bool {
     colorScheme == .dark
   }
@@ -44,12 +45,12 @@ struct ItemRow: View {
   private var infoView: some View {
     VStack(alignment: .leading, spacing: 8) {
       Text(title)
-        .font(Font.system(size: 20, weight: .bold))
+        .dynamicFont(size: 20, weight: .bold)
         .foregroundStyle(isDarkMode ? Color.white : Color.black)
         .multilineTextAlignment(.leading)
       
       Text(description)
-        .font(Font.system(size: 16, weight: .regular))
+        .dynamicFont(weight: .regular)
         .foregroundStyle(isDarkMode ? Color.white : Color.black)
         .multilineTextAlignment(.leading)
     }
@@ -59,7 +60,7 @@ struct ItemRow: View {
 
 #Preview {
   ItemRow(
-    image: Image(systemName: "qrcode"),
+    image: Image(systemName: Image.qrCode),
     title: "QR code title",
     description: "QR code description"
   )

@@ -312,7 +312,11 @@ class AppDataModel: ObservableObject, Identifiable {
     let currentState = OnboardingState.tooFewImages
     guard session.numberOfShotsTaken >= AppDataModel.minNumImages else { return currentState }
     return switch orbit {
-    case .orbit1: isOrbitCompleted ? .firstSegmentComplete : .firstSegmentNeedsWork
+    case .orbit1:
+      // TODO: - Change back
+
+      // isOrbitCompleted ? .firstSegmentComplete : .firstSegmentNeedsWork
+      isOrbitCompleted ? .thirdSegmentComplete : .thirdSegmentNeedsWork
     case .orbit2: isOrbitCompleted ? .secondSegmentComplete : .secondSegmentNeedsWork
     case .orbit3: isOrbitCompleted ? .thirdSegmentComplete : .thirdSegmentNeedsWork
     }

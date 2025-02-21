@@ -9,14 +9,21 @@ import SwiftUI
 
 struct HelpPageScreen: View {
 
+  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @Binding var showInfo: Bool
+
+  private var isDarkMode: Bool {
+    colorScheme == .dark
+  }
 
   var body: some View {
     ZStack {
       VStack(alignment: .leading) {
         HStack {
-          Text(String.LocString.captureHelp)
+          Text(LocString.captureHelp)
             .foregroundStyle(.secondary)
+            .dynamicFont()
+
           Spacer()
           closeButton
         }
@@ -24,22 +31,22 @@ struct HelpPageScreen: View {
       }
       .padding()
     }
-    .navigationTitle(String.LocString.scanningInfo)
+    .navigationTitle(LocString.scanningInfo)
     .navigationViewStyle(StackNavigationViewStyle())
   }
-  
+
   private var closeButton: some View {
     Button {
       withAnimation {
         showInfo = false
       }
     } label: {
-      Image(systemName: "xmark.circle.fill")
+      Image(systemName: Image.xMarkCircleFill)
         .foregroundStyle(.white.opacity(0.5))
         .font(.title)
     }
   }
-  
+
   private var tabView: some View {
     TabView {
       objectHelpPageView
@@ -53,39 +60,45 @@ struct HelpPageScreen: View {
   }
 
   private var objectHelpPageView: some View {
-    TutorialPageView(
-      pageName: String.LocString.objectHelpPageName,
-      imageName: Constant.objectHelpImageName,
-      imageCaption: String.LocString.objectHelpCaption,
-      prosTitle: String.LocString.objectProsTitle,
-      pros: [
-        String.LocString.objectPros1,
-        String.LocString.objectPros2,
-        String.LocString.objectPros3,
-      ],
-      consTitle: String.LocString.objectConsTitle,
-      cons: [
-        String.LocString.objectCons1,
-        String.LocString.objectCons2,
-      ])
+    ScrollView(showsIndicators: false) {
+      TutorialPageView(
+        pageName: LocString.objectHelpPageName,
+        imageName: Image.objectHelp,
+        imageCaption: LocString.objectHelpCaption,
+        prosTitle: LocString.objectProsTitle,
+        pros: [
+          LocString.objectPros1,
+          LocString.objectPros2,
+          LocString.objectPros3,
+        ],
+        consTitle: LocString.objectConsTitle,
+        cons: [
+          LocString.objectCons1,
+          LocString.objectCons2,
+        ])
+      .padding(.bottom, 40)
+    }
   }
 
   private var environmentHelpPageView: some View {
-    TutorialPageView(
-      pageName: String.LocString.envHelpPageName,
-      imageName: Constant.envHelpImageName,
-      imageCaption: String.LocString.environmentHelpCaption,
-      prosTitle: String.LocString.envProsTitle,
-      pros: [
-        String.LocString.envPros1,
-        String.LocString.envPros2,
-        String.LocString.envPros3,
-      ],
-      consTitle: String.LocString.envConsTitle,
-      cons: [
-        String.LocString.envCons1,
-        String.LocString.envCons2,
-      ])
+    ScrollView(showsIndicators: false) {
+      TutorialPageView(
+        pageName: LocString.envHelpPageName,
+        imageName: Image.envHelp,
+        imageCaption: LocString.environmentHelpCaption,
+        prosTitle: LocString.envProsTitle,
+        pros: [
+          LocString.envPros1,
+          LocString.envPros2,
+          LocString.envPros3,
+        ],
+        consTitle: LocString.envConsTitle,
+        cons: [
+          LocString.envCons1,
+          LocString.envCons2,
+        ])
+      .padding(.bottom, 40)
+    }
   }
 
 }

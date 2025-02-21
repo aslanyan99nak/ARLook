@@ -11,12 +11,13 @@ import SwiftUI
 struct QRCodeScanner: View {
 
   @State private var isShow: Bool = false
+  @State private var scannedCode: String?
   @Binding var fileURL: URL?
   @Binding var isShowScanner: Bool
-  @Binding var scannedCode: String?
   @Binding var scale: CGFloat
   
   private let modelManager = ModelManager.shared
+  var scannedCodeCompletion: (String?) -> Void
 
   var body: some View {
     contentView
@@ -37,7 +38,7 @@ struct QRCodeScanner: View {
         closeButton
       }
       .padding(.horizontal, 16)
-      .padding(.top, 40)
+      .padding(.top, 50)
 
       Spacer()
 
@@ -65,6 +66,7 @@ struct QRCodeScanner: View {
               scale = 0
             } completion: {
               isShowScanner = false
+              scannedCodeCompletion(scannedCode)
             }
           }
         }
@@ -76,7 +78,8 @@ struct QRCodeScanner: View {
     Button {
       scannedCode = nil
     } label: {
-      Text(String.LocString.fileNotFound)
+      Text(LocString.fileNotFound)
+        .dynamicFont()
         .foregroundStyle(.white)
         .padding()
         .background(Color.purple)
@@ -90,15 +93,19 @@ struct QRCodeScanner: View {
       withAnimation(.easeInOut) {
         scale = 0
       } completion: {
+        if scannedCode.isNotNil && fileURL.isNil {
+          scannedCode = nil
+          scannedCodeCompletion(nil)
+        }
         isShowScanner = false
       }
     } label: {
-      Image(systemName: "xmark")
+      Image(systemName: Image.xMarkCircle)
+        .renderingMode(.template)
         .resizable()
-        .frame(width: 20, height: 20)
-        .foregroundStyle(.black)
-        .padding(8)
-        .background(.white)
+        .frame(width: 40, height: 40)
+        .foregroundStyle(.white)
+        .background(.regularMaterial)
         .clipShape(Circle())
     }
   }
@@ -109,7 +116,7 @@ struct QRCodeScanner: View {
   QRCodeScanner(
     fileURL: .constant(nil),
     isShowScanner: .constant(false),
-    scannedCode: .constant(""),
-    scale: .constant(0)
+    scale: .constant(1),
+    scannedCodeCompletion: { _ in }
   )
 }

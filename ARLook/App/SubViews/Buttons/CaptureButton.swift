@@ -11,16 +11,15 @@ import SwiftUI
 @MainActor
 struct CaptureButton: View {
 
+  @Binding var hasDetectionFailed: Bool
   var session: ObjectCaptureSession
   var isObjectFlipped: Bool
-  @Binding var hasDetectionFailed: Bool
 
   var body: some View {
     Button {
       performAction()
     } label: {
       Text(buttonLabel)
-        .font(.body)
         .fontWeight(.bold)
         .foregroundStyle(.white)
         .padding(.horizontal, 25)
@@ -32,13 +31,9 @@ struct CaptureButton: View {
 
   private var buttonLabel: String {
     if case .ready = session.state {
-      String.LocString.continue
+      LocString.continue
     } else {
-      if !isObjectFlipped {
-        String.LocString.startCapture
-      } else {
-        String.LocString.continue
-      }
+      !isObjectFlipped ? LocString.startCapture : LocString.continue
     }
   }
 

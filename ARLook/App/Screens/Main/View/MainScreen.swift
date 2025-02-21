@@ -21,24 +21,26 @@ extension MainScreen {
 
 struct MainScreen: View {
 
-  @Environment(\.colorScheme) var colorScheme
   @StateObject private var viewModel = MainViewModel()
+  @EnvironmentObject private var popupVM: PopupViewModel
+  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @State private var navigationPath = NavigationPath()
-
-  private var isDarkMode: Bool {
-    colorScheme == .dark
-  }
 
   var body: some View {
     NavigationStack(path: $navigationPath) {
       contentView
+        .onLoad {
+          Task {
+            await viewModel.getModels()
+          }
+        }
         .navigationDestination(for: Destination.self) { destination in
           if case .modelScanner = destination {
             ObjectScannerScreen()
           }
         }
         .ignoresSafeArea()
-        .navigationTitle(String.LocString.arLook)
+        .navigationTitle(LocString.arLook)
     }
     .sheet(isPresented: $viewModel.isShowPicker) {
       DocumentPicker { url in
@@ -70,34 +72,6 @@ struct MainScreen: View {
         scanner
           .toolbar(.hidden, for: .navigationBar)
           .toolbar(.hidden, for: .tabBar)
-      } else if viewModel.isShowPopup {
-        Rectangle()
-          .background(Material.regular)
-          .ignoresSafeArea()
-
-        VStack(spacing: 20) {
-          Text(String.LocString.canNotScanModel)
-            .foregroundStyle(isDarkMode ? .white : .black)
-
-          Button {
-            withAnimation {
-              viewModel.isShowPopup = false
-            }
-          } label: {
-            Text(String.LocString.ok)
-              .foregroundStyle(.white)
-              .padding(.vertical, 8)
-              .frame(minWidth: 100, idealWidth: 100, maxWidth: 140)
-              .background(Color.purple)
-              .clipShape(Capsule())
-          }
-        }
-        .padding()
-        .background(.regularMaterial)
-        .background(isDarkMode ? Color.gray.opacity(0.15) : Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 24))
-        .shadow(radius: 10)
-        .padding(.horizontal, 16)
       }
     }
   }
@@ -121,11 +95,11 @@ struct MainScreen: View {
       } label: {
         ItemRow(
           image: viewModel.savedFilePath.isNil
-            ? Image(systemName: "square.and.arrow.down") : Image(systemName: "checkmark.seal"),
+          ? Image(systemName: Image.upload) : Image(systemName: Image.checkMarkCircle),
           title: viewModel.savedFilePath.isNil
-            ? String.LocString.upload : String.LocString.uploaded,
+            ? LocString.upload : LocString.uploaded,
           description: viewModel.savedFilePath.isNil
-            ? String.LocString.uploadDescription : String.LocString.uploadedDescription
+            ? LocString.uploadDescription : LocString.uploadedDescription
         )
       }
       .padding(.horizontal, 16)
@@ -137,9 +111,10 @@ struct MainScreen: View {
     QRCodeScanner(
       fileURL: $viewModel.fileURL,
       isShowScanner: $viewModel.isShowScanner,
-      scannedCode: $viewModel.scannedCode,
       scale: $viewModel.scale
-    )
+    ) { code in
+      viewModel.scannedCode = code
+    }
   }
 
   private var scanButton: some View {
@@ -150,9 +125,9 @@ struct MainScreen: View {
       }
     } label: {
       ItemRow(
-        image: Image(systemName: "qrcode"),
-        title: String.LocString.qrCodeScannerTitle,
-        description: String.LocString.qrCodeScannerDescription
+        image: Image(systemName: Image.qrCode),
+        title: LocString.qrCodeScannerTitle,
+        description: LocString.qrCodeScannerDescription
       )
     }
     .padding(.horizontal, 16)
@@ -178,8 +153,8 @@ struct MainScreen: View {
     } label: {
       ItemRow(
         image: Image(.openFile),
-        title: String.LocString.fileManagmentTitle,
-        description: String.LocString.fileManagmentDescription
+        title: LocString.fileManagmentTitle,
+        description: LocString.fileManagmentDescription
       )
     }
     .padding(.horizontal, 16)
@@ -217,8 +192,9 @@ struct MainScreen: View {
       } else {
         // Show popup
         print("Show Popup")
-        withAnimation {
-          viewModel.isShowPopup = true
+        withAnimation(.easeInOut(duration: 0.5)) {
+          popupVM.isShowPopup = true
+          popupVM.popupContent = AnyView(popupView)
         }
       }
     } label: {
@@ -237,11 +213,21 @@ struct MainScreen: View {
       }
     } label: {
       HStack(spacing: 4) {
-        Text(String.LocString.share)
+        Text(LocString.share)
+          .dynamicFont()
 
-        Image(systemName: "square.and.arrow.up")
+        Image(systemName: Image.download)
           .resizable()
           .frame(width: 16, height: 16)
+      }
+    }
+  }
+  
+  private var popupView: some View {
+    PopupView {
+      withAnimation(.easeInOut(duration: 0.5)) {
+        popupVM.isShowPopup = false
+        popupVM.popupContent = AnyView(EmptyView())
       }
     }
   }

@@ -14,7 +14,6 @@ struct ProgressBarView: View {
   @EnvironmentObject var appModel: AppDataModel
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
-  // The progress value from 0 to 1 which describes how much coverage is done.
   var progress: Float
   var estimatedRemainingTime: TimeInterval?
   var processingStageDescription: String?
@@ -30,8 +29,9 @@ struct ProgressBarView: View {
 
   private var remainingTimeString: String {
     String.localizedStringWithFormat(
-      String.LocString.estimatedRemainingTime,
-      formattedEstimatedRemainingTime ?? String.LocString.calculating)
+      LocString.estimatedRemainingTime,
+      formattedEstimatedRemainingTime ?? LocString.calculating
+    )
   }
 
   private var numOfImages: Int {
@@ -48,50 +48,51 @@ struct ProgressBarView: View {
   }
 
   var body: some View {
-    VStack(spacing: 12) {
+    VStack(spacing: 40) {
       headerView
-
-      ProgressView(value: progress)
-
+      ActivityProgressView(progress: progress)
       footerView
-        .padding(.top, 10)
     }
   }
 
   private var headerView: some View {
     HStack(spacing: 0) {
-      Text(processingStageDescription ?? String.LocString.processing)
+      Text(processingStageDescription ?? LocString.processing)
+        .dynamicFont()
 
       Spacer()
-
-      Text(progress, format: .percent.precision(.fractionLength(0)))
-        .bold()
-        .monospacedDigit()
     }
-    .font(.body)
   }
 
   private var footerView: some View {
     HStack(alignment: .center, spacing: 0) {
       VStack(alignment: .center) {
-        Image(systemName: "photo")
+        Image(systemName: Image.photo)
 
         Text(String(numOfImages))
+          .dynamicFont(weight: .bold)
           .frame(alignment: .bottom)
-          .font(.caption)
-          .bold()
       }
-      .font(.subheadline)
       .padding(.trailing, 16)
 
       VStack(alignment: .leading) {
-        Text(String.LocString.processingModelDescription)
+        Text(LocString.processingModelDescription)
+          .dynamicFont()
 
         Text(remainingTimeString)
+          .dynamicFont()
       }
       .font(.subheadline)
     }
     .foregroundStyle(.secondary)
   }
 
+}
+
+#Preview {
+  ProgressBarView(
+    progress: 1,
+    estimatedRemainingTime: TimeInterval(100),
+    processingStageDescription: "dfdsgdfgdfg"
+  )
 }

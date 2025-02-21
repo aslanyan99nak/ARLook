@@ -42,15 +42,16 @@ struct CreateButton: View {
     ZStack {
       if showBusyIndicator {
         HStack {
-          Text(buttonLabel).hidden()
+          Text(buttonLabel)
+            .dynamicFont()
+            .hidden()
           Spacer().frame(maxWidth: 48)
 
           CircularProgressView(tintColor: tintColor)
         }
       }
       Text(buttonLabel)
-        .font(.headline)
-        .bold()
+        .dynamicFont(weight: .bold)
         .foregroundStyle(buttonLabelColor)
         .padding()
         .frame(maxWidth: .infinity)
