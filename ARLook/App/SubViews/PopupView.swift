@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PopupView: View {
   
-//  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @Environment(\.colorScheme) private var colorScheme
 
   let action: () -> Void

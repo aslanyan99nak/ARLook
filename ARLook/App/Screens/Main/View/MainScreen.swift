@@ -14,6 +14,9 @@ extension MainScreen {
   enum Destination: Hashable {
 
     case modelScanner
+    case importQR
+    case look
+    case uploadModel
 
   }
 
@@ -34,9 +37,33 @@ struct MainScreen: View {
             await viewModel.getModels()
           }
         }
+        .onOpenURL { url in
+          print("Opened from: \(url.absoluteString)")
+          guard let code = url.absoluteString.convertedFileNameFromURLString, !code.isEmpty else { return }
+          viewModel.modelManager.checkFileExists(fileName: code) { isExists, url in
+            if let url, isExists {
+              viewModel.fileURL = url
+              viewModel.scannedCode = code
+            }
+          }
+        }
         .navigationDestination(for: Destination.self) { destination in
-          if case .modelScanner = destination {
-            ObjectScannerScreen()
+          switch destination {
+          case .modelScanner: ObjectScannerScreen()
+          case .importQR:
+            QRImageScannerView { code in
+              viewModel.scannedCode = code
+              if !navigationPath.isEmpty {
+                navigationPath.removeLast(navigationPath.count)
+              }
+            }
+          case .look:
+            if let selectedURL = viewModel.selectedURL {
+              LookScreen(fileURL: selectedURL)
+            } else {
+              Text("You have not selected url")
+            }
+          case .uploadModel: UploadModelScreen()
           }
         }
         .ignoresSafeArea()
@@ -62,7 +89,9 @@ struct MainScreen: View {
             showModelButton
           }
           scanButton
+          importQRButton
           chooseButton
+          lookButton
         }
         .padding(.top, 150)
         .padding(.bottom, 150)
@@ -72,62 +101,60 @@ struct MainScreen: View {
         scanner
           .toolbar(.hidden, for: .navigationBar)
           .toolbar(.hidden, for: .tabBar)
+          .transition(.scale)
       }
     }
   }
 
-  @ViewBuilder
   private var uploadButton: some View {
-    if let selectedURL = viewModel.selectedURL {
-      Button {
-        // Saving
-        if viewModel.savedFilePath.isNil {
-          let number = Int.random(in: 1...20)
-          viewModel.modelManager.saveFile(from: selectedURL, to: "model\(number).usdz") {
-            success, savedURL in
-            if success {
-              DispatchQueue.main.async {
-                viewModel.savedFilePath = savedURL?.path
-              }
-            }
-          }
-        }
-      } label: {
-        ItemRow(
-          image: viewModel.savedFilePath.isNil
+    Button {
+      navigationPath.append(Destination.uploadModel)
+    } label: {
+      ItemRow(
+        image: viewModel.savedFilePath.isNil
           ? Image(systemName: Image.upload) : Image(systemName: Image.checkMarkCircle),
-          title: viewModel.savedFilePath.isNil
-            ? LocString.upload : LocString.uploaded,
-          description: viewModel.savedFilePath.isNil
-            ? LocString.uploadDescription : LocString.uploadedDescription
-        )
-      }
-      .padding(.horizontal, 16)
-      .disabled(viewModel.savedFilePath.isNotNil)
+        title: viewModel.savedFilePath.isNil
+          ? LocString.upload : LocString.uploaded,
+        description: viewModel.savedFilePath.isNil
+          ? LocString.uploadDescription : LocString.uploadedDescription
+      )
     }
+    .padding(.horizontal, 16)
   }
 
   private var scanner: some View {
     QRCodeScanner(
       fileURL: $viewModel.fileURL,
-      isShowScanner: $viewModel.isShowScanner,
-      scale: $viewModel.scale
+      isShowScanner: $viewModel.isShowScanner
     ) { code in
       viewModel.scannedCode = code
     }
+    .zIndex(1)
   }
 
   private var scanButton: some View {
     Button {
-      viewModel.isShowScanner = true
-      withAnimation(.easeInOut) {
-        viewModel.scale = 1
+      withAnimation(.easeInOut(duration: 0.3)) {
+        viewModel.isShowScanner = true
       }
     } label: {
       ItemRow(
-        image: Image(systemName: Image.qrCode),
+        image: Image(systemName: Image.qrCodeScanner),
         title: LocString.qrCodeScannerTitle,
         description: LocString.qrCodeScannerDescription
+      )
+    }
+    .padding(.horizontal, 16)
+  }
+
+  private var importQRButton: some View {
+    Button {
+      navigationPath.append(Destination.importQR)
+    } label: {
+      ItemRow(
+        image: Image(systemName: Image.qrCode),
+        title: LocString.importQRTitle,
+        description: LocString.importQRDescription
       )
     }
     .padding(.horizontal, 16)
@@ -141,7 +168,11 @@ struct MainScreen: View {
         viewModel.previewURL = viewModel.fileURL
       }
     } label: {
-      Show3DCardView()
+      ItemRow(
+        image: Image(systemName: Image.arkit),
+        title: LocString.view3DMode,
+        description: "Experience a detailed 3D view with a single tap."
+      )
     }
     .quickLookPreview($viewModel.previewURL)
     .padding(.horizontal, 16)
@@ -160,20 +191,27 @@ struct MainScreen: View {
     .padding(.horizontal, 16)
   }
 
+  private var lookButton: some View {
+    Button {
+      navigationPath.append(Destination.look)
+    } label: {
+      ItemRow(
+        image: Image(systemName: "eye"),
+        title: "Look around",
+        description: "Look around description"
+      )
+    }
+    .padding(.horizontal, 16)
+  }
+
   private var qrCodeView: some View {
     VStack(spacing: 0) {
-      if let image = viewModel.image {
-        Menu {
-          shareButton
-        } label: {
-          Image(uiImage: UIImage(cgImage: image))
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .clipShape(RoundedRectangle(cornerRadius: 24))
-            .frame(width: 200, height: 200)
-            .shadow(radius: 10)
-            .padding(.top, 16)
-        }
+      if viewModel.image.isNotNil {
+        ShareMenuItemsView(
+          isDefaultImage: .constant(false),
+          scannedText: $viewModel.scannedCode,
+          selectedImage: $viewModel.image
+        )
       }
     }
     .padding(.horizontal, 16)
@@ -190,8 +228,6 @@ struct MainScreen: View {
         let screen = Destination.modelScanner
         navigationPath.append(screen)
       } else {
-        // Show popup
-        print("Show Popup")
         withAnimation(.easeInOut(duration: 0.5)) {
           popupVM.isShowPopup = true
           popupVM.popupContent = AnyView(popupView)
@@ -205,24 +241,6 @@ struct MainScreen: View {
     .padding(.top, 16)
   }
 
-  private var shareButton: some View {
-    Button {
-      // Share Action
-      if let url = URL(string: "https://example.com/\(viewModel.scannedCode ?? "")") {
-        viewModel.shareSheet(url: url)
-      }
-    } label: {
-      HStack(spacing: 4) {
-        Text(LocString.share)
-          .dynamicFont()
-
-        Image(systemName: Image.download)
-          .resizable()
-          .frame(width: 16, height: 16)
-      }
-    }
-  }
-  
   private var popupView: some View {
     PopupView {
       withAnimation(.easeInOut(duration: 0.5)) {
@@ -231,17 +249,6 @@ struct MainScreen: View {
       }
     }
   }
-
-//  private var fileInfoDebugView: some View {
-//    VStack(spacing: 10) {
-//      Text("Scanned Code \(viewModel.scannedCode ?? "empty")")
-//      if let path = viewModel.savedFilePath {
-//        Text("Saved File Path:\n\(path)")
-//          .padding()
-//          .multilineTextAlignment(.center)
-//      }
-//    }
-//  }
 
 }
 

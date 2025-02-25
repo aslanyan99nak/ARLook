@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct ItemRow: View {
-  
-//  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
+
   @Environment(\.colorScheme) private var colorScheme
 
   private var isDarkMode: Bool {
@@ -39,7 +38,6 @@ struct ItemRow: View {
       .renderingMode(.template)
       .resizable()
       .frame(width: 40, height: 40)
-      .foregroundStyle(isDarkMode ? Color.white : Color.black)
   }
   
   private var infoView: some View {

@@ -22,7 +22,6 @@ struct ModelView: View {
           endCaptureCallback: endCaptureCallback
         )
       } else {
-        
         CircularProgressView()
           .scaleEffect(2)
       }

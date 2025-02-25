@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2489E3972D4CE5C400BBDB34 /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 2489E3962D4CE5C400BBDB34 /* QRCode */; };
 		2489E3A22D50C67200BBDB34 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 2489E3A12D50C67200BBDB34 /* CodeScanner */; };
+		CE7081982D6887F0003E9AE6 /* FocusEntity in Frameworks */ = {isa = PBXBuildFile; productRef = CE7081972D6887F0003E9AE6 /* FocusEntity */; };
 		CEF871E02D63421C00B790E8 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = CEF871DF2D63421C00B790E8 /* CombineMoya */; };
 		CEF871E22D63421C00B790E8 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CEF871E12D63421C00B790E8 /* Moya */; };
 /* End PBXBuildFile section */
@@ -43,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE7081982D6887F0003E9AE6 /* FocusEntity in Frameworks */,
 				2489E3A22D50C67200BBDB34 /* CodeScanner in Frameworks */,
 				2489E3972D4CE5C400BBDB34 /* QRCode in Frameworks */,
 				CEF871E22D63421C00B790E8 /* Moya in Frameworks */,
@@ -93,6 +95,7 @@
 				2489E3A12D50C67200BBDB34 /* CodeScanner */,
 				CEF871DF2D63421C00B790E8 /* CombineMoya */,
 				CEF871E12D63421C00B790E8 /* Moya */,
+				CE7081972D6887F0003E9AE6 /* FocusEntity */,
 			);
 			productName = ARLook;
 			productReference = 2489E2D42D4BB97A00BBDB34 /* ARLook.app */;
@@ -127,6 +130,7 @@
 				2489E3952D4CE5C400BBDB34 /* XCRemoteSwiftPackageReference "QRCode" */,
 				2489E3A02D50C67200BBDB34 /* XCRemoteSwiftPackageReference "CodeScanner" */,
 				CEF871DE2D63421C00B790E8 /* XCRemoteSwiftPackageReference "Moya" */,
+				CE7081962D6887F0003E9AE6 /* XCRemoteSwiftPackageReference "FocusEntity" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2489E2D52D4BB97A00BBDB34 /* Products */;
@@ -400,6 +404,14 @@
 				minimumVersion = 2.5.2;
 			};
 		};
+		CE7081962D6887F0003E9AE6 /* XCRemoteSwiftPackageReference "FocusEntity" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/maxxfrazer/FocusEntity";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
 		CEF871DE2D63421C00B790E8 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya";
@@ -420,6 +432,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2489E3A02D50C67200BBDB34 /* XCRemoteSwiftPackageReference "CodeScanner" */;
 			productName = CodeScanner;
+		};
+		CE7081972D6887F0003E9AE6 /* FocusEntity */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE7081962D6887F0003E9AE6 /* XCRemoteSwiftPackageReference "FocusEntity" */;
+			productName = FocusEntity;
 		};
 		CEF871DF2D63421C00B790E8 /* CombineMoya */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -239,6 +239,23 @@
         }
       }
     },
+    "choose_from_gallery" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose from gallery"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ընտրել ֆոտոալբոմից"
+          }
+        }
+      }
+    },
     "completed_process" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -337,6 +354,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Մոտեցրեք և կետը կենտրոնացրեք ձեր օբյեկտի վրա, այնուհետև սեղմեք Շարունակել:"
+          }
+        }
+      }
+    },
+    "done" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Հաստատել"
           }
         }
       }
@@ -919,6 +953,40 @@
         }
       }
     },
+    "import_qr_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import QR image from your gallery"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ներմուծեք QR նկարը ձեր ֆոտոալբոմից"
+          }
+        }
+      }
+    },
+    "import_qr_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import QR"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ներմուծեք QR"
+          }
+        }
+      }
+    },
     "light" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -969,6 +1037,12 @@
           }
         }
       }
+    },
+    "Model Description" : {
+
+    },
+    "Model Name" : {
+
     },
     "moving_too_fast" : {
       "extractionState" : "manual",
@@ -1633,6 +1707,57 @@
         }
       }
     },
+    "share_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can share a link or image, or choose an image from your gallery."
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Դուք կարող եք կիսվել հղումով կամ նկարով, կամ ընտրել նկար ձեր ֆոտոալբոմից:"
+          }
+        }
+      }
+    },
+    "share_image" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share image"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Կիսվել նկարով"
+          }
+        }
+      }
+    },
+    "share_link" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share link"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Կիսվել հղումով"
+          }
+        }
+      }
+    },
     "skip" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1921,6 +2046,9 @@
           }
         }
       }
+    },
+    "You have not selected url" : {
+
     }
   },
   "version" : "1.0"

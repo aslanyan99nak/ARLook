@@ -68,10 +68,6 @@ struct ObjectScannerScreen: View {
         }
       }
     }
-    // TODO: - Delete
-    .onAppear {
-      appModel.state = .capturing
-    }
   }
 
   private func appStateChanged(_ newState: AppDataModel.ModelState) {
