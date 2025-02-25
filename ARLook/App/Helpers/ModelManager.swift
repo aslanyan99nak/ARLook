@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SceneKit
+@preconcurrency import SceneKit
 import UIKit
 
 class ModelManager {
@@ -107,17 +107,23 @@ class ModelManager {
     return image
   }
 
-  func thumbnail(for url: URL, size: CGSize, time: TimeInterval = 0) -> UIImage? {
+  @MainActor
+  func thumbnail(for url: URL, size: CGSize, time: TimeInterval = 0, completion: @escaping (UIImage?) -> Void) {
     let device = MTLCreateSystemDefaultDevice()
     let renderer = SCNRenderer(device: device, options: [:])
     renderer.autoenablesDefaultLighting = true
 
-    guard let scene = try? SCNScene(url: url, options: nil)
-    else { return nil }
-    renderer.scene = scene
-
-    let image = renderer.snapshot(atTime: time, with: size, antialiasingMode: .multisampling4X)
-    return image
+    DispatchQueue.global(qos: .background).async {
+      if let scene = try? SCNScene(url: url, options: nil) {
+        renderer.scene = scene
+        DispatchQueue.main.async {
+          let image = renderer.snapshot(atTime: time, with: size, antialiasingMode: .multisampling4X)
+          completion(image)
+        }
+      } else {
+        completion(nil)
+      }
+    }
   }
 
 }

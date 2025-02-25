@@ -10,20 +10,41 @@ import SwiftUI
 struct ModelItemView: View {
 
   @Environment(\.colorScheme) private var colorScheme
-//  @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @Binding var isList: Bool
+  @State private var loadedImage: UIImage?
 
   let modelManager = ModelManager.shared
-  let title: String
-  var description: String = "Description Description"
+  let model: Model
   var viewCountString: String = "167K"
+
+  private var title: String {
+    model.name ?? ""
+  }
+
+  private var description: String {
+    model.description ?? ""
+  }
 
   private var isDarkMode: Bool {
     colorScheme == .dark
   }
 
+  private var url: URL? {
+    model.localFileURL
+  }
+
   var body: some View {
     contentView
+      .onAppear {
+        if let url {
+          modelManager.thumbnail(
+            for: url,
+            size: CGSize(width: 512, height: 512)
+          ) { image in
+            self.loadedImage = image
+          }
+        }
+      }
   }
 
   private var contentView: some View {
@@ -79,16 +100,24 @@ struct ModelItemView: View {
     }
   }
 
-  @ViewBuilder
+  @MainActor
   private var modelView: some View {
-    if let image = modelManager.thumbnail(
-      for: "ClassicZombie.usdz",
-      size: CGSize(width: 512, height: 512)
-    ) {
-      Image(uiImage: image)
-        .resizable()
-        .frame(width: 90, height: 90)
+    ZStack {
+      if let loadedImage {
+        Image(uiImage: loadedImage)
+          .resizable()
+      }
+      
+      if model.isLoading, model.loadingProgress != 1 {
+        ActivityProgressView(
+          progress: Float(model.loadingProgress),
+          color: .blue,
+          scale: 0.4,
+          isTextHidden: true
+        )
+      }
     }
+    .frame(width: 90, height: 90)
   }
 
   private var viewCount: some View {
@@ -128,7 +157,13 @@ struct ModelItemView: View {
 
   ModelItemView(
     isList: $isList,
-    title: "Model1"
+    model: Model(
+      id: nil,
+      name: "Model Name",
+      fileName: "File Name",
+      fileType: "File Type",
+      description: "File Description"
+    )
   )
   .padding()
 }

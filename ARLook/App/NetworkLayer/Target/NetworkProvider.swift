@@ -20,9 +20,11 @@ final class Provider<T>: MoyaProvider<T> where T: MultiTargetType {
       requestClosure: MoyaProvider<Target>.defaultRequestMapping,
       stubClosure: MoyaProvider.neverStub,
       session: NetworkConfiguration.sessionManager,
-      plugins: [NetworkActivityPlugin(
-        networkActivityClosure: NetworkConfiguration.networkActivityIndicator),
-      NetworkConfiguration.networkLogger],
+      plugins: [
+        NetworkActivityPlugin(
+          networkActivityClosure: NetworkConfiguration.networkActivityIndicator),
+        NetworkConfiguration.networkLogger,
+      ],
       trackInflights: false)
   }
 
@@ -35,7 +37,11 @@ final class Provider<T>: MoyaProvider<T> where T: MultiTargetType {
             let data = try response.map(C.self)
             continuation.resume(returning: data)
           } catch {
-            continuation.resume(throwing: error)
+            if let emptyInstance = EmptyModel() as? C {
+              continuation.resume(returning: emptyInstance)
+            } else {
+              continuation.resume(throwing: error)
+            }
           }
         case let .failure(error):
           continuation.resume(throwing: error)
@@ -62,4 +68,5 @@ final class Provider<T>: MoyaProvider<T> where T: MultiTargetType {
         })
     }
   }
+  
 }
