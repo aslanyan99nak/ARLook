@@ -8,7 +8,7 @@
 import Foundation
 
 enum LocString {
-
+  
   static let `continue` = "continue".localized
   static let finish = "finish".localized
   static let skip = "skip".localized
@@ -123,5 +123,12 @@ enum LocString {
   static let system = "system".localized
   static let light = "light".localized
   static let dark = "dark".localized
+  static let importQRTitle = "import_qr_title".localized
+  static let importQRDescription = "import_qr_description".localized
+  static let done = "done".localized
+  static let shareDescription = "share_description".localized
+  static let shareLink = "share_link".localized
+  static let shareImage = "share_image".localized
+  static let chooseFromGallery = "choose_from_gallery".localized
 
 }

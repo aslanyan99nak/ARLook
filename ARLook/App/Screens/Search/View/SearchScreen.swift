@@ -5,6 +5,7 @@
 //  Created by Narek Aslanyan on 06.02.25.
 //
 
+import QuickLook
 import SwiftUI
 
 extension SearchScreen {
@@ -51,7 +52,7 @@ struct SearchScreen: View {
   private var columns: [GridItem] {
     viewModel.isList ? [GridItem(.flexible())] : [GridItem(.flexible()), GridItem(.flexible())]
   }
-  
+
   private var isDarkMode: Bool {
     colorScheme == .dark
   }
@@ -72,10 +73,15 @@ struct SearchScreen: View {
         segmentedControlView
           .padding(.bottom, 8)
           .padding(.horizontal, 16)
-        
+
         Divider()
-        
+
         gridView
+      }
+    }
+    .onLoad {
+      Task {
+        await viewModel.getModels()
       }
     }
   }
@@ -83,18 +89,23 @@ struct SearchScreen: View {
   private var gridView: some View {
     ScrollView(showsIndicators: false) {
       LazyVGrid(columns: columns, spacing: 20) {
-        ForEach(viewModel.searchResults, id: \.self) { modelName in
+        ForEach(viewModel.searchResults, id: \.self) { model in
           Button {
-            viewModel.selectedModelName = modelName
-            if let selectedModelName = viewModel.selectedModelName {
-              viewModel.modelManager.checkFileExists(fileName: selectedModelName) { isExists, url in
-                if let url, isExists {
-                  viewModel.previewURL = url
+            viewModel.selectedModelName = model.name
+            if model.localFileURL.isNotNil {
+              viewModel.previewURL = model.localFileURL
+            } else {
+              if let id = model.id {
+                Task {
+                  await viewModel.downloadModel(by: id)
                 }
               }
             }
           } label: {
-            ModelItemView(isList: $viewModel.isList, title: modelName)
+            ModelItemView(
+              isList: $viewModel.isList,
+              model: model
+            )
           }
           .quickLookPreview($viewModel.previewURL)
         }
@@ -102,6 +113,11 @@ struct SearchScreen: View {
       .padding(.bottom, 40)
       .padding(.top, 20)
       .padding(.horizontal, 16)
+    }
+    .refreshable {
+      Task {
+        await viewModel.getModels()
+      }
     }
   }
 
@@ -114,13 +130,27 @@ struct SearchScreen: View {
             size: .init(width: geo.size.width - 96, height: 40)
           )
           .padding(.trailing, 16)
-          
+
           SwitchButton(isList: $viewModel.isList)
             .frame(width: 80, height: 34)
         }
       }
     }
     .frame(height: 40)
+  }
+
+  private func deleteDownloadedModel(_ model: Model) {
+    if let id = model.id, model.localFileURL.isNotNil {
+      viewModel.deleteDownloadedModel(by: id)
+    }
+  }
+
+  private func updateDownloadedModel(_ model: Model) {
+    if let id = model.id, model.localFileURL.isNotNil {
+      Task {
+        await viewModel.downloadModel(by: id)
+      }
+    }
   }
 
 }

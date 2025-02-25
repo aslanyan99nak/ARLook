@@ -5,20 +5,22 @@
 //  Created by Narek Aslanyan on 03.02.25.
 //
 
+import Alamofire
 import CoreImage.CIFilterBuiltins
+import Foundation
+import Moya
 import QRCode
 import SwiftUI
 
 class MainViewModel: ObservableObject {
-  
+
   @Published var isShowScanner = false
   @Published var isShowPopup = false
   @Published var scannedCode: String?
-  @Published var scale: CGFloat = 0
   @Published var isShowPicker: Bool = false
   @Published var selectedURL: URL?
   @Published var previewURL: URL? = nil
-  @Published var image: CGImage?
+  @Published var image: UIImage?
   @Published var doc: QRCode.Document?
   @Published var savedFilePath: String?
   @Published var fileURL: URL?
@@ -30,7 +32,7 @@ class MainViewModel: ObservableObject {
 
   func setupDocument() {
     guard let scannedCode else { return }
-    let doc = try? QRCode.Document(utf8String: scannedCode)
+    let doc = try? QRCode.Document(utf8String: "arlook://" + scannedCode)
     doc?.design.shape.eye = QRCode.EyeShape.RoundedPointingIn()
 
     doc?.design.shape.onPixels = QRCode.PixelShape.Horizontal(
@@ -51,29 +53,14 @@ class MainViewModel: ObservableObject {
       )
     )
     self.doc = doc
-    image = try? doc?.cgImage(CGSize(width: 800, height: 800))
-  }
-
-  func shareSheet(url: URL) {
-    let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-    let allScenes = UIApplication.shared.connectedScenes
-    let activeScene = allScenes.first(where: { $0.activationState == .foregroundActive })
-    if let windowScene = activeScene as? UIWindowScene {
-      let rootViewController = windowScene.keyWindow?.rootViewController
-      if UIDevice.isPad {
-        activityVC.popoverPresentationController?.sourceView = rootViewController?.view
-        activityVC.popoverPresentationController?.sourceRect = .zero
-      }
-      DispatchQueue.main.async {
-        rootViewController?.present(activityVC, animated: true, completion: nil)
-      }
-    }
+    guard let cgImage = try? doc?.cgImage(CGSize(width: 800, height: 800)) else { return }
+    image = UIImage(cgImage: cgImage)
   }
 
   func generateQRCode(from string: String) -> UIImage {
     filter.message = Data(string.utf8)
     guard let outputImage = filter.outputImage,
-          let cgImage = context.createCGImage(outputImage, from: outputImage.extent)
+      let cgImage = context.createCGImage(outputImage, from: outputImage.extent)
     else {
       return UIImage(systemName: Image.xMarkCircleFill) ?? UIImage()
     }
@@ -89,7 +76,5 @@ class MainViewModel: ObservableObject {
       print("Can't get models")
     }
   }
-
-  func uploadModel() async {}
   
 }

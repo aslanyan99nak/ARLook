@@ -12,7 +12,7 @@ extension MainTabBar {
   enum TabItem: Hashable {
 
     case home
-    case list
+//    case list
     case search
     case settings
 
@@ -35,7 +35,7 @@ struct MainTabBar: View {
     ZStack {
       TabView(selection: $selectedTab) {
         mainScreen
-        modelsListScreen
+//        modelsListScreen
         searchScreen
         settingsScreen
       }
@@ -44,6 +44,13 @@ struct MainTabBar: View {
       .disabled(popupVM.isShowPopup)
 
       if popupVM.isShowPopup {
+        Color.black.opacity(0.2).ignoresSafeArea()
+          .onTapGesture {
+            withAnimation(.easeInOut(duration: 0.5)) {
+              popupVM.isShowPopup = false
+              popupVM.popupContent = AnyView(EmptyView())
+            }
+          }
         popupVM.popupContent
       }
     }
@@ -67,19 +74,19 @@ struct MainTabBar: View {
       }
   }
 
-  private var modelsListScreen: some View {
-    ModelsListScreen()
-      .tag(TabItem.list)
-      .tabItem {
-        VStack(spacing: 0) {
-          Image(systemName: Image.list)
-
-          Text(LocString.list)
-            .foregroundStyle(.blue)
-            .dynamicFont()
-        }
-      }
-  }
+//  private var modelsListScreen: some View {
+//    ModelsListScreen()
+//      .tag(TabItem.list)
+//      .tabItem {
+//        VStack(spacing: 0) {
+//          Image(systemName: Image.list)
+//
+//          Text(LocString.list)
+//            .foregroundStyle(.blue)
+//            .dynamicFont()
+//        }
+//      }
+//  }
 
   private var searchScreen: some View {
     SearchScreen()

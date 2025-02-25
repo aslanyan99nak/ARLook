@@ -71,7 +71,18 @@ struct ModelsListScreen: View {
               }
             }
           } label: {
-            ModelItemView(isList: $viewModel.isList, title: modelName)
+            let model = Model(
+              id: nil,
+              name: modelName,
+              fileName: nil,
+              fileType: nil,
+              description: nil
+            )
+            
+            ModelItemView(
+              isList: $viewModel.isList,
+              model: model
+            )
           }
           .quickLookPreview($viewModel.previewURL)
         }
@@ -79,6 +90,11 @@ struct ModelsListScreen: View {
       .padding(.bottom, 40)
       .padding(.top, 20)
       .padding(.horizontal, 16)
+    }
+    .refreshable {
+      Task {
+        await viewModel.getModels()
+      }
     }
   }
 

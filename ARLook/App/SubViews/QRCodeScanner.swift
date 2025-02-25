@@ -14,7 +14,6 @@ struct QRCodeScanner: View {
   @State private var scannedCode: String?
   @Binding var fileURL: URL?
   @Binding var isShowScanner: Bool
-  @Binding var scale: CGFloat
   
   private let modelManager = ModelManager.shared
   var scannedCodeCompletion: (String?) -> Void
@@ -25,10 +24,10 @@ struct QRCodeScanner: View {
   
   private var contentView: some View {
     ZStack {
+      Color.black.ignoresSafeArea()
       scannerView
       overlayViews
     }
-    .scaleEffect(scale)
   }
   
   private var overlayViews: some View {
@@ -62,10 +61,9 @@ struct QRCodeScanner: View {
         modelManager.checkFileExists(fileName: code) { isExists, url in
           if let url, isExists {
             fileURL = url
-            withAnimation(.easeInOut) {
-              scale = 0
-            } completion: {
+            withAnimation(.easeInOut(duration: 0.3)) {
               isShowScanner = false
+            } completion: {
               scannedCodeCompletion(scannedCode)
             }
           }
@@ -90,21 +88,20 @@ struct QRCodeScanner: View {
 
   private var closeButton: some View {
     Button {
-      withAnimation(.easeInOut) {
-        scale = 0
+      withAnimation(.easeInOut(duration: 0.3)) {
+        isShowScanner = false
       } completion: {
         if scannedCode.isNotNil && fileURL.isNil {
           scannedCode = nil
           scannedCodeCompletion(nil)
         }
-        isShowScanner = false
       }
     } label: {
-      Image(systemName: Image.xMarkCircle)
+      Image(systemName: Image.xMark)
         .renderingMode(.template)
         .resizable()
-        .frame(width: 40, height: 40)
-        .foregroundStyle(.white)
+        .frame(width: 16, height: 16)
+        .padding()
         .background(.regularMaterial)
         .clipShape(Circle())
     }
@@ -116,7 +113,6 @@ struct QRCodeScanner: View {
   QRCodeScanner(
     fileURL: .constant(nil),
     isShowScanner: .constant(false),
-    scale: .constant(1),
     scannedCodeCompletion: { _ in }
   )
 }
