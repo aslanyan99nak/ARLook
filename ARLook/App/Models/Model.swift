@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Model: Codable, Hashable {
+struct Model: Codable, Hashable, Identifiable {
   
   let id: Int?
   let name: String?
@@ -17,6 +17,7 @@ struct Model: Codable, Hashable {
   
   var isLoading: Bool = false
   var loadingProgress: CGFloat = 0
+  var viewCountString: String = "167K"
   
   var localFileURL: URL? {
     guard let id else { return nil }
