@@ -9,13 +9,15 @@ import SwiftUI
 
 struct ModelItemView: View {
 
+  @AppStorage(AccentColorType.defaultKey) var accentColorType: AccentColorType = AccentColorType.defaultValue
   @Environment(\.colorScheme) private var colorScheme
   @Binding var isList: Bool
   @State private var loadedImage: UIImage?
+  @State private var isLoading: Bool = false
 
-  let modelManager = ModelManager.shared
   let model: Model
-  var viewCountString: String = "167K"
+
+  private let modelManager = ModelManager.shared
 
   private var title: String {
     model.name ?? ""
@@ -36,13 +38,11 @@ struct ModelItemView: View {
   var body: some View {
     contentView
       .onAppear {
-        if let url {
-          modelManager.thumbnail(
-            for: url,
-            size: CGSize(width: 512, height: 512)
-          ) { image in
-            self.loadedImage = image
-          }
+        loadModelImage()
+      }
+      .onChange(of: model) { oldValue, newValue in
+        if oldValue != newValue {
+          loadModelImage()
         }
       }
   }
@@ -106,12 +106,14 @@ struct ModelItemView: View {
       if let loadedImage {
         Image(uiImage: loadedImage)
           .resizable()
+      } else if isLoading {
+        CircularProgressView(tintColor: accentColorType.color)
       }
-      
+
       if model.isLoading, model.loadingProgress != 1 {
         ActivityProgressView(
           progress: Float(model.loadingProgress),
-          color: .blue,
+          color: accentColorType.color,
           scale: 0.4,
           isTextHidden: true
         )
@@ -128,7 +130,7 @@ struct ModelItemView: View {
         .frame(width: 20, height: 12)
         .foregroundStyle(isDarkMode ? .white : .black)
 
-      Text(viewCountString)
+      Text(model.viewCountString)
         .multilineTextAlignment(.leading)
         .dynamicFont()
         .foregroundStyle(isDarkMode ? .white : .black)
@@ -148,6 +150,18 @@ struct ModelItemView: View {
       .multilineTextAlignment(.leading)
       .dynamicFont(size: 14, weight: .regular, design: .rounded)
       .foregroundStyle(isDarkMode ? .white : .black)
+  }
+
+  private func loadModelImage() {
+    guard let url else { return }
+    isLoading = true
+    modelManager.thumbnail(
+      for: url,
+      size: CGSize(width: 512, height: 512)
+    ) { image in
+      isLoading = false
+      self.loadedImage = image
+    }
   }
 
 }

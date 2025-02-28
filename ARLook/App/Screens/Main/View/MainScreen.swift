@@ -57,12 +57,7 @@ struct MainScreen: View {
                 navigationPath.removeLast(navigationPath.count)
               }
             }
-          case .look:
-            if let selectedURL = viewModel.selectedURL {
-              LookScreen(fileURL: selectedURL)
-            } else {
-              Text("You have not selected url")
-            }
+          case .look: LookScreen()
           case .uploadModel: UploadModelScreen()
           }
         }

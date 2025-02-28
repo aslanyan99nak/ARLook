@@ -71,13 +71,5 @@ class SearchViewModel: ObservableObject {
       }
     }
   }
-
-  func getFileURL(by id: Int) -> URL? {
-    let fileManager = FileManager.default
-    guard let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
-    else { return nil }
-    let fileURL = documentsDirectory.appendingPathComponent("\(id).usdz")
-    return fileURL
-  }
   
 }

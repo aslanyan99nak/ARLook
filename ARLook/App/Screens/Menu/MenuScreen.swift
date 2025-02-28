@@ -1,52 +1,18 @@
 //
-//  SearchScreen.swift
+//  MenuScreen.swift
 //  ARLook
 //
-//  Created by Narek Aslanyan on 06.02.25.
+//  Created by Narek on 25.02.25.
 //
 
-import QuickLook
 import SwiftUI
 
-extension SearchScreen {
+struct MenuScreen: View {
 
-  enum ModelType: String, CaseIterable {
-
-    case recent
-    case favorite
-    case all
-
-    var name: String {
-      switch self {
-      case .recent: LocString.recent
-      case .favorite: LocString.favorite
-      case .all: LocString.all
-      }
-    }
-
-    var icon: Image? {
-      switch self {
-      case .recent: Image(systemName: Image.recent)
-      case .favorite: Image(systemName: Image.favorite)
-      case .all: nil
-      }
-    }
-
-    var id: Int {
-      switch self {
-      case .recent: 0
-      case .favorite: 1
-      case .all: 2
-      }
-    }
-
-  }
-
-}
-
-struct SearchScreen: View {
-
-  @StateObject var viewModel = SearchViewModel()
+  @StateObject private var viewModel = SearchViewModel()
+  @Binding var isShowPicker: Bool
+  @Binding var fileURL: URL?
+  @Binding var selectedModel: Model?
 
   private var columns: [GridItem] {
     viewModel.isList ? [GridItem(.flexible())] : [GridItem(.flexible()), GridItem(.flexible())]
@@ -87,7 +53,9 @@ struct SearchScreen: View {
           Button {
             viewModel.selectedModelName = model.name
             if model.localFileURL.isNotNil {
-              viewModel.previewURL = model.localFileURL
+              fileURL = model.localFileURL
+              isShowPicker = false
+              selectedModel = model
             } else {
               if let id = model.id {
                 Task {
@@ -101,7 +69,6 @@ struct SearchScreen: View {
               model: model
             )
           }
-          .quickLookPreview($viewModel.previewURL)
         }
       }
       .padding(.bottom, 40)
@@ -147,8 +114,4 @@ struct SearchScreen: View {
     }
   }
 
-}
-
-#Preview {
-  SearchScreen()
 }
