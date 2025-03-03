@@ -1021,6 +1021,28 @@
         }
       }
     },
+    "look_around_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discover in AR – Explore and interact with 3D objects"
+          }
+        }
+      }
+    },
+    "look_around_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Look around"
+          }
+        }
+      }
+    },
     "mesh_generation" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1038,11 +1060,19 @@
         }
       }
     },
-    "Model Description" : {
-
+    "model_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model description"
+          }
+        }
+      }
     },
-    "Model Name" : {
-
+    "model_name" : {
+      "extractionState" : "manual"
     },
     "moving_too_fast" : {
       "extractionState" : "manual",
@@ -1985,13 +2015,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Upload your 3D model for using by QR."
+            "value" : "Upload your 3D model for using by QR"
           }
         },
         "hy-AM" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Վերբեռնեք ձեր 3D մոդելը՝ QR-ով օգտագործելու համար:"
+            "value" : "Վերբեռնեք ձեր 3D մոդելը՝ QR-ով օգտագործելու համար"
           }
         }
       }
@@ -2043,6 +2073,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Դիտել 3D ռեժիմով"
+          }
+        }
+      }
+    },
+    "view_model_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Experience a detailed 3D view with a single tap"
           }
         }
       }

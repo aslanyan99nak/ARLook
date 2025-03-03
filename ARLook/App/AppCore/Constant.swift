@@ -62,5 +62,13 @@ extension Image {
   static let cube = "cube"
   static let link = "link"
   static let gallery = "photo.stack"
+  static let reset = "arrow.trianglehead.counterclockwise.rotate.90"
+  static let plus = "plus"
+  static let snapshot = "inset.filled.circle"
+  static let snapshot2 = "line.3.crossed.swirl.circle"
+  static let rectangleSlash = "rectangle.slash"
+  static let rectangle = "rectangle"
+  static let chevronForward = "chevron.compact.forward"
+  static let chevronDown = "chevron.compact.down"
   
 }

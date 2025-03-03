@@ -313,10 +313,8 @@ class AppDataModel: ObservableObject, Identifiable {
     guard session.numberOfShotsTaken >= AppDataModel.minNumImages else { return currentState }
     return switch orbit {
     case .orbit1:
-      // TODO: - Change back
-
-      // isOrbitCompleted ? .firstSegmentComplete : .firstSegmentNeedsWork
-      isOrbitCompleted ? .thirdSegmentComplete : .thirdSegmentNeedsWork
+       isOrbitCompleted ? .firstSegmentComplete : .firstSegmentNeedsWork
+//      isOrbitCompleted ? .thirdSegmentComplete : .thirdSegmentNeedsWork
     case .orbit2: isOrbitCompleted ? .secondSegmentComplete : .secondSegmentNeedsWork
     case .orbit3: isOrbitCompleted ? .thirdSegmentComplete : .thirdSegmentNeedsWork
     }

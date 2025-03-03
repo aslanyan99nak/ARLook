@@ -23,7 +23,7 @@ extension MainTabBar {
 struct MainTabBar: View {
 
   @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
-  @AppStorage(AccentColorType.defaultKey) var accentColorType: AccentColorType = AccentColorType.defaultValue
+  @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
   @StateObject private var popupVM = PopupViewModel()
   @State private var selectedTab: TabItem = .home
 

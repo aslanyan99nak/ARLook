@@ -166,7 +166,7 @@ struct MainScreen: View {
       ItemRow(
         image: Image(systemName: Image.arkit),
         title: LocString.view3DMode,
-        description: "Experience a detailed 3D view with a single tap."
+        description: LocString.viewModelDescription
       )
     }
     .quickLookPreview($viewModel.previewURL)
@@ -191,9 +191,9 @@ struct MainScreen: View {
       navigationPath.append(Destination.look)
     } label: {
       ItemRow(
-        image: Image(systemName: "eye"),
-        title: "Look around",
-        description: "Look around description"
+        image: Image(systemName: Image.eye),
+        title: LocString.lookAroundTitle,
+        description: LocString.lookAroundDescription
       )
     }
     .padding(.horizontal, 16)

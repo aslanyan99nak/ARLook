@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SwitchButton: View {
   
-  @AppStorage(AccentColorType.defaultKey) var accentColorType: AccentColorType = AccentColorType.defaultValue
+  @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
   @Environment(\.colorScheme) var colorScheme
   @Binding var isList: Bool
   

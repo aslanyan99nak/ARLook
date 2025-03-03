@@ -11,7 +11,7 @@ struct SettingsScreen: View {
   
   @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @AppStorage("textSize") private var textSize: Double = 0
-  @AppStorage(AccentColorType.defaultKey) var accentColorType: AccentColorType = AccentColorType.defaultValue
+  @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
 
   @State private var isColorSheetPresented = false
   @State private var brightness: CGFloat = 0
