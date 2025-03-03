@@ -5,10 +5,12 @@
 //  Created by Narek Aslanyan on 11.02.25.
 //
 
+import Foundation
+import Moya
 import SwiftUI
 
 class SearchViewModel: ObservableObject {
-  
+
   @Published var searchText = ""
   @Published var selectedModelType = SearchScreen.ModelType.all
   @Published var isList: Bool = true
@@ -16,10 +18,10 @@ class SearchViewModel: ObservableObject {
   @Published var selectedURL: URL?
   @Published var selectedModelName: String?
   @Published var models: [Model] = []
-  
+
   let modelManager = ModelManager.shared
   private let modelEnvironment: Provider = Provider<ModelEndpoint>()
-  
+
   var searchResults: [Model] {
     if searchText.isEmpty {
       models
@@ -27,7 +29,7 @@ class SearchViewModel: ObservableObject {
       models.filter { ($0.name ?? "").lowercased().contains(searchText.lowercased()) }
     }
   }
-  
+
   @MainActor
   func getModels() async {
     do {
@@ -38,7 +40,7 @@ class SearchViewModel: ObservableObject {
       print("Can't get models")
     }
   }
-  
+
   @MainActor
   func downloadModel(by id: Int) async {
     guard let modelIndex = models.firstIndex(where: { $0.id == id }) else { return }
@@ -63,7 +65,7 @@ class SearchViewModel: ObservableObject {
       print("Can't get models")
     }
   }
-  
+
   func deleteDownloadedModel(by id: Int) {
     modelManager.deleteFile(by: "\(id).usdz") { successed, url in
       if successed, let url {
@@ -71,5 +73,5 @@ class SearchViewModel: ObservableObject {
       }
     }
   }
-  
+
 }

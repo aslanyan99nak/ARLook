@@ -154,8 +154,8 @@ struct ARViewContainer: UIViewRepresentable {
 
     private func getEntityTransform(for focusTransform: simd_float4x4) -> float4x4 {
       let position = focusTransform.columns.3
-      let horizontalRotation = simd_quatf(angle: 0, axis: [1, 0, 0])  // No X rotation
-      let correctedTransform = float4x4(horizontalRotation)  // Only keep Y rotation
+      let horizontalRotation = simd_quatf(angle: 0, axis: [1, 0, 0]) /// No X rotation
+      let correctedTransform = float4x4(horizontalRotation) /// Only keep Y rotation
       /// Apply position while keeping only horizontal alignment
       var finalTransform = correctedTransform
       finalTransform.columns.3 = position

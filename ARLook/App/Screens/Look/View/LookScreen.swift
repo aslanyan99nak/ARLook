@@ -13,7 +13,7 @@ import SwiftUI
 
 struct LookScreen: View {
 
-  @AppStorage(AccentColorType.defaultKey) var accentColorType: AccentColorType = AccentColorType.defaultValue
+  @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
   @StateObject private var searchViewModel = SearchViewModel()
   @StateObject private var viewModel = LookViewModel()
   @Environment(\.colorScheme) var colorScheme
@@ -105,7 +105,7 @@ struct LookScreen: View {
       viewModel.isFocusEntityEnabled.toggle()
       viewModel.focusEntity?.isEnabled = viewModel.isFocusEntityEnabled
     } label: {
-      Image(systemName: viewModel.isFocusEntityEnabled ? "rectangle.slash" : "rectangle")
+      Image(systemName: viewModel.isFocusEntityEnabled ? Image.rectangleSlash : Image.rectangle)
         .renderingMode(.template)
         .resizable()
         .frame(width: 24, height: 24)
@@ -118,7 +118,7 @@ struct LookScreen: View {
     Button {
       NotificationCenter.default.post(name: .reset, object: nil)
     } label: {
-      Image(systemName: "arrow.trianglehead.counterclockwise.rotate.90")
+      Image(systemName: Image.reset)
         .renderingMode(.template)
         .resizable()
         .frame(width: 24, height: 24)
@@ -134,7 +134,7 @@ struct LookScreen: View {
       if viewModel.isLoading {
         CircularProgressView(tintColor: accentColorType.color)
       } else {
-        Image(systemName: "plus")
+        Image(systemName: Image.plus)
           .renderingMode(.template)
           .resizable()
           .frame(width: 24, height: 24)
@@ -161,8 +161,8 @@ struct LookScreen: View {
     Button {
       NotificationCenter.default.post(name: .snapshot, object: nil)
     } label: {
-//      Image(systemName: "line.3.crossed.swirl.circle")
-      Image(systemName: "inset.filled.circle")
+      // Image(systemName: Image.snapshot2)
+      Image(systemName: Image.snapshot)
         .renderingMode(.template)
         .resizable()
         .frame(width: 60, height: 60)
@@ -182,7 +182,7 @@ struct LookScreen: View {
     } label: {
       VStack(spacing: 0) {
         Spacer()
-        Image(systemName: "chevron.compact.forward")
+        Image(systemName: Image.chevronForward)
           .renderingMode(.template)
           .resizable()
           .frame(width: 8, height: 24)
@@ -201,7 +201,7 @@ struct LookScreen: View {
     Button {
       viewModel.isShowButtonsStack.toggle()
     } label: {
-      Image(systemName: "chevron.compact.down")
+      Image(systemName: Image.chevronDown)
         .renderingMode(.template)
         .resizable()
         .frame(width: 24, height: 8)

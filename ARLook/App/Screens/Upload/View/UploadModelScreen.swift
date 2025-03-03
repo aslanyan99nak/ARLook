@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UploadModelScreen: View {
 
-  @AppStorage(AccentColorType.defaultKey) var accentColorType: AccentColorType = AccentColorType.defaultValue
+  @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
   @StateObject private var viewModel = UploadViewModel()
 
   private let modelManager: ModelManager = .shared
@@ -73,17 +73,7 @@ struct UploadModelScreen: View {
   }
 
   private var modelNameTextField: some View {
-    TextField("Model Name", text: $viewModel.modelName)
-      .padding()
-      .frame(height: 50)
-      .background(
-        RoundedRectangle(cornerRadius: 24)
-          .stroke(Color.gray, lineWidth: 1)
-      )
-  }
-
-  private var modelDescriptionTextField: some View {
-    TextField("Model Description", text: $viewModel.modelDescription)
+    TextField(LocString.modelName, text: $viewModel.modelName)
       .padding()
       .frame(height: 50)
       .background(
@@ -93,7 +83,7 @@ struct UploadModelScreen: View {
   }
 
   private var modelDescriptionTextView: some View {
-    TextField("Model Description", text: $viewModel.modelDescription, axis: .vertical)
+    TextField(LocString.modelDescription, text: $viewModel.modelDescription, axis: .vertical)
       .padding()
       .frame(minHeight: 60)
       .background(
@@ -109,7 +99,7 @@ struct UploadModelScreen: View {
         Image(uiImage: image)
           .resizable()
       } else {
-        Image(systemName: "photo")
+        Image(systemName: Image.photo)
           .renderingMode(.template)
           .resizable()
           .foregroundStyle(accentColorType.color)

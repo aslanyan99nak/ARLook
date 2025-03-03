@@ -130,5 +130,10 @@ enum LocString {
   static let shareLink = "share_link".localized
   static let shareImage = "share_image".localized
   static let chooseFromGallery = "choose_from_gallery".localized
-
+  static let viewModelDescription = "view_model_description".localized
+  static let lookAroundTitle = "look_around_title".localized
+  static let lookAroundDescription = "look_around_description".localized
+  static let modelName = "model_name".localized
+  static let modelDescription = "model_description".localized
+  
 }

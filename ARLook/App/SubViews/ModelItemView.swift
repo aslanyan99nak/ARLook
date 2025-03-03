@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ModelItemView: View {
 
-  @AppStorage(AccentColorType.defaultKey) var accentColorType: AccentColorType = AccentColorType.defaultValue
+  @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
   @Environment(\.colorScheme) private var colorScheme
   @Binding var isList: Bool
   @State private var loadedImage: UIImage?
