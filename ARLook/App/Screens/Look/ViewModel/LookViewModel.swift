@@ -16,6 +16,7 @@ class LookViewModel: ObservableObject {
   @Published var selectedModel: Model?
   @Published var isShowSelectedModel: Bool = true
   @Published var isFocusEntityEnabled: Bool = true
+  @Published var isShowSelected: Bool = true
   @Published var isShowButtonsStack: Bool = true
   @Published var focusEntity: FocusEntity?
   
