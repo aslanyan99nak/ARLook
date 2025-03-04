@@ -7,15 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2489E3972D4CE5C400BBDB34 /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 2489E3962D4CE5C400BBDB34 /* QRCode */; };
-		2489E3A22D50C67200BBDB34 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 2489E3A12D50C67200BBDB34 /* CodeScanner */; };
-		CE7081982D6887F0003E9AE6 /* FocusEntity in Frameworks */ = {isa = PBXBuildFile; productRef = CE7081972D6887F0003E9AE6 /* FocusEntity */; };
-		CEF871E02D63421C00B790E8 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = CEF871DF2D63421C00B790E8 /* CombineMoya */; };
-		CEF871E22D63421C00B790E8 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CEF871E12D63421C00B790E8 /* Moya */; };
+		CE957A8B2D771FBE005BC4BD /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = CE957A8A2D771FBE005BC4BD /* RealityKitContent */; };
+		CE957A922D7721A9005BC4BD /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = CE957A912D7721A9005BC4BD /* RealityKitContent */; };
+		CE957A952D7721DC005BC4BD /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = CE957A942D7721DC005BC4BD /* CodeScanner */; };
+		CE957A982D7721EF005BC4BD /* FocusEntity in Frameworks */ = {isa = PBXBuildFile; productRef = CE957A972D7721EF005BC4BD /* FocusEntity */; };
+		CE957A9B2D772240005BC4BD /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = CE957A9A2D772240005BC4BD /* CombineMoya */; };
+		CE957A9D2D772240005BC4BD /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CE957A9C2D772240005BC4BD /* Moya */; };
+		CE957AA52D7723CF005BC4BD /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = CE957AA42D7723CF005BC4BD /* QRCode */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2489E2D42D4BB97A00BBDB34 /* ARLook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARLook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE957A722D771910005BC4BD /* ARLookVision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARLookVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -25,6 +28,13 @@
 				Info.plist,
 			);
 			target = 2489E2D32D4BB97A00BBDB34 /* ARLook */;
+		};
+		CE957A822D771912005BC4BD /* Exceptions for "ARLookVision" folder in "ARLookVision" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CE957A712D771910005BC4BD /* ARLookVision */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -37,6 +47,14 @@
 			path = ARLook;
 			sourceTree = "<group>";
 		};
+		CE957A732D771910005BC4BD /* ARLookVision */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CE957A822D771912005BC4BD /* Exceptions for "ARLookVision" folder in "ARLookVision" target */,
+			);
+			path = ARLookVision;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,11 +62,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE7081982D6887F0003E9AE6 /* FocusEntity in Frameworks */,
-				2489E3A22D50C67200BBDB34 /* CodeScanner in Frameworks */,
-				2489E3972D4CE5C400BBDB34 /* QRCode in Frameworks */,
-				CEF871E22D63421C00B790E8 /* Moya in Frameworks */,
-				CEF871E02D63421C00B790E8 /* CombineMoya in Frameworks */,
+				CE957AA52D7723CF005BC4BD /* QRCode in Frameworks */,
+				CE957A982D7721EF005BC4BD /* FocusEntity in Frameworks */,
+				CE957A952D7721DC005BC4BD /* CodeScanner in Frameworks */,
+				CE957A9D2D772240005BC4BD /* Moya in Frameworks */,
+				CE957A9B2D772240005BC4BD /* CombineMoya in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE957A6F2D771910005BC4BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE957A922D7721A9005BC4BD /* RealityKitContent in Frameworks */,
+				CE957A8B2D771FBE005BC4BD /* RealityKitContent in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				2489E2D62D4BB97A00BBDB34 /* ARLook */,
+				CE957A732D771910005BC4BD /* ARLookVision */,
 				2489E2D52D4BB97A00BBDB34 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				2489E2D42D4BB97A00BBDB34 /* ARLook.app */,
+				CE957A722D771910005BC4BD /* ARLookVision.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -91,14 +120,38 @@
 			);
 			name = ARLook;
 			packageProductDependencies = (
-				2489E3962D4CE5C400BBDB34 /* QRCode */,
-				2489E3A12D50C67200BBDB34 /* CodeScanner */,
-				CEF871DF2D63421C00B790E8 /* CombineMoya */,
-				CEF871E12D63421C00B790E8 /* Moya */,
-				CE7081972D6887F0003E9AE6 /* FocusEntity */,
+				CE957A942D7721DC005BC4BD /* CodeScanner */,
+				CE957A972D7721EF005BC4BD /* FocusEntity */,
+				CE957A9A2D772240005BC4BD /* CombineMoya */,
+				CE957A9C2D772240005BC4BD /* Moya */,
+				CE957AA42D7723CF005BC4BD /* QRCode */,
 			);
 			productName = ARLook;
 			productReference = 2489E2D42D4BB97A00BBDB34 /* ARLook.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CE957A712D771910005BC4BD /* ARLookVision */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE957A832D771912005BC4BD /* Build configuration list for PBXNativeTarget "ARLookVision" */;
+			buildPhases = (
+				CE957A6E2D771910005BC4BD /* Sources */,
+				CE957A6F2D771910005BC4BD /* Frameworks */,
+				CE957A702D771910005BC4BD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CE957A732D771910005BC4BD /* ARLookVision */,
+			);
+			name = ARLookVision;
+			packageProductDependencies = (
+				CE957A8A2D771FBE005BC4BD /* RealityKitContent */,
+				CE957A912D7721A9005BC4BD /* RealityKitContent */,
+			);
+			productName = ARLookVision;
+			productReference = CE957A722D771910005BC4BD /* ARLookVision.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -114,6 +167,9 @@
 					2489E2D32D4BB97A00BBDB34 = {
 						CreatedOnToolsVersion = 16.2;
 					};
+					CE957A712D771910005BC4BD = {
+						CreatedOnToolsVersion = 16.2;
+					};
 				};
 			};
 			buildConfigurationList = 2489E2CF2D4BB97A00BBDB34 /* Build configuration list for PBXProject "ARLook" */;
@@ -127,10 +183,11 @@
 			mainGroup = 2489E2CB2D4BB97A00BBDB34;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				2489E3952D4CE5C400BBDB34 /* XCRemoteSwiftPackageReference "QRCode" */,
-				2489E3A02D50C67200BBDB34 /* XCRemoteSwiftPackageReference "CodeScanner" */,
-				CEF871DE2D63421C00B790E8 /* XCRemoteSwiftPackageReference "Moya" */,
-				CE7081962D6887F0003E9AE6 /* XCRemoteSwiftPackageReference "FocusEntity" */,
+				CE957A902D7721A9005BC4BD /* XCLocalSwiftPackageReference "RealityKitContent" */,
+				CE957A932D7721DC005BC4BD /* XCRemoteSwiftPackageReference "CodeScanner" */,
+				CE957A962D7721EF005BC4BD /* XCRemoteSwiftPackageReference "FocusEntity" */,
+				CE957A992D772240005BC4BD /* XCRemoteSwiftPackageReference "Moya" */,
+				CE957AA32D7723CF005BC4BD /* XCRemoteSwiftPackageReference "QRCode" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2489E2D52D4BB97A00BBDB34 /* Products */;
@@ -138,6 +195,7 @@
 			projectRoot = "";
 			targets = (
 				2489E2D32D4BB97A00BBDB34 /* ARLook */,
+				CE957A712D771910005BC4BD /* ARLookVision */,
 			);
 		};
 /* End PBXProject section */
@@ -150,10 +208,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CE957A702D771910005BC4BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2489E2D02D4BB97A00BBDB34 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE957A6E2D771910005BC4BD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -314,11 +386,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.nak.ARLook1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nak.ARLook.iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -354,15 +426,71 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.nak.ARLook1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nak.ARLook.iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CE957A842D771912005BC4BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ARLookVision/Preview Content\"";
+				DEVELOPMENT_TEAM = 75J3TY68PB;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nak.ARLook.Vision;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 7;
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		CE957A852D771912005BC4BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ARLookVision/Preview Content\"";
+				DEVELOPMENT_TEAM = 75J3TY68PB;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nak.ARLook.Vision;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 7;
+				XROS_DEPLOYMENT_TARGET = 2.2;
 			};
 			name = Release;
 		};
@@ -387,18 +515,26 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		CE957A832D771912005BC4BD /* Build configuration list for PBXNativeTarget "ARLookVision" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE957A842D771912005BC4BD /* Debug */,
+				CE957A852D771912005BC4BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		2489E3952D4CE5C400BBDB34 /* XCRemoteSwiftPackageReference "QRCode" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/dagronf/QRCode";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 26.1.0;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		CE957A902D7721A9005BC4BD /* XCLocalSwiftPackageReference "RealityKitContent" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = RealityKitContent;
 		};
-		2489E3A02D50C67200BBDB34 /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CE957A932D7721DC005BC4BD /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/twostraws/CodeScanner";
 			requirement = {
@@ -406,7 +542,7 @@
 				minimumVersion = 2.5.2;
 			};
 		};
-		CE7081962D6887F0003E9AE6 /* XCRemoteSwiftPackageReference "FocusEntity" */ = {
+		CE957A962D7721EF005BC4BD /* XCRemoteSwiftPackageReference "FocusEntity" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/maxxfrazer/FocusEntity";
 			requirement = {
@@ -414,7 +550,7 @@
 				minimumVersion = 2.5.1;
 			};
 		};
-		CEF871DE2D63421C00B790E8 /* XCRemoteSwiftPackageReference "Moya" */ = {
+		CE957A992D772240005BC4BD /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya";
 			requirement = {
@@ -422,33 +558,49 @@
 				minimumVersion = 15.0.3;
 			};
 		};
+		CE957AA32D7723CF005BC4BD /* XCRemoteSwiftPackageReference "QRCode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dagronf/QRCode";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 26.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		2489E3962D4CE5C400BBDB34 /* QRCode */ = {
+		CE957A8A2D771FBE005BC4BD /* RealityKitContent */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2489E3952D4CE5C400BBDB34 /* XCRemoteSwiftPackageReference "QRCode" */;
-			productName = QRCode;
+			productName = RealityKitContent;
 		};
-		2489E3A12D50C67200BBDB34 /* CodeScanner */ = {
+		CE957A912D7721A9005BC4BD /* RealityKitContent */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2489E3A02D50C67200BBDB34 /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = RealityKitContent;
+		};
+		CE957A942D7721DC005BC4BD /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE957A932D7721DC005BC4BD /* XCRemoteSwiftPackageReference "CodeScanner" */;
 			productName = CodeScanner;
 		};
-		CE7081972D6887F0003E9AE6 /* FocusEntity */ = {
+		CE957A972D7721EF005BC4BD /* FocusEntity */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CE7081962D6887F0003E9AE6 /* XCRemoteSwiftPackageReference "FocusEntity" */;
+			package = CE957A962D7721EF005BC4BD /* XCRemoteSwiftPackageReference "FocusEntity" */;
 			productName = FocusEntity;
 		};
-		CEF871DF2D63421C00B790E8 /* CombineMoya */ = {
+		CE957A9A2D772240005BC4BD /* CombineMoya */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEF871DE2D63421C00B790E8 /* XCRemoteSwiftPackageReference "Moya" */;
+			package = CE957A992D772240005BC4BD /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = CombineMoya;
 		};
-		CEF871E12D63421C00B790E8 /* Moya */ = {
+		CE957A9C2D772240005BC4BD /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEF871DE2D63421C00B790E8 /* XCRemoteSwiftPackageReference "Moya" */;
+			package = CE957A992D772240005BC4BD /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = Moya;
+		};
+		CE957AA42D7723CF005BC4BD /* QRCode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE957AA32D7723CF005BC4BD /* XCRemoteSwiftPackageReference "QRCode" */;
+			productName = QRCode;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
