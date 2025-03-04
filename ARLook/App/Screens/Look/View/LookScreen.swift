@@ -78,6 +78,8 @@ struct LookScreen: View {
   private var buttonsStack: some View {
     VStack(spacing: 16) {
       VStack(spacing: 16) {
+        deleteEntityButton
+        cursorEnableButton
         focusEntityEnableButton
         resetButton
         addButton
@@ -98,6 +100,39 @@ struct LookScreen: View {
       verticalExpandButton
     }
     .frame(width: 40, height: 264)
+  }
+
+  private var cursorEnableButton: some View {
+    Button {
+      // Action
+      NotificationCenter.default.post(name: .toggleArrowVisibility, object: nil)
+    } label: {
+      Image(systemName: viewModel.isShowSelected ? "cursorarrow.slash" : "cursorarrow")
+        .renderingMode(.template)
+        .resizable()
+        .frame(width: 24, height: 24)
+        .foregroundStyle(accentColorType.color)
+        .padding(8)
+    }
+    .onReceive(NotificationCenter.default.publisher(for: .showSelected)) { notification in
+      if let isShow = notification.object as? Bool {
+        viewModel.isShowSelected = isShow
+      }
+    }
+  }
+  
+  private var deleteEntityButton: some View {
+    Button {
+      // Action
+      NotificationCenter.default.post(name: .deleteSelectedEntity, object: nil)
+    } label: {
+      Image(systemName: "square.3.stack.3d.slash")
+        .renderingMode(.template)
+        .resizable()
+        .frame(width: 24, height: 24)
+        .foregroundStyle(accentColorType.color)
+        .padding(8)
+    }
   }
 
   private var focusEntityEnableButton: some View {
