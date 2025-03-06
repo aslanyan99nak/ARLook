@@ -134,16 +134,14 @@ struct SearchScreen: View {
   }
 
   private func deleteDownloadedModel(_ model: Model) {
-    if let id = model.id, model.localFileURL.isNotNil {
-      viewModel.deleteDownloadedModel(by: id)
-    }
+    guard let id = model.id, model.localFileURL.isNotNil else { return }
+    viewModel.deleteDownloadedModel(by: id)
   }
 
   private func updateDownloadedModel(_ model: Model) {
-    if let id = model.id, model.localFileURL.isNotNil {
-      Task {
-        await viewModel.downloadModel(by: id)
-      }
+    guard let id = model.id, model.localFileURL.isNotNil else { return }
+    Task {
+      await viewModel.downloadModel(by: id)
     }
   }
 

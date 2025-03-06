@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct ARLookVisionApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+  
+  var body: some Scene {
+    WindowGroup {
+      OrnamentView()
     }
+  }
+  
 }

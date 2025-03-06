@@ -69,6 +69,9 @@
         }
       }
     },
+    "ARLook" : {
+
+    },
     "background_color" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1068,11 +1071,31 @@
             "state" : "translated",
             "value" : "Model description"
           }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Մոդելի նկարագրություն"
+          }
         }
       }
     },
     "model_name" : {
-      "extractionState" : "manual"
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model Name"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Մոդելի անուն"
+          }
+        }
+      }
     },
     "moving_too_fast" : {
       "extractionState" : "manual",
@@ -1516,6 +1539,12 @@
         }
       }
     },
+    "Scan QR Code" : {
+
+    },
+    "Scanned QR Code: %@" : {
+
+    },
     "scanner" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1702,6 +1731,12 @@
           }
         }
       }
+    },
+    "Select a cover image for your 3D model. This image will be displayed as a preview before loading the full 3D model." : {
+
+    },
+    "Select an element from the sidebar" : {
+
     },
     "settings" : {
       "extractionState" : "manual",

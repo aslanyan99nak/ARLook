@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct SettingsScreen: View {
-  
+
   @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @AppStorage("textSize") private var textSize: Double = 0
   @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
 
   @State private var isColorSheetPresented = false
   @State private var brightness: CGFloat = 0
-  
+
   private var isDarkMode: Bool {
     colorScheme == .dark
   }
@@ -26,9 +26,9 @@ struct SettingsScreen: View {
         LazyVStack(alignment: .leading, spacing: 16) {
           Text(LocString.appearance)
             .dynamicFont()
-            .foregroundStyle(.gray)
+            .foregroundStyle(UIDevice.isVision ? .white : .gray)
             .padding(.leading, 8)
-          
+
           themeList
           accentColorRow
           TextSizeRow()
@@ -38,7 +38,7 @@ struct SettingsScreen: View {
       .navigationTitle(LocString.settings)
     }
   }
-  
+
   private var themeList: some View {
     VStack(spacing: 0) {
       ForEach(CustomColorScheme.allCases, id: \.self) { mode in
