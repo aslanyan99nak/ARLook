@@ -20,7 +20,7 @@ typealias Header = [String: String]
 extension MultiTargetType {
   
   var baseURL: URL {
-    guard let url = URL(string: AppController.shared.environment.baseURL) else {
+    guard let url = URL(string: AppController.shared.environment.baseURL + "/v1") else {
       fatalError("baseURL could not be configured.")
     }
     return url

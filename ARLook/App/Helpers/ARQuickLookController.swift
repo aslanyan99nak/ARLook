@@ -6,7 +6,6 @@
 //
 
 import ARKit
-import FocusEntity
 import QuickLook
 import RealityKit
 import SwiftUI

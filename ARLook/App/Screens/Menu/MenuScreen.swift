@@ -59,7 +59,10 @@ struct MenuScreen: View {
             } else {
               if let id = model.id {
                 Task {
-                  await viewModel.downloadModel(by: id)
+                  await viewModel.downloadModel(
+                    by: model.mainFilePath ?? "",
+                    id: String(id)
+                  )
                 }
               }
             }
@@ -109,7 +112,10 @@ struct MenuScreen: View {
   private func updateDownloadedModel(_ model: Model) {
     if let id = model.id, model.localFileURL.isNotNil {
       Task {
-        await viewModel.downloadModel(by: id)
+        await viewModel.downloadModel(
+          by: model.mainFilePath ?? "",
+          id: String(id)
+        )
       }
     }
   }

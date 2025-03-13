@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealityFoundation
 @preconcurrency import SceneKit
 import UIKit
 
@@ -41,6 +42,32 @@ class ModelManager {
 
       // Copy the file
       try fileManager.copyItem(at: sourceURL, to: destinationURL)
+
+      print("✅ File saved at:", destinationURL)
+      completion(true, destinationURL)
+    } catch {
+      print("❌ Error saving file:", error.localizedDescription)
+      completion(false, nil)
+    }
+  }
+
+  @available(iOS 18, visionOS 1, *)
+  func saveFile(
+    fileName: String,
+    entity: Entity,
+    completion: @escaping (Bool, URL?) -> Void
+  ) async {
+    let fileManager = FileManager.default
+
+    do {
+      let destinationURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        .appendingPathComponent(fileName)
+
+      if fileManager.fileExists(atPath: destinationURL.path) {
+        try fileManager.removeItem(at: destinationURL)
+      }
+
+      try await entity.write(to: destinationURL)
 
       print("✅ File saved at:", destinationURL)
       completion(true, destinationURL)

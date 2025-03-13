@@ -29,6 +29,13 @@ struct CircleButton: View {
         }
       }
       .onTapGesture(perform: action)
+      .if(UIDevice.isVision) { view in
+        view
+          .padding(4)
+          .background(.regularMaterial)
+          .clipShape(Circle())
+      }
+      .scaleHoverEffect()
   }
   
 }

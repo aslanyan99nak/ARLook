@@ -37,7 +37,8 @@ struct ItemRow: View {
     image
       .renderingMode(.template)
       .resizable()
-      .frame(width: 40, height: 40)
+      .aspectRatio(contentMode: .fit)
+      .frame(width: 40)
   }
   
   private var infoView: some View {

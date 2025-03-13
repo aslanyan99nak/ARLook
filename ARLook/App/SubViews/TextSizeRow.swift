@@ -30,18 +30,21 @@ struct TextSizeRow: View {
 
   private var sliderView: some View {
     Slider(value: $textSize, in: 0...10, step: 1)
-      .background {
-        HStack {
-          ForEach(0..<5) { i in
-            Color.gray
-              .frame(width: 2, height: 8)
-            if i < 4 {
-              Spacer()
+      .if(!UIDevice.isVision) { view in
+        view
+          .background {
+            HStack {
+              ForEach(0..<5) { i in
+                Color.gray
+                  .frame(width: 2, height: 8)
+                if i < 4 {
+                  Spacer()
+                }
+              }
             }
           }
-        }
-        .padding(.horizontal, 12)
       }
+      .padding(.horizontal, 12)
   }
 
 }

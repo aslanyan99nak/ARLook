@@ -5,8 +5,8 @@
 //  Created by Narek on 19.02.25.
 //
 
-import SwiftUI
 import PhotosUI
+import SwiftUI
 
 struct ImagePicker: UIViewControllerRepresentable {
 
@@ -28,7 +28,7 @@ struct ImagePicker: UIViewControllerRepresentable {
   }
 
   class Coordinator: NSObject, PHPickerViewControllerDelegate {
-    
+
     let parent: ImagePicker
 
     init(_ parent: ImagePicker) {
@@ -50,7 +50,7 @@ struct ImagePicker: UIViewControllerRepresentable {
         }
       }
     }
-    
+
   }
-  
+
 }

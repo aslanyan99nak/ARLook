@@ -27,9 +27,7 @@ struct UploadModelScreen: View {
         isShowPicker: $viewModel.isShowImagePicker
       )
     }
-    .onChange(of: viewModel.selectedURL) {
-      oldValue,
-      newValue in
+    .onChange(of: viewModel.selectedURL) { oldValue, newValue in
       if newValue.isNotNil {
         if let url = newValue {
           modelManager.thumbnail(
@@ -116,7 +114,10 @@ struct UploadModelScreen: View {
     Button {
       Task {
         if let fileURL = viewModel.selectedURL {
-          await viewModel.uploadFile(fileURL: fileURL)
+          await viewModel.uploadFile(
+            fileURL: fileURL,
+            thumbnailImage: viewModel.image
+          )
         }
       }
     } label: {

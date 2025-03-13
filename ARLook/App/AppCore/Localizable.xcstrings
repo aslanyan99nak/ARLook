@@ -69,6 +69,9 @@
         }
       }
     },
+    "ARLook" : {
+
+    },
     "background_color" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -256,6 +259,9 @@
         }
       }
     },
+    "ColorPicker" : {
+
+    },
     "completed_process" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -357,6 +363,9 @@
           }
         }
       }
+    },
+    "Dismiss Immersive Space" : {
+
     },
     "done" : {
       "extractionState" : "manual",
@@ -578,6 +587,9 @@
           }
         }
       }
+    },
+    "Export usdz File" : {
+
     },
     "failed" : {
       "extractionState" : "manual",
@@ -1068,11 +1080,31 @@
             "state" : "translated",
             "value" : "Model description"
           }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Մոդելի նկարագրություն"
+          }
         }
       }
     },
     "model_name" : {
-      "extractionState" : "manual"
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model Name"
+          }
+        },
+        "hy-AM" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Մոդելի անուն"
+          }
+        }
+      }
     },
     "moving_too_fast" : {
       "extractionState" : "manual",
@@ -1363,6 +1395,9 @@
         }
       }
     },
+    "Owner" : {
+
+    },
     "point_cloud_generation" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1515,6 +1550,12 @@
           }
         }
       }
+    },
+    "Scan QR Code" : {
+
+    },
+    "Scanned QR Code: %@" : {
+
     },
     "scanner" : {
       "extractionState" : "manual",
@@ -1703,6 +1744,15 @@
         }
       }
     },
+    "Select a cover image for your 3D model. This image will be displayed as a preview before loading the full 3D model." : {
+
+    },
+    "Select an element from the sidebar" : {
+
+    },
+    "Select Material" : {
+
+    },
     "settings" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1787,6 +1837,12 @@
           }
         }
       }
+    },
+    "Show Document Picker" : {
+
+    },
+    "Show Meshes" : {
+
     },
     "skip" : {
       "extractionState" : "manual",
@@ -2059,6 +2115,9 @@
           }
         }
       }
+    },
+    "View as a 3D" : {
+
     },
     "view_3d_mode" : {
       "extractionState" : "manual",

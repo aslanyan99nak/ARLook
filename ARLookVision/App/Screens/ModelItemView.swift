@@ -2,7 +2,7 @@
 //  ModelItemView.swift
 //  ARLook
 //
-//  Created by Narek Aslanyan on 10.02.25.
+//  Created by Narek on 07.03.25.
 //
 
 import SwiftUI
@@ -18,22 +18,9 @@ struct ModelItemView: View {
   let model: Model
 
   private let modelManager = ModelManager.shared
-
-  private var title: String {
-    model.name ?? ""
-  }
-
-  private var description: String {
-    model.description ?? ""
-  }
-
-  private var isDarkMode: Bool {
-    colorScheme == .dark
-  }
-
-  private var url: URL? {
-    model.localFileURL
-  }
+  private var title: String { model.name ?? "" }
+  private var description: String { model.description ?? "" }
+  private var url: URL? { model.localFileURL }
 
   var body: some View {
     contentView
@@ -49,16 +36,13 @@ struct ModelItemView: View {
 
   private var contentView: some View {
     modelContent
-      .frame(height: isList ? 120 : 180)
       .padding(16)
       .background(.regularMaterial)
-      .background(isDarkMode ? Color.gray.opacity(0.15) : Color.white)
       .clipShape(RoundedRectangle(cornerRadius: 24))
-      .shadow(radius: 10)
   }
 
   private var modelContent: some View {
-    ZStack {
+    VStack {
       if isList {
         contentViewForList
       } else {
@@ -86,18 +70,23 @@ struct ModelItemView: View {
   }
 
   private var contentViewForGrid: some View {
-    HStack(spacing: 0) {
-      Spacer()
-      VStack(spacing: 0) {
+    VStack(spacing: 8) {
+      modelView
+      HStack(spacing: 0) {
         modelNameView
-          .padding(.horizontal, 8)
         Spacer()
-        modelView
+      }
+      HStack(spacing: 0) {
+        modelDescriptionView
+        Spacer()
+      }
+      HStack(spacing: 0) {
+        ownerView
         Spacer()
         viewCount
       }
-      Spacer()
     }
+    .padding(.horizontal, 8)
   }
 
   @MainActor
@@ -136,12 +125,12 @@ struct ModelItemView: View {
         .renderingMode(.template)
         .resizable()
         .frame(width: 20, height: 12)
-        .foregroundStyle(isDarkMode ? .white : .black)
+        .foregroundStyle(.white)
 
       Text(model.viewCountString)
         .multilineTextAlignment(.leading)
         .dynamicFont()
-        .foregroundStyle(isDarkMode ? .white : .black)
+        .foregroundStyle(.white)
     }
   }
 
@@ -150,14 +139,22 @@ struct ModelItemView: View {
       .dynamicFont(size: isList ? 16 : 14, weight: .medium, design: .rounded)
       .lineLimit(3)
       .multilineTextAlignment(.leading)
-      .foregroundStyle(isDarkMode ? .white : .black)
+      .foregroundStyle(.white)
   }
 
   private var modelDescriptionView: some View {
     Text(description)
+      .lineLimit(2)
       .multilineTextAlignment(.leading)
       .dynamicFont(size: 14, weight: .regular, design: .rounded)
-      .foregroundStyle(isDarkMode ? .white : .black)
+      .foregroundStyle(.white)
+  }
+  
+  private var ownerView: some View {
+    Text("Owner")
+      .multilineTextAlignment(.leading)
+      .dynamicFont(size: 14, weight: .regular, design: .rounded)
+      .foregroundStyle(.white)
   }
 
   private func loadModelImage() {
@@ -175,11 +172,14 @@ struct ModelItemView: View {
 }
 
 #Preview {
-  @Previewable @State var isList: Bool = true
+  @Previewable @State var isList: Bool = false
 
-  ModelItemView(
-    isList: $isList,
-    model: Model.mockModel
-  )
-  .padding()
+  ZStack {
+    Color.red.ignoresSafeArea()
+    ModelItemView(
+      isList: $isList,
+      model: Model.mockModel
+    )
+    .padding()
+  }
 }

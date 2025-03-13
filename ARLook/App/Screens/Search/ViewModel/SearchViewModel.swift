@@ -35,18 +35,21 @@ class SearchViewModel: ObservableObject {
     do {
       let models: [Model] = try await modelEnvironment.request(.getList)
       self.models = models
-      models.forEach { print("File name 📁: \($0.fileName ?? "Not found")") }
+      models.forEach { print("File name 📁: \($0.mainFileName ?? "Not found")") }
     } catch {
       print("Can't get models")
     }
   }
 
   @MainActor
-  func downloadModel(by id: Int) async {
-    guard let modelIndex = models.firstIndex(where: { $0.id == id }) else { return }
+  func downloadModel(by path: String, id: String) async {
+    guard let modelIndex = models.firstIndex(where: { $0.mainFilePath == path }),
+          let path = path.trimmedVersion
+    else { return }
+    
     models[modelIndex].isLoading = true
     do {
-      let stream = try await modelEnvironment.downloadRequest(.download(id: String(id)))
+      let stream = try await modelEnvironment.downloadRequest(.download(path: path, id: id))
       do {
         for try await progress in stream {
           let isCompleted = progress.completed

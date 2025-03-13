@@ -24,6 +24,11 @@ class MainViewModel: ObservableObject {
   @Published var doc: QRCode.Document?
   @Published var savedFilePath: String?
   @Published var fileURL: URL?
+  
+  #if os(visionOS)
+  @Published var sideMenuItems: [SideMenuItem] = SideMenuItem.allCases.filter { $0 != .view3DMode }
+  @Published var selectedItem: SideMenuItem?
+  #endif
 
   let context = CIContext()
   let filter = CIFilter.qrCodeGenerator()
@@ -71,7 +76,7 @@ class MainViewModel: ObservableObject {
     do {
       let response: [Model?] = try await modelEnvironment.request(.getList)
       let models = response.compactMap(\.self)
-      models.forEach { print("File name 📁: \($0.fileName ?? "Not found")") }
+      models.forEach { print("File name 📁: \($0.mainFileName ?? "Not found")") }
     } catch {
       print("Can't get models")
     }
