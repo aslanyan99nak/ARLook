@@ -163,8 +163,8 @@ struct CaptureOverlayView: View {
 
           Spacer()
         } else if case .ready = session.state {
-          FilesButton(selectedURL: $selectedURL)
-            .transition(.opacity)
+//          FilesButton(selectedURL: $selectedURL)
+//            .transition(.opacity)
 
           Spacer()
         }

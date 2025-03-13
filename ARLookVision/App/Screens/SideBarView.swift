@@ -17,6 +17,7 @@ enum SideMenuItem: String, Identifiable, CaseIterable {
   case qrCodeScanner
   case importQR
   case file
+  case view3DMode
   case lookAround
 
   var icon: Image {
@@ -25,6 +26,7 @@ enum SideMenuItem: String, Identifiable, CaseIterable {
     case .qrCodeScanner: Image(systemName: Image.qrCodeScanner)
     case .importQR: Image(systemName: Image.qrCode)
     case .file: Image(.openFile)
+    case .view3DMode: Image(systemName: Image.arkit)
     case .lookAround: Image(systemName: Image.eye)
     }
   }
@@ -35,6 +37,7 @@ enum SideMenuItem: String, Identifiable, CaseIterable {
     case .qrCodeScanner: LocString.qrCodeScannerTitle
     case .importQR: LocString.importQRTitle
     case .file: LocString.fileManagmentTitle
+    case .view3DMode: LocString.view3DMode
     case .lookAround: LocString.lookAroundTitle
     }
   }
@@ -45,6 +48,7 @@ enum SideMenuItem: String, Identifiable, CaseIterable {
     case .qrCodeScanner: LocString.qrCodeScannerDescription
     case .importQR: LocString.importQRDescription
     case .file: LocString.fileManagmentDescription
+    case .view3DMode: LocString.viewModelDescription
     case .lookAround: LocString.lookAroundDescription
     }
   }
@@ -54,8 +58,7 @@ enum SideMenuItem: String, Identifiable, CaseIterable {
 struct SideBarView: View {
 
   @Binding var selectedItem: SideMenuItem?
-  
-  var sideMenuItems: [SideMenuItem] = SideMenuItem.allCases
+  @Binding var sideMenuItems: [SideMenuItem]  
 
   var body: some View {
     List(sideMenuItems) { item in
@@ -83,5 +86,8 @@ struct SideBarView: View {
 }
 
 #Preview {
-  SideBarView(selectedItem: .constant(nil))
+  SideBarView(
+    selectedItem: .constant(nil),
+    sideMenuItems: .constant([])
+  )
 }

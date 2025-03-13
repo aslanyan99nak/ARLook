@@ -2,7 +2,7 @@
 //  SearchScreen.swift
 //  ARLook
 //
-//  Created by Narek Aslanyan on 06.02.25.
+//  Created by Narek on 05.03.25.
 //
 
 import QuickLook
@@ -49,7 +49,9 @@ struct SearchScreen: View {
   @StateObject var viewModel = SearchViewModel()
 
   private var columns: [GridItem] {
-    viewModel.isList ? [GridItem(.flexible())] : [GridItem(.flexible()), GridItem(.flexible())]
+    viewModel.isList
+      ? [GridItem(.flexible(), spacing: 40), GridItem(.flexible(), spacing: 40)]
+      : [GridItem(.flexible()), GridItem(.flexible())]
   }
 
   var body: some View {
@@ -57,39 +59,47 @@ struct SearchScreen: View {
       contentView
         .navigationTitle(LocString.search3D)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+          ToolbarItem(placement: .bottomOrnament) {
+            segmentedControlView
+          }
+        }
     }
     .searchable(text: $viewModel.searchText)
   }
 
   private var contentView: some View {
-    ZStack {
-      VStack(spacing: 0) {
-        segmentedControlView
-          .padding(.bottom, 8)
-          .padding(.horizontal, 16)
-
-        Divider()
-
-        gridView
+    gridView
+      .onLoad {
+        Task {
+          await viewModel.getModels()
+        }
       }
-    }
-    .onLoad {
-      Task {
-        await viewModel.getModels()
-      }
-    }
   }
 
   private var gridView: some View {
-    ScrollView(showsIndicators: false) {
-      LazyVGrid(columns: columns, spacing: 20) {
-        ForEach(viewModel.searchResults, id: \.self) { model in
-          Button {
-            viewModel.selectedModelName = model.name
-            if model.localFileURL.isNotNil {
-              viewModel.previewURL = model.localFileURL
-            } else {
-              if let id = model.id {
+    GeometryReader { geometry in
+      let flexibleColumns = Array(
+        repeating: GridItem(.flexible(), spacing: 40),
+        count: max(Int(geometry.size.width / 300), 1)
+      )
+
+      let columns = viewModel.isList ? self.columns : flexibleColumns
+      ScrollView(showsIndicators: false) {
+        LazyVGrid(columns: columns, spacing: 40) {
+          ForEach(viewModel.searchResults, id: \.self) { model in
+            ModelItemView(
+              isList: $viewModel.isList,
+              model: model
+            )
+            .scaleHoverEffect(scale: viewModel.isList ? 1.1 : 1.2)
+            .quickLookPreview($viewModel.previewURL)
+            .onTapGesture {
+              viewModel.selectedModelName = model.name
+              if model.localFileURL.isNotNil {
+                viewModel.previewURL = model.localFileURL
+              } else {
+                guard let id = model.id else { return }
                 Task {
                   await viewModel.downloadModel(
                     by: model.mainFilePath ?? "",
@@ -98,40 +108,34 @@ struct SearchScreen: View {
                 }
               }
             }
-          } label: {
-            ModelItemView(
-              isList: $viewModel.isList,
-              model: model
-            )
           }
-          .quickLookPreview($viewModel.previewURL)
         }
+        .padding(.bottom, 40)
+        .padding(.top, 20)
+        .padding(.horizontal, 40)
       }
-      .padding(.bottom, 40)
-      .padding(.top, 20)
-      .padding(.horizontal, 16)
-    }
-    .refreshable {
-      Task {
-        await viewModel.getModels()
+      .refreshable {
+        Task {
+          await viewModel.getModels()
+        }
       }
     }
   }
 
   private var segmentedControlView: some View {
-    GeometryReader { geo in
-      VStack(spacing: 0) {
-        HStack(spacing: 0) {
-          SegmentedControl(
-            selection: $viewModel.selectedModelType,
-            size: .init(width: geo.size.width - 96, height: 40)
-          )
-          .padding(.trailing, 16)
+    HStack(spacing: 0) {
+      SegmentedControl(
+        selection: $viewModel.selectedModelType,
+        size: .init(width: 400, height: 40)
+      )
+      .background(.ultraThickMaterial)
+      .clipShape(Capsule())
 
-          SwitchButton(isList: $viewModel.isList)
-            .frame(width: 80, height: 34)
-        }
-      }
+      SwitchButton(isList: $viewModel.isList)
+        .frame(width: 120, height: 40)
+        .background(.ultraThickMaterial)
+        .clipShape(Capsule())
+        .padding(.horizontal, 16)
     }
     .frame(height: 40)
   }

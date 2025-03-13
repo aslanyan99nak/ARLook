@@ -10,10 +10,10 @@ import Foundation
 struct UploadDataModel: Codable {
 
   let file: Data?
+  let thumbnailFile: Data?
   let name: String?
   let description: String?
   let filetype: String?
-  // let tumbnail: Data?
 
 }
 

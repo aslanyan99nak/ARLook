@@ -49,4 +49,16 @@ extension View {
     modifier(ViewDidLoadModifier(perform: action))
   }
 
+  func scaleHoverEffect(scale: CGFloat = 1.2) -> some View {
+    self
+      .if(UIDevice.isVision) { view in
+        #if os(visionOS)
+          view
+            .hoverEffect(ScaleHoverEffect(scale: scale))
+        #else
+          view
+        #endif
+      }
+  }
+
 }

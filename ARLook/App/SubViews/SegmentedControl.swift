@@ -15,32 +15,28 @@ struct SegmentedControl: View {
   @Binding var selection: SearchScreen.ModelType
 
   private let size: CGSize
-  
+
   private var offsetX: CGFloat {
     let isFirst = selection == SearchScreen.ModelType.allCases.first
     let isLast = selection == SearchScreen.ModelType.allCases.last
     let offset = calculateSegmentOffset(size)
     return isFirst ? offset + 4 : isLast ? offset - 4 : offset
   }
-  
+
   private var iconOffsetX: CGFloat {
     let isFirst = selection == SearchScreen.ModelType.allCases.first
     let isLast = selection == SearchScreen.ModelType.allCases.last
     return isSmall ? (isFirst ? 4 : isLast ? -4 : 0) : 0
   }
-  
+
   private var isDarkMode: Bool {
     customColorScheme == .dark || customColorScheme == .system && colorScheme == .dark
   }
-  
-  private var capsuleColor: Color {
-    isDarkMode ? .black : .white
-  }
-  
-  private var isSmall: Bool {
-    size.width < 320
-  }
-  
+
+  private var capsuleColor: Color { isDarkMode ? .black : .white }
+
+  private var isSmall: Bool { size.width < 320 }
+
   public init(selection: Binding<SearchScreen.ModelType>, size: CGSize) {
     self._selection = selection
     self.size = size
@@ -53,22 +49,31 @@ struct SegmentedControl: View {
       segmentedItemView
     }
   }
-  
+
   private var bigCapsuleView: some View {
     Capsule()
       .frame(width: abs(size.width), height: abs(size.height))
       .foregroundStyle(.gray)
       .opacity(0.2)
   }
-  
+
   private var smallCapsuleView: some View {
     Capsule()
+      .fill(Color.clear)
+      .if(UIDevice.isVision) { view in
+        view
+          .background(.ultraThinMaterial)
+      }
+      .if(!UIDevice.isVision) { view in
+        view
+          .background(capsuleColor)
+      }
       .frame(width: segmentWidth(size), height: size.height - 6)
-      .foregroundStyle(capsuleColor)
+      .clipShape(Capsule())
       .offset(x: offsetX)
       .animation(.easeInOut(duration: 0.3), value: selection)
   }
-  
+
   private var segmentedItemView: some View {
     HStack(spacing: 0) {
       ForEach(SearchScreen.ModelType.allCases, id: \.self) { modelType in
@@ -83,7 +88,7 @@ struct SegmentedControl: View {
       }
     }
   }
-  
+
   private func segmentLabelView(
     modelType: SearchScreen.ModelType,
     textColor: Color,
@@ -97,7 +102,7 @@ struct SegmentedControl: View {
           .foregroundStyle(textColor)
           .offset(x: modelType == .recent ? 4 : 0)
       }
-      
+
       if modelType == .all || !isSmall {
         Text(modelType.name)
           .multilineTextAlignment(.center)
@@ -107,6 +112,7 @@ struct SegmentedControl: View {
       }
     }
     .frame(width: width)
+    .scaleHoverEffect()
   }
 
   private func segmentWidth(_ mainSize: CGSize) -> CGFloat {
@@ -120,7 +126,7 @@ struct SegmentedControl: View {
   private func calculateSegmentOffset(_ mainSize: CGSize) -> CGFloat {
     segmentWidth(mainSize) * CGFloat(selection.id)
   }
-  
+
 }
 
 #Preview {

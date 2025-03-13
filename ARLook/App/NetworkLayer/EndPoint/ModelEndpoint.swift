@@ -12,7 +12,7 @@ enum ModelEndpoint {
 
   case getList
   case upload(data: UploadDataModel)
-  case download(id: String)
+  case download(path: String, id: String)
   case get(id: String)
   case delete(id: String)
 
@@ -24,7 +24,7 @@ extension ModelEndpoint: MultiTargetType {
     switch self {
     case .getList: "/files/list"
     case .upload: "/files/upload"
-    case let .download(id): "files/\(id)/download"
+    case let .download(path, _): path
     case let .get(id): "/files/\(id)"
     case let .delete(id): "/files/\(id)"
     }
@@ -66,7 +66,8 @@ extension ModelEndpoint: MultiTargetType {
     case .getList: return .requestParameters(parameters: parameters, encoding: URLEncoding())
     case let .upload(data: dataModel):
       var formData: [MultipartFormData] = []
-      let mimeType = ".usdz"
+      let modelMimeType = ".usdz"
+      let thumbnailMimeType = ".jpg"
       guard let fileData = dataModel.file else {
         return .uploadMultipart(formData)
       }
@@ -74,9 +75,20 @@ extension ModelEndpoint: MultiTargetType {
         MultipartFormData(
           provider: .data(fileData),
           name: "file",
-          fileName: "Model" + mimeType
+          fileName: "Model" + modelMimeType
         )
       )
+      
+      if let thumbnailFileData = dataModel.thumbnailFile {
+        formData.append(
+          MultipartFormData(
+            provider: .data(thumbnailFileData),
+            name: "file",
+            fileName: "thumbnail" + thumbnailMimeType
+          )
+        )
+      }
+      
       if let name = dataModel.name {
         formData.append(MultipartFormData(provider: .data(name.data(using: .utf8)!), name: "name"))
       }
@@ -90,7 +102,7 @@ extension ModelEndpoint: MultiTargetType {
       }
 
       return .uploadMultipart(formData)
-    case let .download(id: id):
+    case let .download(path, id):
       return .downloadDestination { temporaryURL, response in
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let destinationURL = documentsDirectory.appendingPathComponent(id + ".usdz")

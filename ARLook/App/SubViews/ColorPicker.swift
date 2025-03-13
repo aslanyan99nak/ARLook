@@ -37,7 +37,7 @@ struct ColorPicker: View {
       isColorSheetPresented = true
     } label: {
       Circle()
-        .tint(accentColorType.color)
+        .fill(accentColorType.color)
         .frame(width: 24, height: 24)
     }
   }
@@ -73,6 +73,12 @@ struct ColorPicker: View {
         .fontDesign(.rounded)
         .symbolRenderingMode(.hierarchical)
         .foregroundStyle(.gray)
+        .background(.regularMaterial)
+        .clipShape(Circle())
+    }
+    .if(UIDevice.isVision) { view in
+      view
+        .buttonStyle(PlainButtonStyle())
     }
   }
 

@@ -22,21 +22,22 @@ class UploadViewModel: ObservableObject {
   private let modelEnvironment: Provider = Provider<ModelEndpoint>()
   
   @MainActor
-  func uploadFile(fileURL: URL) async {
+  func uploadFile(fileURL: URL, thumbnailImage: UIImage?) async {
     guard let fileData = try? Data(contentsOf: fileURL) else { return }
+    var thumbnailFileData: Data?
+    
+    if let thumbnailImage {
+      thumbnailFileData = thumbnailImage.jpegData(compressionQuality: 0.8)
+    }
+    
     let data = UploadDataModel(
       file: fileData,
+      thumbnailFile: thumbnailFileData,
       name: modelName,
       description: modelDescription,
       filetype: "3dModel"
     )
 
-//    do {
-//      let response: EmptyModel = try await modelEnvironment.request(.upload(data: data))
-//      print("Upload Successed ✅✅✅✅ with response: \(response)")
-//    } catch {
-//      print("Can't upload Data with error: \(error.localizedDescription)")
-//    }
     isLoading = true
     modelEnvironment.request(
       .upload(data: data),

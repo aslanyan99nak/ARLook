@@ -259,6 +259,9 @@
         }
       }
     },
+    "ColorPicker" : {
+
+    },
     "completed_process" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -360,6 +363,9 @@
           }
         }
       }
+    },
+    "Dismiss Immersive Space" : {
+
     },
     "done" : {
       "extractionState" : "manual",
@@ -581,6 +587,9 @@
           }
         }
       }
+    },
+    "Export usdz File" : {
+
     },
     "failed" : {
       "extractionState" : "manual",
@@ -1386,6 +1395,9 @@
         }
       }
     },
+    "Owner" : {
+
+    },
     "point_cloud_generation" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1738,6 +1750,9 @@
     "Select an element from the sidebar" : {
 
     },
+    "Select Material" : {
+
+    },
     "settings" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1822,6 +1837,12 @@
           }
         }
       }
+    },
+    "Show Document Picker" : {
+
+    },
+    "Show Meshes" : {
+
     },
     "skip" : {
       "extractionState" : "manual",
@@ -2094,6 +2115,9 @@
           }
         }
       }
+    },
+    "View as a 3D" : {
+
     },
     "view_3d_mode" : {
       "extractionState" : "manual",

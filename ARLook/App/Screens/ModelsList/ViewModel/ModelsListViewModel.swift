@@ -24,7 +24,7 @@ class ModelsListViewModel: ObservableObject {
     do {
       let models: [Model] = try await modelEnvironment.request(.getList)
       self.models = models
-      models.forEach { print("File name 📁: \($0.fileName ?? "Not found")") }
+      models.forEach { print("File name 📁: \($0.mainFileName ?? "Not found")") }
     } catch {
       print("Can't get models")
     }

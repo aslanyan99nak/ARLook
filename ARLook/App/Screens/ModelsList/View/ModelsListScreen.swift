@@ -71,17 +71,9 @@ struct ModelsListScreen: View {
               }
             }
           } label: {
-            let model = Model(
-              id: nil,
-              name: modelName,
-              fileName: nil,
-              fileType: nil,
-              description: nil
-            )
-            
             ModelItemView(
               isList: $viewModel.isList,
-              model: model
+              model: Model.mockModel
             )
           }
           .quickLookPreview($viewModel.previewURL)

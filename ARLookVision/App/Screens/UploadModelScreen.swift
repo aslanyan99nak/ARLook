@@ -1,5 +1,5 @@
 //
-//  UploadModelScreen2.swift
+//  UploadModelScreen.swift
 //  ARLook
 //
 //  Created by Narek on 05.03.25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UploadModelScreen2: View {
+struct UploadModelScreen: View {
 
   @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
   @StateObject private var viewModel = UploadViewModel()
@@ -30,13 +30,12 @@ struct UploadModelScreen2: View {
       .onChange(of: viewModel.selectedURL) {
         oldValue,
         newValue in
-        if let url = newValue {
-          modelManager.thumbnail(
-            for: url,
-            size: CGSize(width: 512, height: 512)
-          ) { image in
-            viewModel.image = image
-          }
+        guard let url = newValue else { return }
+        modelManager.thumbnail(
+          for: url,
+          size: CGSize(width: 512, height: 512)
+        ) { image in
+          viewModel.image = image
         }
       }
   }
@@ -46,6 +45,7 @@ struct UploadModelScreen2: View {
       Text(LocString.uploadDescription)
         .font(.extraLargeTitle)
         .padding(20)
+
       ScrollView(.vertical, showsIndicators: false) {
         VStack(alignment: .leading, spacing: 16) {
           HStack(alignment: .top, spacing: 16) {
@@ -132,44 +132,51 @@ struct UploadModelScreen2: View {
     Button {
       Task {
         if let fileURL = viewModel.selectedURL {
-          await viewModel.uploadFile(fileURL: fileURL)
+          await viewModel.uploadFile(
+            fileURL: fileURL,
+            thumbnailImage: viewModel.image
+          )
         }
       }
     } label: {
-      HStack(spacing: 0) {
-        Spacer()
-        Text(LocString.upload)
-          .foregroundStyle(.white)
-          .dynamicFont(size: 20, weight: .medium)
-
-        if viewModel.isLoading, viewModel.loadingProgress != 1 {
-          ActivityProgressView(
-            progress: Float(viewModel.loadingProgress),
-            color: .white,
-            scale: 0.1,
-            isTextHidden: true
-          )
-          .padding(.leading, 16)
-        } else {
-          Image(systemName: Image.upload)
-            .resizable()
-            .frame(height: 24)
-            .aspectRatio(contentMode: .fit)
-            .padding(.leading, 16)
-        }
-
-        Spacer()
-      }
-      .padding()
-      .background(accentColorType.color)
-      .clipShape(Capsule())
+      uploadButtonContentView
     }
     .disabled(viewModel.isLoading)
     .buttonStyle(PlainButtonStyle())
   }
 
+  private var uploadButtonContentView: some View {
+    HStack(spacing: 0) {
+      Spacer()
+      Text(LocString.upload)
+        .foregroundStyle(.white)
+        .dynamicFont(size: 20, weight: .medium)
+
+      if viewModel.isLoading, viewModel.loadingProgress != 1 {
+        ActivityProgressView(
+          progress: Float(viewModel.loadingProgress),
+          color: .white,
+          scale: 0.1,
+          isTextHidden: true
+        )
+        .padding(.leading, 16)
+      } else {
+        Image(systemName: Image.upload)
+          .resizable()
+          .frame(height: 24)
+          .aspectRatio(contentMode: .fit)
+          .padding(.leading, 16)
+      }
+
+      Spacer()
+    }
+    .padding()
+    .background(accentColorType.color)
+    .clipShape(Capsule())
+  }
+
 }
 
 #Preview(windowStyle: .automatic) {
-  UploadModelScreen2()
+  UploadModelScreen()
 }
