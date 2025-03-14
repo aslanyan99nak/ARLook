@@ -12,19 +12,26 @@ struct Model: Codable, Hashable, Identifiable {
   let id: Int?
   let name: String?
   let mainFileName: String?
-  let mainFileSize: Double?
-  let mainFilePath: String?  // ": "/v1/files/202/MODEL/download",
+  let mainFileSize: Int64?
+  let mainFilePath: String?
   let thumbnailFileName: String?
-  let thumbnailFileSize: Double?
+  let thumbnailFileSize: Int64?
   let thumbnailFilePath: String?
-  let viewsCount: Int?
+  var viewsCount: Int64?
   let isFavorite: Bool?
   let fileType: String?
   let description: String?
 
   var isLoading: Bool = false
   var loadingProgress: CGFloat = 0
-  var viewCountString: String = "167K"
+  
+  var viewCountString: String {
+    (viewsCount ?? 0).formattedViewCount
+  }
+  
+  var fileSizeString: String {
+    (mainFileSize ?? 0).fileSizeFormatted
+  }
 
   var localFileURL: URL? {
     guard let id else { return nil }

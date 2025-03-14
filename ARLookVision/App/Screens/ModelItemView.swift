@@ -62,6 +62,10 @@ struct ModelItemView: View {
       VStack(alignment: .leading, spacing: 8) {
         modelNameView
         modelDescriptionView
+        Text(model.fileSizeString)
+          .multilineTextAlignment(.leading)
+          .dynamicFont()
+          .foregroundStyle(.white)
       }
       .padding(.leading, 16)
 
@@ -84,6 +88,12 @@ struct ModelItemView: View {
         ownerView
         Spacer()
         viewCount
+
+        Text(model.fileSizeString)
+          .multilineTextAlignment(.leading)
+          .dynamicFont()
+          .foregroundStyle(.white)
+          .padding(.leading, 8)
       }
     }
     .padding(.horizontal, 8)
@@ -131,7 +141,13 @@ struct ModelItemView: View {
         .multilineTextAlignment(.leading)
         .dynamicFont()
         .foregroundStyle(.white)
+
+      Text(model.fileSizeString)
+        .multilineTextAlignment(.leading)
+        .dynamicFont()
+        .foregroundStyle(.white)
     }
+    .padding(.horizontal, 8)
   }
 
   private var modelNameView: some View {
@@ -149,7 +165,7 @@ struct ModelItemView: View {
       .dynamicFont(size: 14, weight: .regular, design: .rounded)
       .foregroundStyle(.white)
   }
-  
+
   private var ownerView: some View {
     Text("Owner")
       .multilineTextAlignment(.leading)

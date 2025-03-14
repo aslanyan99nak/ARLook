@@ -47,6 +47,7 @@
 				App/AppCore/Env.swift,
 				App/AppCore/Localizable.xcstrings,
 				"App/Extensions/Color+Ext.swift",
+				"App/Extensions/Int+Ext.swift",
 				"App/Extensions/Optional+Ext.swift",
 				"App/Extensions/String+Ext.swift",
 				"App/Extensions/UIDevice+Ext.swift",

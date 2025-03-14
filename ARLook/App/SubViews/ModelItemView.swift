@@ -18,22 +18,10 @@ struct ModelItemView: View {
   let model: Model
 
   private let modelManager = ModelManager.shared
-
-  private var title: String {
-    model.name ?? ""
-  }
-
-  private var description: String {
-    model.description ?? ""
-  }
-
-  private var isDarkMode: Bool {
-    colorScheme == .dark
-  }
-
-  private var url: URL? {
-    model.localFileURL
-  }
+  private var title: String { model.name ?? "" }
+  private var description: String { model.description ?? "" }
+  private var isDarkMode: Bool { colorScheme == .dark }
+  private var url: URL? { model.localFileURL }
 
   var body: some View {
     contentView
@@ -78,6 +66,10 @@ struct ModelItemView: View {
       VStack(alignment: .leading, spacing: 8) {
         modelNameView
         modelDescriptionView
+        Text(model.fileSizeString)
+          .multilineTextAlignment(.leading)
+          .dynamicFont()
+          .foregroundStyle(isDarkMode ? .white : .black)
       }
       .padding(.leading, 16)
 
@@ -94,7 +86,14 @@ struct ModelItemView: View {
         Spacer()
         modelView
         Spacer()
-        viewCount
+        HStack(spacing: 8) {
+          viewCount
+          
+          Text(model.fileSizeString)
+            .multilineTextAlignment(.leading)
+            .dynamicFont()
+            .foregroundStyle(isDarkMode ? .white : .black)
+        }
       }
       Spacer()
     }

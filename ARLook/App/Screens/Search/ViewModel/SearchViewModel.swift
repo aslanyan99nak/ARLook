@@ -76,5 +76,18 @@ class SearchViewModel: ObservableObject {
       }
     }
   }
+  
+  @MainActor
+  func incrementViewsCount(by id: String) async {
+    do {
+      let _: EmptyModel = try await modelEnvironment.request(.addViewCount(id: id))
+      guard let modelIndex = models.firstIndex(where: { String($0.id ?? 0) == id }),
+            let _ = models[modelIndex].viewsCount
+      else { return }
+      models[modelIndex].viewsCount! += 1
+    } catch {
+      print("❌ Can't Increment viewsCount: \(error.localizedDescription)")
+    }
+  }
 
 }

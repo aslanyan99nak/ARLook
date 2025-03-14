@@ -108,6 +108,13 @@ struct SearchScreen: View {
                 }
               }
             }
+            .onChange(of: viewModel.previewURL) { oldValue, newValue in
+              if oldValue.isNotNil && newValue.isNil {
+                Task {
+                  await viewModel.incrementViewsCount(by: String(model.id ?? 0))
+                }
+              }
+            }
           }
         }
         .padding(.bottom, 40)
