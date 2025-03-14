@@ -15,6 +15,7 @@ enum ModelEndpoint {
   case download(path: String, id: String)
   case get(id: String)
   case delete(id: String)
+  case addViewCount(id: String)
 
 }
 
@@ -27,6 +28,7 @@ extension ModelEndpoint: MultiTargetType {
     case let .download(path, _): path
     case let .get(id): "/files/\(id)"
     case let .delete(id): "/files/\(id)"
+    case let .addViewCount(id): "/files/\(id)/views"
     }
   }
 
@@ -35,12 +37,15 @@ extension ModelEndpoint: MultiTargetType {
     case .get, .getList, .download: .get
     case .upload: .post
     case .delete: .delete
+    case .addViewCount: .put
     }
   }
 
   var parameters: Parameter {
     switch self {
     case .upload: return [:]
+    case .addViewCount:
+      return ["addedViewCounts": 1]
     default: return [:]
     }
   }
@@ -102,7 +107,7 @@ extension ModelEndpoint: MultiTargetType {
       }
 
       return .uploadMultipart(formData)
-    case let .download(path, id):
+    case let .download(_, id):
       return .downloadDestination { temporaryURL, response in
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let destinationURL = documentsDirectory.appendingPathComponent(id + ".usdz")
