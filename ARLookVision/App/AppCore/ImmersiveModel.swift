@@ -19,32 +19,24 @@ class ImmersiveModel: ObservableObject {
 
 enum ShowCase: String, Identifiable, CaseIterable, Equatable {
   
-  case PanoramaVideo, WorldReconstruction, PlaneClassification, SharePlay, HandTracking, TargetPlane, Gesture, Window
+  case worldScaning
+  case planeClassification
+  case mainCamera
+  case qrScanner
+  case roomTracking
 
   var id: Self { self }
   var name: String { rawValue }
 
   var detail: String {
     switch self {
-    case .PanoramaVideo: "Show Panorama Video in visionOS"
-    case .WorldReconstruction: "Use ARKit to scene the world"
-    case .PlaneClassification: "Use ARKit to classification the plane"
-    case .SharePlay: "Show the SharePlay in visionOS"
-    case .HandTracking: "Tracking the hand movement"
-    case .TargetPlane: "Place Entity onto target plane"
-    case .Gesture: "Gesture in 3D"
-    case .Window: "What window can show in 3D space"
+    case .worldScaning: "Use ARKit to scene the world"
+    case .planeClassification: "Use ARKit to classification the plane"
+    case .mainCamera: "Use ARKit to use main camera frame"
+    case .qrScanner: "Use ARKit to scan QR code"
+    case .roomTracking: "Use ARKit to track the room"
     }
   }
-
-  //    var windowDestination: AnyView? {
-  //        switch self {
-  //            case .PanoramaVideo: AnyView(VideoController())
-  //            case .SharePlay: AnyView(PlayTogtherView())
-  //            case .Window: AnyView(WindowView())
-  //            default: nil
-  //        }
-  //    }
 
   var windowId: String? {
     switch self {
@@ -52,20 +44,14 @@ enum ShowCase: String, Identifiable, CaseIterable, Equatable {
     }
   }
 
-  var volumeId: String? {
+  var immersiveSpaceId: String {
     switch self {
-    case .Gesture: "Gesture"
-    default: nil
+    case .worldScaning: "WorldScaning"
+    case .planeClassification: "PlaneClassification"
+    case .mainCamera: "MainCamera"
+    case .qrScanner: "QRScanner"
+    case .roomTracking: "RoomTracking"
     }
   }
-
-  var immersiveSpaceId: String? {
-    switch self {
-    case .WorldReconstruction: "WorldScaning"
-    case .PlaneClassification: "PalneClassification"
-    case .HandTracking: "HandTracking"
-    case .TargetPlane: "TargetPlane"
-    default: nil
-    }
-  }
+  
 }

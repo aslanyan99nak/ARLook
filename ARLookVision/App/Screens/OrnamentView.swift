@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  OrnamentView.swift
 //  ARLookVision
 //
 //  Created by Narek on 04.03.25.

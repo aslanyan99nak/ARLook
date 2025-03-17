@@ -367,6 +367,15 @@
     "Dismiss Immersive Space" : {
 
     },
+    "Dismiss MainCamera" : {
+
+    },
+    "Dismiss PlaneClassification Space" : {
+
+    },
+    "Dismiss QR Scanner" : {
+
+    },
     "done" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -383,6 +392,12 @@
           }
         }
       }
+    },
+    "Enter immersive space" : {
+
+    },
+    "Enter the immersive space to start room tracking." : {
+
     },
     "env_cons_1" : {
       "extractionState" : "manual",
@@ -999,6 +1014,9 @@
         }
       }
     },
+    "Leave immersive space" : {
+
+    },
     "light" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1054,6 +1072,9 @@
           }
         }
       }
+    },
+    "Make Look Around Screen" : {
+
     },
     "mesh_generation" : {
       "extractionState" : "manual",
@@ -1432,6 +1453,9 @@
         }
       }
     },
+    "Preview USDZ File" : {
+
+    },
     "processing" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1550,12 +1574,6 @@
           }
         }
       }
-    },
-    "Scan QR Code" : {
-
-    },
-    "Scanned QR Code: %@" : {
-
     },
     "scanner" : {
       "extractionState" : "manual",
@@ -1841,7 +1859,16 @@
     "Show Document Picker" : {
 
     },
+    "Show MainCamera" : {
+
+    },
     "Show Meshes" : {
+
+    },
+    "Show PlaneClassification Space" : {
+
+    },
+    "Show QR Scanner" : {
 
     },
     "skip" : {

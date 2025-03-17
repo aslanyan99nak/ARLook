@@ -55,8 +55,10 @@ struct MainScreen: View {
   private var selectedDetailView: some View {
     if let selectedItem = viewModel.selectedItem {
       switch selectedItem {
+      case .objectScanner: ObjectScannerScreen()
       case .upload: UploadModelScreen()
-      case .qrCodeScanner: QRScannerView()
+      case .qrCodeScanner:
+        QRScannerView()
       case .importQR:
         QRImageScannerView { code in
           viewModel.scannedCode = code
@@ -65,21 +67,10 @@ struct MainScreen: View {
         FileScreen { url in
           viewModel.selectedURL = url
         }
-      case .lookAround:
-        //        ScannerView()
-        LookAroundScreen()
+      case .lookAround: LookAroundScreen()
       case .view3DMode:
-        VStack(spacing: 40) {
-          Text(LocString.viewModelDescription)
-            .font(.extraLargeTitle)
-            .padding(20)
-
-          Button {
-            viewModel.previewURL = viewModel.selectedURL
-          } label: {
-            Text(LocString.view3DMode)
-          }
-          .quickLookPreview($viewModel.previewURL)
+        View3DScreen(previewURL: $viewModel.previewURL) {
+          viewModel.previewURL = viewModel.selectedURL
         }
       }
     } else {

@@ -43,6 +43,7 @@ extension Image {
   static let lightColorScheme = "sun.max"
   static let darkColorScheme = "moon"
   static let qrCodeScanner = "qrcode.viewfinder"
+  static let visionPro = "visionpro"
   static let qrCode = "qrcode"
   static let recent = "memories"
   static let favorite = "heart"
