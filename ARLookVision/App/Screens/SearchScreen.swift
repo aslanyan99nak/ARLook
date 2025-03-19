@@ -88,33 +88,7 @@ struct SearchScreen: View {
       ScrollView(showsIndicators: false) {
         LazyVGrid(columns: columns, spacing: 40) {
           ForEach(viewModel.searchResults, id: \.self) { model in
-            ModelItemView(
-              isList: $viewModel.isList,
-              model: model
-            )
-            .scaleHoverEffect(scale: viewModel.isList ? 1.1 : 1.2)
-            .quickLookPreview($viewModel.previewURL)
-            .onTapGesture {
-              viewModel.selectedModelName = model.name
-              if model.localFileURL.isNotNil {
-                viewModel.previewURL = model.localFileURL
-              } else {
-                guard let id = model.id else { return }
-                Task {
-                  await viewModel.downloadModel(
-                    by: model.mainFilePath ?? "",
-                    id: String(id)
-                  )
-                }
-              }
-            }
-            .onChange(of: viewModel.previewURL) { oldValue, newValue in
-              if oldValue.isNotNil && newValue.isNil {
-                Task {
-                  await viewModel.incrementViewsCount(by: String(model.id ?? 0))
-                }
-              }
-            }
+            makeModelContentView(model)
           }
         }
         .padding(.bottom, 40)
@@ -124,6 +98,42 @@ struct SearchScreen: View {
       .refreshable {
         Task {
           await viewModel.getModels()
+        }
+      }
+    }
+  }
+    
+  private func makeModelContentView(_ model: Model) -> some View {
+    ModelItemView(
+      isList: $viewModel.isList,
+      model: model
+    ) {
+      if !model.isFavoriteLoading {
+        Task {
+          await viewModel.makeFavorite(by: String(model.id ?? 0))
+        }
+      }
+    }
+    .scaleHoverEffect(scale: viewModel.isList ? 1.1 : 1.2)
+    .quickLookPreview($viewModel.previewURL)
+    .onTapGesture {
+      viewModel.selectedModelName = model.name
+      if model.localFileURL.isNotNil {
+        viewModel.previewURL = model.localFileURL
+      } else {
+        guard let id = model.id else { return }
+        Task {
+          await viewModel.downloadModel(
+            by: model.mainFilePath ?? "",
+            id: String(id)
+          )
+        }
+      }
+    }
+    .onChange(of: viewModel.previewURL) { oldValue, newValue in
+      if oldValue.isNotNil && newValue.isNil {
+        Task {
+          await viewModel.incrementViewsCount(by: String(model.id ?? 0))
         }
       }
     }

@@ -121,29 +121,40 @@ struct UploadModelScreen: View {
         }
       }
     } label: {
-      HStack(spacing: 0) {
-        Spacer()
-        Text(LocString.upload)
-          .foregroundStyle(.white)
-          .dynamicFont(size: 20, weight: .medium)
-        
-        if viewModel.isLoading, viewModel.loadingProgress != 1 {
-          ActivityProgressView(
-            progress: Float(viewModel.loadingProgress),
-            color: .white,
-            scale: 0.1,
-            isTextHidden: true
-          )
-          .padding(.leading, 16)
-        }
-        
-        Spacer()
-      }
-      .padding()
-      .background(accentColorType.color)
-      .clipShape(Capsule())
+      uploadButtonContent
     }
     .disabled(viewModel.isLoading)
+  }
+  
+  private var uploadButtonContent: some View {
+    HStack(spacing: 0) {
+      Spacer()
+      Text(LocString.upload)
+        .foregroundStyle(.white)
+        .dynamicFont(size: 20, weight: .medium)
+      
+      if viewModel.isLoading, viewModel.loadingProgress != 1 {
+        ActivityProgressView(
+          progress: Float(viewModel.loadingProgress),
+          color: .white,
+          scale: 0.1,
+          isTextHidden: true
+        )
+        .padding(.leading, 16)
+      } else {
+        Image(systemName: Image.upload)
+          .resizable()
+          .aspectRatio(contentMode: .fit)
+          .frame(width: 16)
+          .padding(.leading, 16)
+          .foregroundStyle(.white)
+      }
+      
+      Spacer()
+    }
+    .padding()
+    .background(accentColorType.color)
+    .clipShape(Capsule())
   }
 
 }

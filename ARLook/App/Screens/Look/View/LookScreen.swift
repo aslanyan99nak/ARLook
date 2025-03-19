@@ -104,7 +104,6 @@ struct LookScreen: View {
 
   private var cursorEnableButton: some View {
     Button {
-      // Action
       NotificationCenter.default.post(name: .toggleArrowVisibility, object: nil)
     } label: {
       Image(systemName: viewModel.isShowSelected ? "cursorarrow.slash" : "cursorarrow")
@@ -196,7 +195,6 @@ struct LookScreen: View {
     Button {
       NotificationCenter.default.post(name: .snapshot, object: nil)
     } label: {
-      // Image(systemName: Image.snapshot2)
       Image(systemName: Image.snapshot)
         .renderingMode(.template)
         .resizable()

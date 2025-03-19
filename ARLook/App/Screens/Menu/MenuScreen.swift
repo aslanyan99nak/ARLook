@@ -70,7 +70,13 @@ struct MenuScreen: View {
             ModelItemView(
               isList: $viewModel.isList,
               model: model
-            )
+            ) {
+              if !model.isFavoriteLoading {
+                Task {
+                  await viewModel.makeFavorite(by: String(model.id ?? 0))
+                }
+              }
+            }
           }
         }
       }

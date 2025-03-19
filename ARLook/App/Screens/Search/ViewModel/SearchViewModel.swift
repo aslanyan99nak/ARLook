@@ -24,7 +24,7 @@ class SearchViewModel: ObservableObject {
 
   var searchResults: [Model] {
     if searchText.isEmpty {
-      models
+      selectedModelType == .all ? models : models.filter { $0.isFavorite ?? false }
     } else {
       models.filter { ($0.name ?? "").lowercased().contains(searchText.lowercased()) }
     }
@@ -88,6 +88,23 @@ class SearchViewModel: ObservableObject {
     } catch {
       print("❌ Can't Increment viewsCount: \(error.localizedDescription)")
     }
+  }
+  
+  @MainActor
+  func makeFavorite(by id: String) async {
+    guard let modelIndex = models.firstIndex(where: { String($0.id ?? 0) == id }),
+          let isFavorite = models[modelIndex].isFavorite
+    else { return }
+    do {
+      models[modelIndex].isFavoriteLoading = true
+      let _: EmptyModel = try await modelEnvironment.request(.favorite(id: id))
+      models[modelIndex].isFavorite = !isFavorite
+      models[modelIndex].isFavoriteLoading = false
+    } catch {
+      models[modelIndex].isFavoriteLoading = false
+      print("❌ Can't Change model favorite: \(error.localizedDescription)")
+    }
+    
   }
 
 }
