@@ -12,6 +12,8 @@ struct SettingsScreen: View {
   @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
   @AppStorage("textSize") private var textSize: Double = 0
   @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
+  @AppStorage("isHandTrackingEnabled") var isHandTrackingEnabled: Bool = false
+  @EnvironmentObject var handTrackingViewModel: HandTrackingViewModel
 
   @State private var isColorSheetPresented = false
   @State private var brightness: CGFloat = 0
@@ -32,6 +34,7 @@ struct SettingsScreen: View {
           themeList
           accentColorRow
           TextSizeRow()
+          handTrackingSwitch
         }
         .padding(.horizontal, 16)
       }
@@ -76,6 +79,21 @@ struct SettingsScreen: View {
     .padding(.vertical, 10)
     .background(Material.regular)
     .clipShape(RoundedRectangle(cornerRadius: 16))
+  }
+  
+  private var handTrackingSwitch: some View {
+    Toggle(isOn: $isHandTrackingEnabled) {
+      Text(isHandTrackingEnabled ? "Disable Hand Tracking" : "Enable Hand Tracking")
+        .minimumScaleFactor(0.5)
+        .dynamicFont()
+    }
+    .padding(.horizontal, 16)
+    .padding(.vertical, 10)
+    .background(Material.regular)
+    .clipShape(RoundedRectangle(cornerRadius: 16))
+    .onChange(of: isHandTrackingEnabled) { _, newValue in
+      handTrackingViewModel.hideShowHandTracking(newValue)
+    }
   }
 
 }

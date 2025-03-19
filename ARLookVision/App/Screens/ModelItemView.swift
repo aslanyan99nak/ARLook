@@ -141,11 +141,6 @@ struct ModelItemView: View {
         .multilineTextAlignment(.leading)
         .dynamicFont()
         .foregroundStyle(.white)
-
-      Text(model.fileSizeString)
-        .multilineTextAlignment(.leading)
-        .dynamicFont()
-        .foregroundStyle(.white)
     }
     .padding(.horizontal, 8)
   }

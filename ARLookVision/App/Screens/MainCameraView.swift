@@ -17,15 +17,6 @@ struct MainCameraView: View {
 
   var body: some View {
     Text("Make Look Around Screen")
-    
-//    let image = mainCameraModel.pixelBuffer?.image ?? emptyImage
-//
-//    image
-//      .resizable()
-//      .scaledToFit()
-//      .task {
-//        await mainCameraModel.run()
-//      }
   }
 
 }

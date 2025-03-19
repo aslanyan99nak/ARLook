@@ -19,6 +19,7 @@ struct ARLookVisionApp: App {
   @StateObject private var planeClassificationModel = PlaneClassificationTrackingModel()
   @StateObject private var mainCameraTrackingModel = MainCameraTrackingModel()
   @StateObject private var roomClassificationTrackingModel = RoomClassificationTrackingModel()
+  @StateObject private var handTrackingViewModel = HandTrackingViewModel()
 
   @State private var selectedColor: Color = .red
   @State private var opacity: Double = 0
@@ -33,6 +34,7 @@ struct ARLookVisionApp: App {
         .environmentObject(planeClassificationModel)
         .environmentObject(mainCameraTrackingModel)
         .environmentObject(roomClassificationTrackingModel)
+        .environmentObject(handTrackingViewModel)
     }
 
     WindowGroup(id: "ChangeMaterialColor") {
@@ -64,14 +66,6 @@ struct ARLookVisionApp: App {
       .padding(40)
     }
 
-    //    WindowGroup {
-    //      RoomTrackingScreen()
-    //        .environment(roomState)
-    //        .environmentObject(immersiveModel)
-    //        .environmentObject(roomClassificationTrackingModel)
-    //    }
-    //    .defaultSize(CGSize(width: 800, height: 400))
-
     ImmersiveSpace(id: ShowCase.worldScaning.immersiveSpaceId) {
       WorldScaningImmersiveView()
         .environmentObject(worldScaningTrackingModel)
@@ -83,8 +77,11 @@ struct ARLookVisionApp: App {
     }
 
     ImmersiveSpace(id: ShowCase.mainCamera.immersiveSpaceId) {
-      MainCameraView()
-        .environmentObject(mainCameraTrackingModel)
+      //      MainCameraView()
+      //        .environmentObject(mainCameraTrackingModel)
+
+      HandTrackingView()
+        .environmentObject(handTrackingViewModel)
     }
 
     ImmersiveSpace(id: ShowCase.qrScanner.immersiveSpaceId) {
@@ -96,6 +93,7 @@ struct ARLookVisionApp: App {
         .environment(roomState)
         .environmentObject(immersiveModel)
         .environmentObject(roomClassificationTrackingModel)
+        .environmentObject(handTrackingViewModel)
     }
 
   }

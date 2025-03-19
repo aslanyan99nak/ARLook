@@ -20,12 +20,14 @@ struct ObjectScannerScreen: View {
   @State private var previewURL: URL?
 
   var body: some View {
-    VStack(spacing: 40) {
-      openDismissImmersiveSpaceButton
-      openDismissPlaneClassificationSpaceButton
+    HStack(spacing: 40) {
+      VStack(spacing: 40) {
+        openDismissImmersiveSpaceButton
+        openDismissPlaneClassificationSpaceButton
+        previewButton
+        selectMaterialButton
+      }
       wallScannerView
-      previewButton
-      selectMaterialButton
     }
     .onDisappear {
       if immseriveModel.immersiveSpaceId != nil {
@@ -56,9 +58,11 @@ struct ObjectScannerScreen: View {
   private var previewButton: some View {
     Button {
       // TODO: - Change back
-
 //      previewURL = model.selectedURL
-      previewURL = planeClassificationModel.selectedURL
+      
+      if let url = planeClassificationModel.selectedURL {
+        previewURL = url
+      }
     } label: {
       Text("View as a 3D")
     }

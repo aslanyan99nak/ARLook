@@ -52,6 +52,7 @@ class RoomState {
   private let occlusionMaterial = OcclusionMaterial()
   /// Material for current room walls.
   private var wallMaterial = UnlitMaterial(color: .blue)
+  private var floorMaterial = UnlitMaterial(color: .brown)
   private var addedWallMaterial = UnlitMaterial(color: .white)
   /// When a person denies authorization or a data provider state changes to an error condition,
   /// the main window displays an error message based on the `errorState`.
@@ -72,11 +73,13 @@ class RoomState {
 
     roomRoot.isEnabled = false
     renderWallRoot.isEnabled = true
+    
     renderWallRoot.components[OpacityComponent.self] = .init(opacity: 0.3)
     colliderWallsRoot.components[OpacityComponent.self] = .init(opacity: 0)
 
     contentRoot.addChild(roomParentEntity)
     contentRoot.addChild(roomRoot)
+
     contentRoot.addChild(renderWallRoot)
     contentRoot.addChild(colliderWallsRoot)
   }
@@ -100,7 +103,7 @@ class RoomState {
 
   func runSession() async {
     do {
-      try await session.run([worldTracking, roomTracking, handTracking])
+      try await session.run([worldTracking, roomTracking, handTracking /*, planeTracking*/])
     } catch {
       guard error is ARKitSession.Error else {
         preconditionFailure("Unexpected error \(error).")
@@ -152,9 +155,10 @@ class RoomState {
       logger.error("Failed to find the nearest wall to the rendered wall.")
       return
     }
-    self.currentRenderedWall = newWallToRender
-    renderWallRoot.addChild(newWallToRender)
-    roomParentEntity.addChild(newWallToRender)
+    let clonedWall = newWallToRender.clone(recursive: true)
+    self.currentRenderedWall = clonedWall
+    renderWallRoot.addChild(clonedWall)
+    roomParentEntity.addChild(clonedWall)
   }
 
   /// Updates the wall in front of the person when a wall isn't in a selected state.
@@ -207,9 +211,45 @@ class RoomState {
       }
 
       wallEntity.collision = CollisionComponent(shapes: [shape], isStatic: true)
+      wallEntity.name = "Wall"
       newColliderWalls.addChild(wallEntity)
     }
     colliderWallsRoot.addChild(newColliderWalls)
+  }
+
+  private func createBoxFromPlane(originalMesh: MeshResource, customHeight: Float) -> MeshResource? {
+    let bounds = originalMesh.bounds
+    let width = bounds.extents.x
+    let depth = bounds.extents.z
+    let boxMesh = MeshResource.generateBox(size: [width, customHeight, depth])
+    return boxMesh
+  }
+
+  private func updateCurrentFloorPlanes(for roomAnchor: RoomAnchor) async {
+    let newColliderFloor = Entity()
+    let floorGeometries = roomAnchor.geometries(of: .floor)
+    for floorGeometry in floorGeometries {
+      guard let floorMeshResource = floorGeometry.asMeshResource() else {
+        continue
+      }
+
+      guard let meshResource = createBoxFromPlane(originalMesh: floorMeshResource, customHeight: 0.2)
+      else { continue }
+
+      let floorEntity = ModelEntity(mesh: meshResource, materials: [floorMaterial])
+      floorEntity.transform = Transform(matrix: roomAnchor.originFromAnchorTransform)
+      floorEntity.position.y = -0.2
+
+      guard let shape = try? await ShapeResource.generateStaticMesh(from: floorMeshResource) else {
+        logger.error("Failed to create ShapeResource from wall geometries.")
+        continue
+      }
+
+      floorEntity.collision = CollisionComponent(shapes: [shape], isStatic: true)
+      floorEntity.name = "Floor"
+      newColliderFloor.addChild(floorEntity)
+    }
+    colliderWallsRoot.addChild(newColliderFloor)
   }
 
   func processRoomTrackingUpdates() async {
@@ -245,6 +285,7 @@ class RoomState {
         if roomAnchor.isCurrentRoom {
           if renderWallRoot.isEnabled {
             await updateCurrentRoomWalls(for: roomAnchor)
+            await updateCurrentFloorPlanes(for: roomAnchor)
           }
         }
       }
@@ -254,12 +295,15 @@ class RoomState {
   @MainActor
   func processTapOnEntity() {
     var newColliderWalls: [ModelEntity] = []
-    colliderWallsRoot.children.forEach { entity in
-      entity.children.forEach { wallEntity in
-        if let wallEntity = wallEntity as? ModelEntity {
+    for entity in colliderWallsRoot.children {
+      for wallEntity in entity.children {
+        guard let wallEntity = wallEntity as? ModelEntity else { continue }
+        if wallEntity.name.contains("Floor") {
+          wallEntity.model?.materials = [floorMaterial]
+        } else {
           wallEntity.model?.materials = [addedWallMaterial]
-          newColliderWalls.append(wallEntity)
         }
+        newColliderWalls.append(wallEntity)
       }
     }
     updateSelectedWall(wallCandidateEntities: newColliderWalls)
@@ -309,3 +353,4 @@ class RoomState {
   }
 
 }
+

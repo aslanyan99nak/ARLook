@@ -364,6 +364,9 @@
         }
       }
     },
+    "Disable Hand Tracking" : {
+
+    },
     "Dismiss Immersive Space" : {
 
     },
@@ -392,6 +395,9 @@
           }
         }
       }
+    },
+    "Enable Hand Tracking" : {
+
     },
     "Enter immersive space" : {
 

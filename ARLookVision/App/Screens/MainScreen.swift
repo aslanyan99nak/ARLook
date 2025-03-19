@@ -57,8 +57,7 @@ struct MainScreen: View {
       switch selectedItem {
       case .objectScanner: ObjectScannerScreen()
       case .upload: UploadModelScreen()
-      case .qrCodeScanner:
-        QRScannerView()
+//      case .qrCodeScanner: QRScannerView()
       case .importQR:
         QRImageScannerView { code in
           viewModel.scannedCode = code

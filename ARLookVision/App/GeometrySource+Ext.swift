@@ -8,39 +8,6 @@
 import ARKit
 import RealityKit
 
-extension SIMD4 {
-
-  /// Retrieves first 3 elements
-  var xyz: SIMD3<Scalar> {
-    self[SIMD3(0, 1, 2)]
-  }
-
-}
-
-extension ModelEntity {
-
-  /// The geometry center of this model's faces.
-  var centroid: SIMD3<Float>? {
-    guard let vertices = self.model?.mesh.contents.models[0].parts[0].positions.elements else {
-      return nil
-    }
-    guard let faces = self.model?.mesh.contents.models[0].parts[0].triangleIndices?.elements else {
-      return nil
-    }
-
-    // Create a set of all vertices of the entity's faces.
-    let uniqueFaces = Set(faces)
-
-    var centroid = SIMD3<Float>()
-    for vertexInFace in uniqueFaces {
-      centroid += vertices[Int(vertexInFace)]
-    }
-    centroid /= Float(uniqueFaces.count)
-    return centroid
-  }
-
-}
-
 extension GeometrySource {
 
   /// converts between ARKit and RealityKit types.
@@ -90,6 +57,29 @@ extension MeshAnchor.Geometry {
     let vertices = self.vertices.asSIMD3(ofType: Float.self)
     guard !vertices.isEmpty else { return nil }
     let faceIndexArray = self.faces.asIndexArray()
+    var descriptor = MeshDescriptor()
+    descriptor.positions = .init(vertices)
+    descriptor.materials = .allFaces(0)
+    descriptor.primitives = MeshDescriptor.Primitives.triangles(faceIndexArray)
+
+    do {
+      let mesh = try MeshResource.generate(from: [descriptor])
+      return mesh
+    } catch {
+      logger.error("Error creating MeshResource with error:\(error)")
+    }
+    return nil
+  }
+
+}
+
+extension PlaneAnchor.Geometry {
+
+  @MainActor
+  func asMeshResource() -> MeshResource? {
+    let vertices = self.meshVertices.asSIMD3(ofType: Float.self)
+    guard !vertices.isEmpty else { return nil }
+    let faceIndexArray = self.meshFaces.asIndexArray()
     var descriptor = MeshDescriptor()
     descriptor.positions = .init(vertices)
     descriptor.materials = .allFaces(0)

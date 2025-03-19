@@ -26,15 +26,12 @@ class PlaneClassificationTrackingModel: TrackingModel, ObservableObject {
     do {
       try await session.run(providers)
       for await sceneUpdate in planeDataProvider.anchorUpdates {
-        // print classifications
         try await updatePlaneEntity(sceneUpdate.anchor)
       }
     } catch {
       print("error is \(error)")
     }
   }
-
-  // MARK: Plane Classification
 
   @MainActor
   func updatePlaneEntity(_ anchor: PlaneAnchor) async throws {
@@ -51,7 +48,6 @@ class PlaneClassificationTrackingModel: TrackingModel, ObservableObject {
       anchorEntity.addChild(textEntity)
     } else {
       let anchorEntity = AnchorEntity(world: anchor.originFromAnchorTransform)
-      // NOTE: 需要翻转 -90 度
       anchorEntity.orientation = .init(angle: -.pi / 2, axis: .init(1, 0, 0))
       anchorEntity.addChild(modelEntity)
       anchorEntity.addChild(textEntity)
@@ -77,7 +73,7 @@ class PlaneClassificationTrackingModel: TrackingModel, ObservableObject {
     
     
     let material = SimpleMaterial(
-      color: anchor.classificationColor,
+      color: anchor.classificationColor.withAlphaComponent(0.7),
       isMetallic: false
     )
     

@@ -15,7 +15,7 @@ enum SideMenuItem: String, Identifiable, CaseIterable {
 
   case objectScanner
   case upload
-  case qrCodeScanner
+//  case qrCodeScanner
   case importQR
   case file
   case view3DMode
@@ -25,7 +25,7 @@ enum SideMenuItem: String, Identifiable, CaseIterable {
     switch self {
     case .objectScanner: Image(systemName: Image.visionPro)
     case .upload: Image(systemName: Image.upload)
-    case .qrCodeScanner: Image(systemName: Image.qrCodeScanner)
+//    case .qrCodeScanner: Image(systemName: Image.qrCodeScanner)
     case .importQR: Image(systemName: Image.qrCode)
     case .file: Image(.openFile)
     case .view3DMode: Image(systemName: Image.arkit)
@@ -37,7 +37,7 @@ enum SideMenuItem: String, Identifiable, CaseIterable {
     switch self {
     case .objectScanner: ""
     case .upload: LocString.upload
-    case .qrCodeScanner: LocString.qrCodeScannerTitle
+//    case .qrCodeScanner: LocString.qrCodeScannerTitle
     case .importQR: LocString.importQRTitle
     case .file: LocString.fileManagmentTitle
     case .view3DMode: LocString.view3DMode
@@ -49,7 +49,7 @@ enum SideMenuItem: String, Identifiable, CaseIterable {
     switch self {
     case .objectScanner: ""
     case .upload: LocString.uploadDescription
-    case .qrCodeScanner: LocString.qrCodeScannerDescription
+//    case .qrCodeScanner: LocString.qrCodeScannerDescription
     case .importQR: LocString.importQRDescription
     case .file: LocString.fileManagmentDescription
     case .view3DMode: LocString.viewModelDescription

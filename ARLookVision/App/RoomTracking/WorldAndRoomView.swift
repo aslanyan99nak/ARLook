@@ -15,7 +15,7 @@ struct WorldAndRoomView: View {
   @State var previewSphere: Entity?
   @State private var updateFacingWallTask: Task<Void, Never>? = nil
   
-  @StateObject var handTrackingViewModel = HandTrackingViewModel()
+  @EnvironmentObject var handTrackingViewModel: HandTrackingViewModel
 
   var body: some View {
     RealityView { content in
@@ -39,7 +39,6 @@ struct WorldAndRoomView: View {
     .task {
       await roomState.processRoomTrackingUpdates()
     }
-    
     // FOR HAND TRACKING
     .task {
       await handTrackingViewModel.runSession()
