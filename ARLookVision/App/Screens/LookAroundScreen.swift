@@ -11,7 +11,7 @@ import SwiftUI
 struct LookAroundScreen: View {
 
   @EnvironmentObject var mainCameraTrackingModel: MainCameraTrackingModel
-  @EnvironmentObject var immersiveModel: ImmersiveModel
+  @EnvironmentObject var appModel: AppModel
   @Environment(\.openImmersiveSpace) var openImmersiveSpace
   @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
 
@@ -24,16 +24,16 @@ struct LookAroundScreen: View {
   private var openDismissMainCameraButton: some View {
     Button {
       Task {
-        if immersiveModel.immersiveSpaceId != nil {
+        if appModel.immersiveSpaceId != nil {
           await dismissImmersiveSpace()
-          immersiveModel.immersiveSpaceId = nil
+          appModel.immersiveSpaceId = nil
         } else {
           await openImmersiveSpace(id: ShowCase.mainCamera.immersiveSpaceId)
-          immersiveModel.immersiveSpaceId = ShowCase.mainCamera.immersiveSpaceId
+          appModel.immersiveSpaceId = ShowCase.mainCamera.immersiveSpaceId
         }
       }
     } label: {
-      Text(immersiveModel.immersiveSpaceId != nil ? "Dismiss MainCamera" : "Show MainCamera")
+      Text(appModel.immersiveSpaceId != nil ? "Dismiss MainCamera" : "Show MainCamera")
     }
   }
 

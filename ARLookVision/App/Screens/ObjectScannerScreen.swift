@@ -35,7 +35,7 @@ struct ObjectScannerScreen: View {
 
   @EnvironmentObject var model: WorldScaningTrackingModel
   @EnvironmentObject var planeClassificationModel: PlaneClassificationTrackingModel
-  @EnvironmentObject var immseriveModel: ImmersiveModel
+  @EnvironmentObject var appModel: AppModel
   @EnvironmentObject var roomClassificationTrackingModel: RoomClassificationTrackingModel
   @Environment(RoomState.self) var roomState
   @Environment(\.scenePhase) var scenePhase
@@ -63,10 +63,10 @@ struct ObjectScannerScreen: View {
       Spacer()
     }
     .onDisappear {
-      if immseriveModel.immersiveSpaceId != nil {
+      if appModel.immersiveSpaceId != nil {
         Task {
           await dismissImmersiveSpace()
-          immseriveModel.immersiveSpaceId = nil
+          appModel.immersiveSpaceId = nil
         }
       }
     }
@@ -75,25 +75,25 @@ struct ObjectScannerScreen: View {
   private var openDismissImmersiveSpaceButton: some View {
     Button {
       Task {
-        if immseriveModel.immersiveSpaceId != nil {
+        if appModel.immersiveSpaceId != nil {
           await dismissImmersiveSpace()
-          immseriveModel.immersiveSpaceId = nil
+          appModel.immersiveSpaceId = nil
         } else {
           switch selectedObjectScannerType {
           case .meshes:
             await openImmersiveSpace(id: ShowCase.worldScaning.immersiveSpaceId)
-            immseriveModel.immersiveSpaceId = ShowCase.worldScaning.immersiveSpaceId
+            appModel.immersiveSpaceId = ShowCase.worldScaning.immersiveSpaceId
           case .planeClassification:
             await openImmersiveSpace(id: ShowCase.planeClassification.immersiveSpaceId)
-            immseriveModel.immersiveSpaceId = ShowCase.planeClassification.immersiveSpaceId
+            appModel.immersiveSpaceId = ShowCase.planeClassification.immersiveSpaceId
           case .roomClassification:
             await openImmersiveSpace(id: ShowCase.roomTracking.immersiveSpaceId)
-            immseriveModel.immersiveSpaceId = ShowCase.roomTracking.immersiveSpaceId
+            appModel.immersiveSpaceId = ShowCase.roomTracking.immersiveSpaceId
           }
         }
       }
     } label: {
-      Text(immseriveModel.immersiveSpaceId != nil ? "Dismiss Immersive Space" : "Show Immersive Space")
+      Text(appModel.immersiveSpaceId != nil ? "Dismiss Immersive Space" : "Show Immersive Space")
     }
   }
   
@@ -135,7 +135,7 @@ struct ObjectScannerScreen: View {
 
   private var selectMaterialButton: some View {
     Button {
-      if immseriveModel.windowId.isNotNil && immseriveModel.windowId == "ChangeMaterialColor" {
+      if appModel.windowId.isNotNil && appModel.windowId == "ChangeMaterialColor" {
         dismissWindow(id: "ChangeMaterialColor")
       } else {
         openWindow(id: "ChangeMaterialColor")
@@ -157,7 +157,7 @@ struct ObjectScannerScreen: View {
       if scenePhase != .active && roomState.isImmersive {
         Task {
           await dismissImmersiveSpace()
-          immseriveModel.immersiveSpaceId = nil
+          appModel.immersiveSpaceId = nil
         }
       }
     }
@@ -165,7 +165,7 @@ struct ObjectScannerScreen: View {
       if roomState.errorState != .noError && roomState.isImmersive {
         Task {
           await dismissImmersiveSpace()
-          immseriveModel.immersiveSpaceId = nil
+          appModel.immersiveSpaceId = nil
         }
       }
     }
@@ -203,6 +203,6 @@ struct ObjectScannerScreen: View {
     .environment(RoomState())
     .environmentObject(WorldScaningTrackingModel())
     .environmentObject(PlaneClassificationTrackingModel())
-    .environmentObject(ImmersiveModel())
+    .environmentObject(AppModel())
     .environmentObject(RoomClassificationTrackingModel())
 }

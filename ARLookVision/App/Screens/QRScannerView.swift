@@ -168,12 +168,11 @@ struct QRScannerScreen: View {
 
 #Preview(immersionStyle: .mixed) {
   QRScannerScreen()
-    .environment(AppModel())
 }
 
 struct QRScannerView: View {
   
-  @EnvironmentObject var immseriveModel: ImmersiveModel
+  @EnvironmentObject var appModel: AppModel
   @Environment(\.openImmersiveSpace) var openImmersiveSpace
   @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
   
@@ -184,16 +183,16 @@ struct QRScannerView: View {
   private var openDismissQRScannerScreenButton: some View {
     Button {
       Task {
-        if immseriveModel.immersiveSpaceId != nil {
+        if appModel.immersiveSpaceId != nil {
           await dismissImmersiveSpace()
-          immseriveModel.immersiveSpaceId = nil
+          appModel.immersiveSpaceId = nil
         } else {
           await openImmersiveSpace(id: ShowCase.qrScanner.immersiveSpaceId)
-          immseriveModel.immersiveSpaceId = ShowCase.qrScanner.immersiveSpaceId
+          appModel.immersiveSpaceId = ShowCase.qrScanner.immersiveSpaceId
         }
       }
     } label: {
-      Text(immseriveModel.immersiveSpaceId != nil ? "Dismiss QR Scanner" : "Show QR Scanner")
+      Text(appModel.immersiveSpaceId != nil ? "Dismiss QR Scanner" : "Show QR Scanner")
     }
   }
   

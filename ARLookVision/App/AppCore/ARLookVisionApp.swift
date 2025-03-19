@@ -13,7 +13,7 @@ import SwiftUI
 @MainActor
 struct ARLookVisionApp: App {
 
-  @StateObject private var immersiveModel = ImmersiveModel()
+  @StateObject private var immersiveModel = AppModel()
   @StateObject private var worldScaningTrackingModel = WorldScaningTrackingModel()
   @StateObject private var planeClassificationModel = PlaneClassificationTrackingModel()
   @StateObject private var mainCameraTrackingModel = MainCameraTrackingModel()

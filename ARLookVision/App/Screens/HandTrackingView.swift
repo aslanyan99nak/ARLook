@@ -23,6 +23,7 @@ struct HandTrackingView: View {
       await handTrackingViewModel.processHandUpdates()
     }
   }
+  
 }
 
 #Preview {
