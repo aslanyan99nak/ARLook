@@ -74,7 +74,9 @@ struct ModelsListScreen: View {
             ModelItemView(
               isList: $viewModel.isList,
               model: Model.mockModel
-            )
+            ) {
+              // TODO: - Favorite action
+            }
           }
           .quickLookPreview($viewModel.previewURL)
         }

@@ -5,7 +5,6 @@
 //  Created by Narek on 04.03.25.
 //
 
-import Photos
 import RealityFoundation
 import RealityKit
 import SwiftUI
@@ -42,26 +41,16 @@ struct ARLookVisionApp: App {
         SwiftUI.ColorPicker("ColorPicker", selection: $selectedColor)
           .onChange(of: selectedColor) { oldValue, newValue in
             let color = UIColor(newValue).withAlphaComponent(worldScaningTrackingModel.opacity)
-            //            worldScaningTrackingModel.material = SimpleMaterial(color: color, isMetallic: false)
-            worldScaningTrackingModel.material = UnlitMaterial(color: color)
+            worldScaningTrackingModel.material = SimpleMaterial(color: color, isMetallic: false)
+            // worldScaningTrackingModel.material = UnlitMaterial(color: color)
           }
 
         Slider(value: $worldScaningTrackingModel.opacity, in: 0...1, step: 0.1)
           .onChange(of: worldScaningTrackingModel.opacity) { oldValue, newValue in
             let color = UIColor(selectedColor).withAlphaComponent(newValue)
-            //            worldScaningTrackingModel.material = SimpleMaterial(
-            //              color: UIColor(selectedColor).withAlphaComponent(newValue), isMetallic: false)
-            worldScaningTrackingModel.material = UnlitMaterial(color: color)
+            worldScaningTrackingModel.material = SimpleMaterial(color: color, isMetallic: false)
+            // worldScaningTrackingModel.material = UnlitMaterial(color: color)
           }
-
-        Button {
-          // TODO: - Change back
-
-          //          worldScaningTrackingModel.saveModelEntity()
-          planeClassificationModel.saveModelEntity()
-        } label: {
-          Text("Export usdz File")
-        }
       }
       .padding(40)
     }

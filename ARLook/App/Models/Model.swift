@@ -18,11 +18,12 @@ struct Model: Codable, Hashable, Identifiable {
   let thumbnailFileSize: Int64?
   let thumbnailFilePath: String?
   var viewsCount: Int64?
-  let isFavorite: Bool?
+  var isFavorite: Bool?
   let fileType: String?
   let description: String?
 
   var isLoading: Bool = false
+  var isFavoriteLoading: Bool = false
   var loadingProgress: CGFloat = 0
   
   var viewCountString: String {

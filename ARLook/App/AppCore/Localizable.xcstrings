@@ -373,9 +373,6 @@
     "Dismiss MainCamera" : {
 
     },
-    "Dismiss PlaneClassification Space" : {
-
-    },
     "Dismiss QR Scanner" : {
 
     },
@@ -1865,13 +1862,10 @@
     "Show Document Picker" : {
 
     },
+    "Show Immersive Space" : {
+
+    },
     "Show MainCamera" : {
-
-    },
-    "Show Meshes" : {
-
-    },
-    "Show PlaneClassification Space" : {
 
     },
     "Show QR Scanner" : {

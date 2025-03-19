@@ -163,8 +163,8 @@ struct UploadModelScreen: View {
       } else {
         Image(systemName: Image.upload)
           .resizable()
-          .frame(height: 24)
           .aspectRatio(contentMode: .fit)
+          .frame(height: 24)
           .padding(.leading, 16)
       }
 

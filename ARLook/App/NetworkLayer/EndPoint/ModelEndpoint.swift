@@ -16,6 +16,7 @@ enum ModelEndpoint {
   case get(id: String)
   case delete(id: String)
   case addViewCount(id: String)
+  case favorite(id: String)
 
 }
 
@@ -29,6 +30,7 @@ extension ModelEndpoint: MultiTargetType {
     case let .get(id): "/files/\(id)"
     case let .delete(id): "/files/\(id)"
     case let .addViewCount(id): "/files/\(id)/views"
+    case let .favorite(id): "/files/\(id)/favourite"
     }
   }
 
@@ -37,7 +39,7 @@ extension ModelEndpoint: MultiTargetType {
     case .get, .getList, .download: .get
     case .upload: .post
     case .delete: .delete
-    case .addViewCount: .put
+    case .addViewCount, .favorite: .put
     }
   }
 

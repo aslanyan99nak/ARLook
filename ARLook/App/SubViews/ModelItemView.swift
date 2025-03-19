@@ -11,11 +11,12 @@ struct ModelItemView: View {
 
   @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
   @Environment(\.colorScheme) private var colorScheme
-  @Binding var isList: Bool
   @State private var loadedImage: UIImage?
   @State private var isLoading: Bool = false
+  @Binding var isList: Bool
 
   let model: Model
+  var favoriteAction: (() -> Void)?
 
   private let modelManager = ModelManager.shared
   private var title: String { model.name ?? "" }
@@ -25,11 +26,11 @@ struct ModelItemView: View {
 
   var body: some View {
     contentView
-      .onAppear {
+      .onLoad {
         loadModelImage()
       }
       .onChange(of: model) { oldValue, newValue in
-        if oldValue != newValue {
+        if oldValue.localFileURL != newValue.localFileURL {
           loadModelImage()
         }
       }
@@ -43,6 +44,13 @@ struct ModelItemView: View {
       .background(isDarkMode ? Color.gray.opacity(0.15) : Color.white)
       .clipShape(RoundedRectangle(cornerRadius: 24))
       .shadow(radius: 10)
+      .overlay(alignment: .topTrailing) {
+        if !isList {
+          favoriteButton
+            .padding(.top, 8)
+            .padding(.trailing, 8)
+        }
+      }
   }
 
   private var modelContent: some View {
@@ -56,15 +64,24 @@ struct ModelItemView: View {
   }
 
   private var contentViewForList: some View {
-    HStack(alignment: .top, spacing: 16) {
+    HStack(alignment: .top, spacing: 4) {
       VStack(spacing: 0) {
         modelView
         Spacer()
         viewCount
       }
+//      .padding(.trailing, 8)
 
       VStack(alignment: .leading, spacing: 8) {
-        modelNameView
+        HStack(spacing: 0) {
+          modelNameView
+          if favoriteAction.isNotNil {
+            Spacer()
+            favoriteButton
+          }
+        }
+//        .background(Color.red)
+        
         modelDescriptionView
         Text(model.fileSizeString)
           .multilineTextAlignment(.leading)
@@ -73,7 +90,7 @@ struct ModelItemView: View {
       }
       .padding(.leading, 16)
 
-      Spacer()
+//      Spacer()
     }
   }
 
@@ -81,14 +98,27 @@ struct ModelItemView: View {
     HStack(spacing: 0) {
       Spacer()
       VStack(spacing: 0) {
-        modelNameView
-          .padding(.horizontal, 8)
-        Spacer()
+//        HStack(spacing: 0) {
+////          modelNameView
+////            .padding(.leading, 30)
+//          Spacer()
+//          favoriteButton
+//        }
+//        .padding(.horizontal, 8)
+//        Spacer()
         modelView
-        Spacer()
+          .padding(.top, 8)
+          
+//        Spacer()
+//        HStack(spacing: 0) {
+          modelNameView
+//          Spacer()
+//        }
+          .padding(.vertical, 8)
+          .padding(.horizontal, 8)
         HStack(spacing: 8) {
           viewCount
-          
+
           Text(model.fileSizeString)
             .multilineTextAlignment(.leading)
             .dynamicFont()
@@ -97,6 +127,16 @@ struct ModelItemView: View {
       }
       Spacer()
     }
+//    .overlay {
+//      if favoriteAction.isNotNil {
+//        VStack(spacing: 0) {
+//          favoriteButton
+//          Spacer()
+//        }
+////          .padding(.trailing, -8)
+////          .padding(.top, -8)
+//      }
+//    }
   }
 
   @MainActor
@@ -116,7 +156,7 @@ struct ModelItemView: View {
       } else if isLoading {
         CircularProgressView(tintColor: accentColorType.color)
       }
-
+      
       if model.isLoading, model.loadingProgress != 1 {
         ActivityProgressView(
           progress: Float(model.loadingProgress),
@@ -159,6 +199,27 @@ struct ModelItemView: View {
       .foregroundStyle(isDarkMode ? .white : .black)
   }
 
+  private var favoriteButton: some View {
+    Button {
+      favoriteAction?()
+    } label: {
+      if model.isLoading {
+        CircularProgressView(tintColor: accentColorType.color)
+      } else {
+        Image(systemName: (model.isFavorite ?? false) ? "heart.fill" : "heart")
+          .renderingMode(.template)
+          .resizable()
+          .aspectRatio(contentMode: .fit)
+          .frame(width: 20)
+          .foregroundStyle(accentColorType.color)
+          .padding(10)
+          .background(isDarkMode ? Color.white.opacity(0.1) : Color.black.opacity(0.1))
+          .background(.regularMaterial)
+          .clipShape(Circle())
+      }
+    }
+  }
+
   private func loadModelImage() {
     guard let url else { return }
     isLoading = true
@@ -174,11 +235,12 @@ struct ModelItemView: View {
 }
 
 #Preview {
-  @Previewable @State var isList: Bool = true
+  @Previewable @State var isList: Bool = false
 
   ModelItemView(
     isList: $isList,
     model: Model.mockModel
-  )
+  ) {}
+    .frame(width: 150, height: 200)
   .padding()
 }

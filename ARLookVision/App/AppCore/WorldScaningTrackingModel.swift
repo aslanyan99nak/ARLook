@@ -25,7 +25,7 @@ class TrackingModel: NSObject {
 
 class WorldScaningTrackingModel: TrackingModel, ObservableObject {
   
-  @Published var material = UnlitMaterial(color: .red)
+  @Published var material = SimpleMaterial(color: .red, isMetallic: false) // UnlitMaterial(color: .red)
   @Published var selectedURL: URL?
   @Published var opacity: CGFloat = 1
   
@@ -46,7 +46,6 @@ class WorldScaningTrackingModel: TrackingModel, ObservableObject {
         let geometry = anchor.geometry
         switch sceneUpdate.event {
         case .added:
-          // print classifications
           print("add anchor classification is \(String(describing: geometry.classifications))")
           try await createMeshEntity(geometry, anchor)
         case .updated:
@@ -107,9 +106,7 @@ class WorldScaningTrackingModel: TrackingModel, ObservableObject {
           }
         }
       }
-
     }
-    
   }
   
 }

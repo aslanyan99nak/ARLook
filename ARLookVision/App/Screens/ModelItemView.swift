@@ -11,11 +11,12 @@ struct ModelItemView: View {
 
   @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
   @Environment(\.colorScheme) private var colorScheme
-  @Binding var isList: Bool
   @State private var loadedImage: UIImage?
   @State private var isLoading: Bool = false
+  @Binding var isList: Bool
 
   let model: Model
+  var favoriteAction: () -> Void
 
   private let modelManager = ModelManager.shared
   private var title: String { model.name ?? "" }
@@ -60,7 +61,11 @@ struct ModelItemView: View {
       }
 
       VStack(alignment: .leading, spacing: 8) {
-        modelNameView
+        HStack(spacing: 0) {
+          modelNameView
+          Spacer()
+          favoriteButton
+        }
         modelDescriptionView
         Text(model.fileSizeString)
           .multilineTextAlignment(.leading)
@@ -79,6 +84,7 @@ struct ModelItemView: View {
       HStack(spacing: 0) {
         modelNameView
         Spacer()
+        favoriteButton
       }
       HStack(spacing: 0) {
         modelDescriptionView
@@ -167,6 +173,28 @@ struct ModelItemView: View {
       .dynamicFont(size: 14, weight: .regular, design: .rounded)
       .foregroundStyle(.white)
   }
+  
+  private var favoriteButton: some View {
+    Button {
+      favoriteAction()
+    } label: {
+      if model.isLoading {
+        CircularProgressView(tintColor: accentColorType.color)
+      } else {
+        Image(systemName: (model.isFavorite ?? false) ? "heart.fill" : "heart")
+          .renderingMode(.template)
+          .resizable()
+          .aspectRatio(contentMode: .fit)
+          .frame(width: 20)
+          .foregroundStyle(accentColorType.color)
+          .padding(10)
+          .background(.regularMaterial)
+          .scaleHoverEffect(scale: 1.2)
+          .clipShape(Circle())
+      }
+    }
+    .buttonStyle(.plain)
+  }
 
   private func loadModelImage() {
     guard let url else { return }
@@ -190,7 +218,7 @@ struct ModelItemView: View {
     ModelItemView(
       isList: $isList,
       model: Model.mockModel
-    )
+    ) { }
     .padding()
   }
 }
