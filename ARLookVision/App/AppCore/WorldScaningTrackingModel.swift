@@ -24,8 +24,8 @@ class TrackingModel: NSObject {
 }
 
 class WorldScaningTrackingModel: TrackingModel, ObservableObject {
-
-  @Published var material = SimpleMaterial(color: .red, isMetallic: false)
+  
+  @Published var material = UnlitMaterial(color: .red)
   @Published var selectedURL: URL?
   @Published var opacity: CGFloat = 1
   
@@ -62,11 +62,9 @@ class WorldScaningTrackingModel: TrackingModel, ObservableObject {
     }
   }
 
-  // MARK: Geometry Mesh
-
   @MainActor
   func createMeshEntity(_ geometry: MeshAnchor.Geometry, _ anchor: MeshAnchor) async throws {
-    let modelEntity = try await generateModelEntity(geometry: geometry)
+    guard let modelEntity = try await generateModelEntity(geometry: geometry) else { return }
     let anchorEntity = AnchorEntity(world: anchor.originFromAnchorTransform)
     anchorEntity.addChild(modelEntity)
     anchorEntity.name = "MeshAnchor-\(anchor.id)"
@@ -75,7 +73,7 @@ class WorldScaningTrackingModel: TrackingModel, ObservableObject {
 
   @MainActor
   func updateMeshEntity(_ geometry: MeshAnchor.Geometry, _ anchor: MeshAnchor) async throws {
-    let modelEntity = try await generateModelEntity(geometry: geometry)
+    guard let modelEntity = try await generateModelEntity(geometry: geometry) else { return }
     if let anchorEntity = rootEntity.findEntity(named: "MeshAnchor-\(anchor.id)") {
       anchorEntity.children.removeAll()
       anchorEntity.addChild(modelEntity)
@@ -88,27 +86,9 @@ class WorldScaningTrackingModel: TrackingModel, ObservableObject {
     }
   }
 
-  // MARK: Helpers
-
   @MainActor
-  func generateModelEntity(geometry: MeshAnchor.Geometry) async throws -> ModelEntity {
-    // generate mesh
-    var desc = MeshDescriptor()
-    let posValues = geometry.vertices.asSIMD3(ofType: Float.self)
-    desc.positions = .init(posValues)
-    let normalValues = geometry.normals.asSIMD3(ofType: Float.self)
-    desc.normals = .init(normalValues)
-    do {
-      desc.primitives = .polygons(
-        (0..<geometry.faces.count).map { _ in UInt8(3) },
-        (0..<geometry.faces.count * 3).map {
-          geometry.faces.buffer.contents()
-            .advanced(by: $0 * geometry.faces.bytesPerIndex)
-            .assumingMemoryBound(to: UInt32.self).pointee
-        }
-      )
-    }
-    let meshResource = try MeshResource.generate(from: [desc])
+  func generateModelEntity(geometry: MeshAnchor.Geometry) async throws -> ModelEntity? {
+    guard let meshResource = geometry.asMeshResource() else { return nil }
     let modelEntity = ModelEntity(mesh: meshResource, materials: [material])
     return modelEntity
   }
