@@ -26,8 +26,17 @@ class HandTrackingViewModel: ObservableObject {
   ]
 
   private var lastPlacementTime: TimeInterval = 0
+  
+  private var isFingersPlaced: Bool {
+    guard let leftValues = fingerEntities[.left]?.values, leftValues.isEmpty,
+          let rightValues = fingerEntities[.right]?.values, rightValues.isEmpty
+    else { return true }
+    return false
+  }
+  
+  func setupContentEntity() -> Entity? {
+    guard !isFingersPlaced else { return contentEntity }
 
-  func setupContentEntity() -> Entity {
     for key in fingerEntities.keys {
       if key == .left {
         setupJoints(for: key)
@@ -58,6 +67,9 @@ class HandTrackingViewModel: ObservableObject {
         jointEntity = ModelEntity.createFingerTip(color: color)
       }
       if let jointEntity {
+        jointEntity.name = jointName.description
+        let shape = ShapeResource.generateSphere(radius: 0.008)
+        jointEntity.components.set(CollisionComponent(shapes: [shape]))
         leftJointsDictionary[jointName] = jointEntity
       }
     }
@@ -119,6 +131,14 @@ class HandTrackingViewModel: ObservableObject {
       )
     )
     contentEntity.addChild(entity)
+  }
+  
+  func getLeftFingerPosition() -> SIMD3<Float>? {
+    guard let indexFingerTipEntity = fingerEntities[.left]?[.indexFingerTip]
+    else { return nil }
+    let leftFingerPosition = indexFingerTipEntity.transform.translation
+    let placementLocation = leftFingerPosition + SIMD3<Float>(0, -0.05, 0)
+    return placementLocation
   }
 
   func hideShowHandTracking(_ enabled: Bool) {

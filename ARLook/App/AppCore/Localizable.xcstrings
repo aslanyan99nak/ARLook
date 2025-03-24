@@ -18,6 +18,9 @@
         }
       }
     },
+    "Add Entity" : {
+
+    },
     "all" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -242,6 +245,9 @@
         }
       }
     },
+    "Choose Entity" : {
+
+    },
     "choose_from_gallery" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -367,10 +373,10 @@
     "Disable Hand Tracking" : {
 
     },
-    "Dismiss Immersive Space" : {
+    "Dismiss Immersinve" : {
 
     },
-    "Dismiss MainCamera" : {
+    "Dismiss Immersive Space" : {
 
     },
     "Dismiss QR Scanner" : {
@@ -394,12 +400,6 @@
       }
     },
     "Enable Hand Tracking" : {
-
-    },
-    "Enter immersive space" : {
-
-    },
-    "Enter the immersive space to start room tracking." : {
 
     },
     "env_cons_1" : {
@@ -606,7 +606,7 @@
         }
       }
     },
-    "Export usdz File" : {
+    "Export File" : {
 
     },
     "failed" : {
@@ -1017,9 +1017,6 @@
         }
       }
     },
-    "Leave immersive space" : {
-
-    },
     "light" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1075,9 +1072,6 @@
           }
         }
       }
-    },
-    "Make Look Around Screen" : {
-
     },
     "mesh_generation" : {
       "extractionState" : "manual",
@@ -1455,9 +1449,6 @@
           }
         }
       }
-    },
-    "Preview USDZ File" : {
-
     },
     "processing" : {
       "extractionState" : "manual",
@@ -1862,10 +1853,10 @@
     "Show Document Picker" : {
 
     },
-    "Show Immersive Space" : {
+    "Show Immersive" : {
 
     },
-    "Show MainCamera" : {
+    "Show Immersive Space" : {
 
     },
     "Show QR Scanner" : {

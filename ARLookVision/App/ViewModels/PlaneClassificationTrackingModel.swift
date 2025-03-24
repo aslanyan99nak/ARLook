@@ -119,7 +119,7 @@ class PlaneClassificationTrackingModel: TrackingModel, ObservableObject {
   func saveModelEntity() {
     Task {
       await ModelManager.shared.saveFile(
-        fileName: "Room.reality",
+        fileName: "PlaneClassification\(DateFormatter().string(from: Date())).reality",
         entity: rootEntity
       ) { [weak self] isSuccess, url in
         DispatchQueue.main.async { [weak self] in

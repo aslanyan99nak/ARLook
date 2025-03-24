@@ -11,24 +11,44 @@ import SwiftUI
 
 struct WorldAndRoomView: View {
   
-  @Environment(RoomState.self) var roomState
-  @State var previewSphere: Entity?
-  @State private var updateFacingWallTask: Task<Void, Never>? = nil
-  
+  @EnvironmentObject var appModel: AppModel
   @EnvironmentObject var handTrackingViewModel: HandTrackingViewModel
+  @StateObject var gestureModel = GestureModel()
+  @Environment(RoomState.self) var roomState
+  @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
+  @State private var previewSphere: Entity?
+  @State private var updateFacingWallTask: Task<Void, Never>? = nil
 
   var body: some View {
     RealityView { content in
       content.add(roomState.setupContentEntity())
-      content.add(handTrackingViewModel.setupContentEntity())
+      if let handsContentEntity = handTrackingViewModel.setupContentEntity() {
+        content.add(handsContentEntity)
+      }
       updateFacingWallTask = run(roomState.updateFacingWall, withFrequency: 10)
     }
-    .onAppear {
-      roomState.isImmersive = true
+    .onLoad {
+      gestureModel.gestureAction = { gesture in
+        if case .tap = gesture {
+          roomState.processTapOnEntity()
+        }
+      }
     }
     .onDisappear {
-      roomState.isImmersive = false
-      updateFacingWallTask?.cancel()
+      Task {
+        if appModel.immersiveSpaceId != nil {
+          await dismissImmersiveSpace()
+          appModel.immersiveSpaceId = nil
+        }
+        updateFacingWallTask?.cancel()
+        // TODO: - Reset content
+      }
+    }
+    .task {
+      await gestureModel.start()
+    }
+    .task {
+      await gestureModel.publishHandTrackingUpdates()
     }
     .task {
       await roomState.runSession()
@@ -46,13 +66,6 @@ struct WorldAndRoomView: View {
     .task {
       await handTrackingViewModel.processHandUpdates()
     }
-    .gesture(SpatialTapGesture().targetedToAnyEntity().onEnded { value in
-      print("Tapped!!!")
-//      Task {
-//        await handTrackingViewModel.placeCube()
-//      }
-      roomState.processTapOnEntity()
-    })
   }
 }
 

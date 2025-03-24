@@ -13,12 +13,13 @@ import SwiftUI
 @MainActor
 struct ARLookVisionApp: App {
 
-  @StateObject private var immersiveModel = ImmersiveModel()
+  @StateObject private var appModel = AppModel()
   @StateObject private var worldScaningTrackingModel = WorldScaningTrackingModel()
   @StateObject private var planeClassificationModel = PlaneClassificationTrackingModel()
-  @StateObject private var mainCameraTrackingModel = MainCameraTrackingModel()
   @StateObject private var roomClassificationTrackingModel = RoomClassificationTrackingModel()
   @StateObject private var handTrackingViewModel = HandTrackingViewModel()
+
+  @StateObject private var lookAroundViewModel = LookAroundImmersiveViewModel()
 
   @State private var selectedColor: Color = .red
   @State private var opacity: Double = 0
@@ -28,15 +29,15 @@ struct ARLookVisionApp: App {
     WindowGroup {
       OrnamentView()
         .environment(roomState)
-        .environmentObject(immersiveModel)
+        .environmentObject(appModel)
         .environmentObject(worldScaningTrackingModel)
         .environmentObject(planeClassificationModel)
-        .environmentObject(mainCameraTrackingModel)
         .environmentObject(roomClassificationTrackingModel)
         .environmentObject(handTrackingViewModel)
+        .environmentObject(lookAroundViewModel)
     }
 
-    WindowGroup(id: "ChangeMaterialColor") {
+    WindowGroup(id: WindowCase.changeMaterialColor.rawValue) {
       VStack(spacing: 20) {
         SwiftUI.ColorPicker("ColorPicker", selection: $selectedColor)
           .onChange(of: selectedColor) { oldValue, newValue in
@@ -54,6 +55,13 @@ struct ARLookVisionApp: App {
       }
       .padding(40)
     }
+    .defaultSize(width: 200, height: 200)
+    
+    WindowGroup(id: WindowCase.searchScreen.rawValue) {
+      SearchScreen(isInImmersive: true)
+        .environmentObject(lookAroundViewModel)
+        .environmentObject(appModel)
+    }
 
     ImmersiveSpace(id: ShowCase.worldScaning.immersiveSpaceId) {
       WorldScaningImmersiveView()
@@ -65,12 +73,11 @@ struct ARLookVisionApp: App {
         .environmentObject(planeClassificationModel)
     }
 
-    ImmersiveSpace(id: ShowCase.mainCamera.immersiveSpaceId) {
-      //      MainCameraView()
-      //        .environmentObject(mainCameraTrackingModel)
-
-      HandTrackingView()
+    ImmersiveSpace(id: ShowCase.lookAround.immersiveSpaceId) {
+      LookAroundImmersiveView()
+        .environmentObject(lookAroundViewModel)
         .environmentObject(handTrackingViewModel)
+        .environmentObject(appModel)
     }
 
     ImmersiveSpace(id: ShowCase.qrScanner.immersiveSpaceId) {
@@ -80,7 +87,7 @@ struct ARLookVisionApp: App {
     ImmersiveSpace(id: ShowCase.roomTracking.immersiveSpaceId) {
       WorldAndRoomView()
         .environment(roomState)
-        .environmentObject(immersiveModel)
+        .environmentObject(appModel)
         .environmentObject(roomClassificationTrackingModel)
         .environmentObject(handTrackingViewModel)
     }

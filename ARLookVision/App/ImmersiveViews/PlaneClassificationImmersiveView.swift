@@ -20,9 +20,9 @@ struct PlaneClassificationImmersiveView: View {
     .task {
       await model.run()
     }
-//    .onDisappear {
-//      model.stop()
-//    }
+    .onDisappear {
+      // TODO: - Reset content
+    }
   }
 }
 
