@@ -19,6 +19,9 @@ struct WorldScaningImmersiveView: View {
     .task {
       await model.run()
     }
+    .onDisappear {
+      // TODO: - Reset content
+    }
   }
 
 }

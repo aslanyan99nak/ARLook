@@ -96,7 +96,7 @@ struct ObjectScannerScreen: View {
       Text(appModel.immersiveSpaceId != nil ? "Dismiss Immersive Space" : "Show Immersive Space")
     }
   }
-  
+
   private var exportButton: some View {
     Button {
       switch selectedObjectScannerType {
@@ -109,23 +109,22 @@ struct ObjectScannerScreen: View {
         roomClassificationTrackingModel.saveModelEntity()
       }
     } label: {
-      Text("Export usdz File")
+      Text("Export File")
     }
   }
-  
+
   private var previewButton: some View {
     Button {
       switch selectedObjectScannerType {
       case .meshes:
-        if let url = model.selectedURL {
-          previewURL = url
-        }
+        guard let url = model.selectedURL else { return }
+        previewURL = url
       case .planeClassification:
-        if let url = planeClassificationModel.selectedURL {
-          previewURL = url
-        }
+        guard let url = planeClassificationModel.selectedURL else { return }
+        previewURL = url
       case .roomClassification:
-        previewURL = roomClassificationTrackingModel.selectedURL
+        guard let url = roomClassificationTrackingModel.selectedURL else { return }
+        previewURL = url
       }
     } label: {
       Text("View as a 3D")
@@ -135,10 +134,13 @@ struct ObjectScannerScreen: View {
 
   private var selectMaterialButton: some View {
     Button {
-      if appModel.windowId.isNotNil && appModel.windowId == "ChangeMaterialColor" {
-        dismissWindow(id: "ChangeMaterialColor")
+      if appModel.windowId.isNotNil {
+        if appModel.windowId == WindowCase.changeMaterialColor.rawValue {
+          dismissWindow(id: WindowCase.changeMaterialColor.rawValue)
+          appModel.windowId = nil
+        }
       } else {
-        openWindow(id: "ChangeMaterialColor")
+        openWindow(id: WindowCase.changeMaterialColor.rawValue)
       }
     } label: {
       Text("Select Material")
@@ -188,7 +190,7 @@ struct ObjectScannerScreen: View {
   var errorView: some View {
     var message: String
     switch roomState.errorState {
-    case .noError: message = ""  // Empty string, since the app only shows this view in case of an error.
+    case .noError: message = ""
     case .providerNotAuthorized: message = "The app hasn't authorized one or more data providers."
     case .providerNotSupported: message = "This device doesn't support one or more data providers."
     case .sessionError(let error): message = "Running the ARKitSession failed with an error: \(error)."

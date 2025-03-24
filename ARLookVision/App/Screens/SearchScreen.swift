@@ -46,7 +46,10 @@ extension SearchScreen {
 
 struct SearchScreen: View {
 
+  @EnvironmentObject var lookAroundViewModel: LookAroundImmersiveViewModel
   @StateObject var viewModel = SearchViewModel()
+  
+  var isInImmersive: Bool = false
 
   private var columns: [GridItem] {
     viewModel.isList
@@ -102,7 +105,7 @@ struct SearchScreen: View {
       }
     }
   }
-    
+
   private func makeModelContentView(_ model: Model) -> some View {
     ModelItemView(
       isList: $viewModel.isList,
@@ -117,18 +120,7 @@ struct SearchScreen: View {
     .scaleHoverEffect(scale: viewModel.isList ? 1.1 : 1.2)
     .quickLookPreview($viewModel.previewURL)
     .onTapGesture {
-      viewModel.selectedModelName = model.name
-      if model.localFileURL.isNotNil {
-        viewModel.previewURL = model.localFileURL
-      } else {
-        guard let id = model.id else { return }
-        Task {
-          await viewModel.downloadModel(
-            by: model.mainFilePath ?? "",
-            id: String(id)
-          )
-        }
-      }
+      modelItemTapAction(model)
     }
     .onChange(of: viewModel.previewURL) { oldValue, newValue in
       if oldValue.isNotNil && newValue.isNil {
@@ -169,6 +161,26 @@ struct SearchScreen: View {
         by: model.mainFilePath ?? "",
         id: String(id)
       )
+    }
+  }
+
+  private func modelItemTapAction(_ model: Model) {
+    viewModel.selectedModelName = model.name
+    if model.localFileURL.isNotNil {
+      if isInImmersive {
+        lookAroundViewModel.selectedFileURL = model.localFileURL
+        lookAroundViewModel.selectedModel = model
+      } else {
+        viewModel.previewURL = model.localFileURL
+      }
+    } else {
+      guard let id = model.id else { return }
+      Task {
+        await viewModel.downloadModel(
+          by: model.mainFilePath ?? "",
+          id: String(id)
+        )
+      }
     }
   }
 

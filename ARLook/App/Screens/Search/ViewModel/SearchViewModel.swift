@@ -49,7 +49,10 @@ class SearchViewModel: ObservableObject {
     
     models[modelIndex].isLoading = true
     do {
-      let stream = try await modelEnvironment.downloadRequest(.download(path: path, id: id))
+      let name = models[modelIndex].name ?? "Model"
+      let stream = try await modelEnvironment.downloadRequest(
+        .download(path: path, id: id, name: name)
+      )
       do {
         for try await progress in stream {
           let isCompleted = progress.completed

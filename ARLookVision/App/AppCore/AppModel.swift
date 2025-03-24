@@ -21,9 +21,9 @@ enum ShowCase: String, Identifiable, CaseIterable, Equatable {
   
   case worldScaning
   case planeClassification
-  case mainCamera
   case qrScanner
   case roomTracking
+  case lookAround
 
   var id: Self { self }
   var name: String { rawValue }
@@ -32,9 +32,9 @@ enum ShowCase: String, Identifiable, CaseIterable, Equatable {
     switch self {
     case .worldScaning: "Use ARKit to scene the world"
     case .planeClassification: "Use ARKit to classification the plane"
-    case .mainCamera: "Use ARKit to use main camera frame"
     case .qrScanner: "Use ARKit to scan QR code"
     case .roomTracking: "Use ARKit to track the room"
+    case .lookAround: "Use ARKit to use main camera frame"
     }
   }
 
@@ -48,10 +48,17 @@ enum ShowCase: String, Identifiable, CaseIterable, Equatable {
     switch self {
     case .worldScaning: "WorldScaning"
     case .planeClassification: "PlaneClassification"
-    case .mainCamera: "MainCamera"
     case .qrScanner: "QRScanner"
     case .roomTracking: "RoomTracking"
+    case .lookAround: "LookAround"
     }
   }
+  
+}
+
+enum WindowCase: String {
+  
+  case changeMaterialColor = "ChangeMaterialColor"
+  case searchScreen = "SearchScreen"
   
 }

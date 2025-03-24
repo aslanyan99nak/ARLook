@@ -18,7 +18,7 @@ class RoomClassificationTrackingModel: TrackingModel, ObservableObject {
   func saveModelEntity() {
     Task {
       await ModelManager.shared.saveFile(
-        fileName: "Room.reality",
+        fileName: "RoomClassification\(DateFormatter().string(from: Date())).reality",
         entity: roomParentEntity
       ) { [weak self] isSuccess, url in
         DispatchQueue.main.async { [weak self] in

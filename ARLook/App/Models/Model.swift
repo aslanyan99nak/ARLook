@@ -25,6 +25,7 @@ struct Model: Codable, Hashable, Identifiable {
   var isLoading: Bool = false
   var isFavoriteLoading: Bool = false
   var loadingProgress: CGFloat = 0
+  var isHovered: Bool = false
   
   var viewCountString: String {
     (viewsCount ?? 0).formattedViewCount
@@ -39,7 +40,9 @@ struct Model: Codable, Hashable, Identifiable {
     let fileManager = FileManager.default
     guard let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
     else { return nil }
-    let fileURL = documentsDirectory.appendingPathComponent("\(id).usdz")
+    let fileURL = documentsDirectory
+      .appendingPathComponent("\(id)")
+      .appendingPathComponent("\(name ?? "Model").usdz")
     return fileManager.fileExists(atPath: fileURL.path()) ? fileURL : nil
   }
   
