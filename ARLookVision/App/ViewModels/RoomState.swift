@@ -88,6 +88,10 @@ class RoomState {
   func setupContentEntity() -> Entity {
     contentRoot
   }
+  
+  func resetContent() {
+    contentRoot.children.removeAll()
+  }
 
   private var areAllDataProvidersSupported: Bool {
     WorldTrackingProvider.isSupported && RoomTrackingProvider.isSupported && HandTrackingProvider.isSupported
@@ -155,10 +159,16 @@ class RoomState {
       logger.error("Failed to find the nearest wall to the rendered wall.")
       return
     }
-    let clonedWall = newWallToRender.clone(recursive: true)
-    self.currentRenderedWall = clonedWall
-    renderWallRoot.addChild(clonedWall)
-    roomParentEntity.addChild(clonedWall)
+    
+    guard let wallEntity = newWallToRender as? ModelEntity else { return }
+    if !wallEntity.name.contains("Floor") {
+      wallEntity.model?.materials = [addedWallMaterial]
+      wallEntity.name = "SelectedWall"
+    }
+    
+    self.currentRenderedWall = wallEntity
+    renderWallRoot.addChild(wallEntity)
+    roomParentEntity.addChild(wallEntity)
   }
 
   /// Updates the wall in front of the person when a wall isn't in a selected state.
@@ -301,7 +311,12 @@ class RoomState {
         if wallEntity.name.contains("Floor") {
           wallEntity.model?.materials = [floorMaterial]
         } else {
-          wallEntity.model?.materials = [addedWallMaterial]
+          if wallEntity.name.contains("SelectedWall") {
+            print("Selected Walllll")
+            wallEntity.model?.materials = [addedWallMaterial]
+          } else {
+            wallEntity.model?.materials = [wallMaterial]
+          }
         }
         newColliderWalls.append(wallEntity)
       }
@@ -336,7 +351,7 @@ class RoomState {
         try await worldTracking.removeAnchor(forID: id)
       } catch {
         logger.info("Failed to remove world anchor id \(id).")
-      }
+      } 
     }
   }
 

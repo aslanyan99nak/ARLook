@@ -12,9 +12,9 @@ import UIKit
 
 class PlaneClassificationTrackingModel: TrackingModel, ObservableObject {
 
-  let planeDataProvider = PlaneDetectionProvider(alignments: [.horizontal, .vertical])
-
   @Published var selectedURL: URL?
+  
+  let planeDataProvider = PlaneDetectionProvider(alignments: [.horizontal, .vertical])
 
   @MainActor
   func run() async {
@@ -66,36 +66,35 @@ class PlaneClassificationTrackingModel: TrackingModel, ObservableObject {
   func generatePlanelExtent(_ anchor: PlaneAnchor) async throws -> ModelEntity {
     // NOTE: extent in visionOS is on the geomerty object
     let extent = anchor.geometry.extent
-//    var material = PhysicallyBasedMaterial()
-//    let classificationColor = anchor.classificationColor
-//    material.baseColor = .init(tint: classificationColor)
-//    material.blending = .transparent(opacity: 0.7)
+    var material = PhysicallyBasedMaterial()
+    let classificationColor = anchor.classificationColor
+    material.baseColor = .init(tint: classificationColor)
+    material.blending = .transparent(opacity: 0.7)
     
-    
-    let material = SimpleMaterial(
-      color: anchor.classificationColor.withAlphaComponent(0.7),
-      isMetallic: false
-    )
+//    let material = SimpleMaterial(
+//      color: anchor.classificationColor.withAlphaComponent(0.7),
+//      isMetallic: false
+//    )
     
     // Plane
     // TODO: - Change back to plane
 
-//    let modelEntity = ModelEntity(
-//      mesh: .generatePlane(
-//        width: extent.width,
-//        height: extent.height
-//      ),
-//      materials: [material]
-//    )
-    
     let modelEntity = ModelEntity(
-      mesh: .generateBox(
+      mesh: .generatePlane(
         width: extent.width,
-        height: extent.height,
-        depth: 0.1
+        height: extent.height
       ),
       materials: [material]
     )
+    
+//    let modelEntity = ModelEntity(
+//      mesh: .generateBox(
+//        width: extent.width,
+//        height: extent.height,
+//        depth: 0.3
+//      ),
+//      materials: [material]
+//    )
     
     // NOTE: rotationOnYAxis is not avaliable on the visionOS
     // modelEntity.transform.rotation = .init(angle: extent.rotationOnYAxis, axis: .init(0, 1, 0))

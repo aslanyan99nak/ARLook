@@ -5,6 +5,7 @@
 //  Created by Narek Aslanyan on 10.02.25.
 //
 
+import NukeUI
 import SwiftUI
 
 struct ModelItemView: View {
@@ -70,7 +71,6 @@ struct ModelItemView: View {
         Spacer()
         viewCount
       }
-//      .padding(.trailing, 8)
 
       VStack(alignment: .leading, spacing: 8) {
         HStack(spacing: 0) {
@@ -80,8 +80,7 @@ struct ModelItemView: View {
             favoriteButton
           }
         }
-//        .background(Color.red)
-        
+
         modelDescriptionView
         Text(model.fileSizeString)
           .multilineTextAlignment(.leading)
@@ -89,8 +88,6 @@ struct ModelItemView: View {
           .foregroundStyle(isDarkMode ? .white : .black)
       }
       .padding(.leading, 16)
-
-//      Spacer()
     }
   }
 
@@ -98,22 +95,9 @@ struct ModelItemView: View {
     HStack(spacing: 0) {
       Spacer()
       VStack(spacing: 0) {
-//        HStack(spacing: 0) {
-////          modelNameView
-////            .padding(.leading, 30)
-//          Spacer()
-//          favoriteButton
-//        }
-//        .padding(.horizontal, 8)
-//        Spacer()
         modelView
           .padding(.top, 8)
-          
-//        Spacer()
-//        HStack(spacing: 0) {
-          modelNameView
-//          Spacer()
-//        }
+        modelNameView
           .padding(.vertical, 8)
           .padding(.horizontal, 8)
         HStack(spacing: 8) {
@@ -127,28 +111,20 @@ struct ModelItemView: View {
       }
       Spacer()
     }
-//    .overlay {
-//      if favoriteAction.isNotNil {
-//        VStack(spacing: 0) {
-//          favoriteButton
-//          Spacer()
-//        }
-////          .padding(.trailing, -8)
-////          .padding(.top, -8)
-//      }
-//    }
   }
 
   @MainActor
   private var modelView: some View {
     ZStack {
       if let thumbnailURL = model.thumbnailFileURL {
-        AsyncImage(url: thumbnailURL) { image in
-          image
-            .resizable()
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-        } placeholder: {
-          CircularProgressView(tintColor: accentColorType.color)
+        LazyImage(url: thumbnailURL) { state in
+          if let image = state.image {
+            image
+              .resizable()
+              .clipShape(RoundedRectangle(cornerRadius: 12))
+          } else {
+            CircularProgressView(tintColor: accentColorType.color)
+          }
         }
       } else if let loadedImage {
         Image(uiImage: loadedImage)
@@ -156,7 +132,7 @@ struct ModelItemView: View {
       } else if isLoading {
         CircularProgressView(tintColor: accentColorType.color)
       }
-      
+
       if model.isLoading, model.loadingProgress != 1 {
         ActivityProgressView(
           progress: Float(model.loadingProgress),
@@ -241,6 +217,6 @@ struct ModelItemView: View {
     isList: $isList,
     model: Model.mockModel
   ) {}
-    .frame(width: 150, height: 200)
+  .frame(width: 150, height: 200)
   .padding()
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NukeUI
 
 struct ModelItemView: View {
 
@@ -109,12 +110,14 @@ struct ModelItemView: View {
   private var modelView: some View {
     ZStack {
       if let thumbnailURL = model.thumbnailFileURL {
-        AsyncImage(url: thumbnailURL) { image in
-          image
-            .resizable()
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-        } placeholder: {
-          CircularProgressView(tintColor: accentColorType.color)
+        LazyImage(url: thumbnailURL) { state in
+          if let image = state.image {
+            image
+              .resizable()
+              .clipShape(RoundedRectangle(cornerRadius: 12))
+          } else {
+            CircularProgressView(tintColor: accentColorType.color)
+          }
         }
       } else if let loadedImage {
         Image(uiImage: loadedImage)
@@ -173,7 +176,7 @@ struct ModelItemView: View {
       .dynamicFont(size: 14, weight: .regular, design: .rounded)
       .foregroundStyle(.white)
   }
-  
+
   private var favoriteButton: some View {
     Button {
       favoriteAction()
@@ -218,7 +221,7 @@ struct ModelItemView: View {
     ModelItemView(
       isList: $isList,
       model: Model.mockModel
-    ) { }
+    ) {}
     .padding()
   }
 }

@@ -12,6 +12,8 @@ import SwiftUI
 struct PlaneClassificationImmersiveView: View {
   
   @EnvironmentObject var model: PlaneClassificationTrackingModel
+  @EnvironmentObject var appModel: AppModel
+  @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
 
   var body: some View {
     RealityView { content in
@@ -21,7 +23,13 @@ struct PlaneClassificationImmersiveView: View {
       await model.run()
     }
     .onDisappear {
-      // TODO: - Reset content
+      Task {
+        if appModel.immersiveSpaceId != nil {
+          await dismissImmersiveSpace()
+          appModel.immersiveSpaceId = nil
+        }
+        // model.resetContent()
+      }
     }
   }
 }

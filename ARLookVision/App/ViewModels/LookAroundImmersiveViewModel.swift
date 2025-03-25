@@ -16,12 +16,14 @@ class LookAroundImmersiveViewModel: ObservableObject {
 
   private var contentEntity = ModelEntity()
   private var arrowEntity: Entity?
+  private var stationEntity: Entity?
   private var originalScale: SIMD3<Float>?
   private var selectedEntity: Entity?
 
   init() {
     Task {
       await loadArrowEntity()
+      await loadSpaceStationEntity()
     }
   }
 
@@ -68,14 +70,6 @@ class LookAroundImmersiveViewModel: ObservableObject {
     }
   }
 
-  private func setupGestureComponent(_ gestureEnabled: Bool) -> GestureComponent {
-    var gestureComponent = GestureComponent()
-    gestureComponent.canDrag = gestureEnabled
-    gestureComponent.canScale = gestureEnabled
-    gestureComponent.canRotate = gestureEnabled
-    return gestureComponent
-  }
-
   func addHighlightForEntity(for entity: Entity) {
     guard let arrowEntity, let originalScale else { return }
     let bounds = entity.visualBounds(relativeTo: nil)
@@ -115,6 +109,16 @@ class LookAroundImmersiveViewModel: ObservableObject {
   func deleteSelectedEntity() {
     selectedEntity?.removeFromParent()
   }
+  
+  func resetContent() {
+    contentEntity.children.removeAll()
+  }
+  
+  func addSpaceStation() {
+    if let stationEntity {
+      contentEntity.addChild(stationEntity)
+    }
+  }
 
   private func loadArrowEntity() async {
     do {
@@ -128,9 +132,25 @@ class LookAroundImmersiveViewModel: ObservableObject {
       print("Failed with error: \(error.localizedDescription)")
     }
   }
-
-  func resetContent() {
-    contentEntity.children.removeAll()
+  
+  private func loadSpaceStationEntity() async {
+    do {
+      let modelEntity = try await Entity(named: "SpaceStation")
+      modelEntity.name = "SpaceStation"
+      modelEntity.scale = [1, 1, 1]
+      modelEntity.position = [0, -1, 0]
+      self.stationEntity = modelEntity.clone(recursive: true)
+    } catch {
+      print("Failed with error: \(error.localizedDescription)")
+    }
+  }
+  
+  private func setupGestureComponent(_ gestureEnabled: Bool) -> GestureComponent {
+    var gestureComponent = GestureComponent()
+    gestureComponent.canDrag = gestureEnabled
+    gestureComponent.canScale = gestureEnabled
+    gestureComponent.canRotate = gestureEnabled
+    return gestureComponent
   }
 
 }
