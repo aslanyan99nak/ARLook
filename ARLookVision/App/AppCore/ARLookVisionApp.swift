@@ -66,11 +66,13 @@ struct ARLookVisionApp: App {
     ImmersiveSpace(id: ShowCase.worldScaning.immersiveSpaceId) {
       WorldScaningImmersiveView()
         .environmentObject(worldScaningTrackingModel)
+        .environmentObject(appModel)
     }
 
     ImmersiveSpace(id: ShowCase.planeClassification.immersiveSpaceId) {
       PlaneClassificationImmersiveView()
         .environmentObject(planeClassificationModel)
+        .environmentObject(appModel)
     }
 
     ImmersiveSpace(id: ShowCase.lookAround.immersiveSpaceId) {

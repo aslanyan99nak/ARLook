@@ -10,7 +10,9 @@ import Foundation
 extension String {
 
   var convertedFileNameFromURLString: String? {
-    self.components(separatedBy: "/").last
+    let components = self.components(separatedBy: "/")
+    guard components.count >= 2 else { return nil }
+    return components.suffix(2).joined(separator: "/")
   }
 
   var localized: String {

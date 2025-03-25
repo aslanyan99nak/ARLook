@@ -52,8 +52,10 @@ struct ObjectScannerScreen: View {
       segmentedPickerView
         .padding(.top, 40)
       openDismissImmersiveSpaceButton
-      exportButton
-      previewButton
+      if selectedObjectScannerType != .planeClassification {
+        exportButton
+        previewButton
+      }
       if selectedObjectScannerType == .meshes {
         selectMaterialButton
       }

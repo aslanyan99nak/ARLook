@@ -207,6 +207,7 @@ struct MainScreen: View {
           scannedText: $viewModel.scannedCode,
           selectedImage: $viewModel.image
         )
+        .padding(.bottom, 20)
       }
     }
     .padding(.horizontal, 16)

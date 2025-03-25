@@ -49,7 +49,7 @@ struct LookAroundImmersiveView: View {
         case .tap: print("LookAroundImmersiveView Tapped!!!")
         case .middleTap: addSelectedEntity()
         case .heart: viewModel.resetContent()
-        case .custom: print("✊🏻 Custom gesture!")
+        case .custom: viewModel.addSpaceStation()
         case .cross: viewModel.deleteSelectedEntity()
         case .unknown: break
         }

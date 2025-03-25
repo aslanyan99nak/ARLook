@@ -15,6 +15,10 @@ class TrackingModel: NSObject {
 
   var session: ARKitSession? = ARKitSession()
   var rootEntity = AnchorEntity(world: .zero)
+  
+  func resetContent() {
+    rootEntity.children.removeAll()
+  }
 
 //  func stop() {
 //    session?.stop()

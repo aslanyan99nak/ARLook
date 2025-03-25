@@ -41,7 +41,7 @@ struct WorldAndRoomView: View {
           appModel.immersiveSpaceId = nil
         }
         updateFacingWallTask?.cancel()
-        // TODO: - Reset content
+        // roomState.resetContent()
       }
     }
     .task {

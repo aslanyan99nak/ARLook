@@ -17,6 +17,10 @@
 		CE957A9B2D772240005BC4BD /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = CE957A9A2D772240005BC4BD /* CombineMoya */; };
 		CE957A9D2D772240005BC4BD /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CE957A9C2D772240005BC4BD /* Moya */; };
 		CE957AA52D7723CF005BC4BD /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = CE957AA42D7723CF005BC4BD /* QRCode */; };
+		CEBEE8C62D91996E001D820C /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = CEBEE8C52D91996E001D820C /* Nuke */; };
+		CEBEE8C82D91996E001D820C /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = CEBEE8C72D91996E001D820C /* NukeUI */; };
+		CEBEE8CA2D919987001D820C /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = CEBEE8C92D919987001D820C /* Nuke */; };
+		CEBEE8CC2D919987001D820C /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = CEBEE8CB2D919987001D820C /* NukeUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -114,8 +118,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE957AA52D7723CF005BC4BD /* QRCode in Frameworks */,
+				CEBEE8C82D91996E001D820C /* NukeUI in Frameworks */,
 				CE957A982D7721EF005BC4BD /* FocusEntity in Frameworks */,
 				CE957A952D7721DC005BC4BD /* CodeScanner in Frameworks */,
+				CEBEE8C62D91996E001D820C /* Nuke in Frameworks */,
 				CE957A9D2D772240005BC4BD /* Moya in Frameworks */,
 				CE957A9B2D772240005BC4BD /* CombineMoya in Frameworks */,
 			);
@@ -126,8 +132,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE491D7A2D796A2300B2ABC7 /* QRCode in Frameworks */,
+				CEBEE8CC2D919987001D820C /* NukeUI in Frameworks */,
 				CE491C412D78777400B2ABC7 /* RealityKitContent in Frameworks */,
 				CE366BD42D78704C0088615E /* CombineMoya in Frameworks */,
+				CEBEE8CA2D919987001D820C /* Nuke in Frameworks */,
 				CE957A922D7721A9005BC4BD /* RealityKitContent in Frameworks */,
 				CE366BD62D78704C0088615E /* Moya in Frameworks */,
 			);
@@ -187,6 +195,8 @@
 				CE957A9A2D772240005BC4BD /* CombineMoya */,
 				CE957A9C2D772240005BC4BD /* Moya */,
 				CE957AA42D7723CF005BC4BD /* QRCode */,
+				CEBEE8C52D91996E001D820C /* Nuke */,
+				CEBEE8C72D91996E001D820C /* NukeUI */,
 			);
 			productName = ARLook;
 			productReference = 2489E2D42D4BB97A00BBDB34 /* ARLook.app */;
@@ -214,6 +224,8 @@
 				CE366BD32D78704C0088615E /* CombineMoya */,
 				CE366BD52D78704C0088615E /* Moya */,
 				CE491D792D796A2300B2ABC7 /* QRCode */,
+				CEBEE8C92D919987001D820C /* Nuke */,
+				CEBEE8CB2D919987001D820C /* NukeUI */,
 			);
 			productName = ARLookVision;
 			productReference = CE957A722D771910005BC4BD /* ARLookVision.app */;
@@ -253,6 +265,7 @@
 				CE957A962D7721EF005BC4BD /* XCRemoteSwiftPackageReference "FocusEntity" */,
 				CE957A992D772240005BC4BD /* XCRemoteSwiftPackageReference "Moya" */,
 				CE957AA32D7723CF005BC4BD /* XCRemoteSwiftPackageReference "QRCode" */,
+				CEBEE8C42D91996E001D820C /* XCRemoteSwiftPackageReference "Nuke" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2489E2D52D4BB97A00BBDB34 /* Products */;
@@ -633,6 +646,14 @@
 				minimumVersion = 26.1.0;
 			};
 		};
+		CEBEE8C42D91996E001D820C /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.8.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -683,6 +704,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CE957AA32D7723CF005BC4BD /* XCRemoteSwiftPackageReference "QRCode" */;
 			productName = QRCode;
+		};
+		CEBEE8C52D91996E001D820C /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEBEE8C42D91996E001D820C /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+		CEBEE8C72D91996E001D820C /* NukeUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEBEE8C42D91996E001D820C /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = NukeUI;
+		};
+		CEBEE8C92D919987001D820C /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEBEE8C42D91996E001D820C /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+		CEBEE8CB2D919987001D820C /* NukeUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEBEE8C42D91996E001D820C /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = NukeUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

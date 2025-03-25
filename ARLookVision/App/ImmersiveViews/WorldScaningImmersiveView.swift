@@ -11,6 +11,8 @@ import SwiftUI
 struct WorldScaningImmersiveView: View {
 
   @EnvironmentObject var model: WorldScaningTrackingModel
+  @EnvironmentObject var appModel: AppModel
+  @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
 
   var body: some View {
     RealityView { content in
@@ -20,7 +22,13 @@ struct WorldScaningImmersiveView: View {
       await model.run()
     }
     .onDisappear {
-      // TODO: - Reset content
+      Task {
+        if appModel.immersiveSpaceId != nil {
+          await dismissImmersiveSpace()
+          appModel.immersiveSpaceId = nil
+        }
+        // model.resetContent()
+      }
     }
   }
 
