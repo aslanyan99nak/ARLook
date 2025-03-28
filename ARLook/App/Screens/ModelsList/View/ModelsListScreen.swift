@@ -47,8 +47,10 @@ struct ModelsListScreen: View {
 
         Spacer()
 
-        SwitchButton(isList: $viewModel.isList)
-          .frame(width: 80, height: 30)
+        SwitchButton(
+          isList: $viewModel.isList,
+          size: .init(width: 80, height: 40)
+        )
       }
       .padding(.horizontal, 16)
 

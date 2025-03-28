@@ -64,6 +64,7 @@ struct CaptureOverlayView: View {
           .disabled(!shouldShowNextButton)
       }
       .foregroundStyle(.white)
+      .padding(.top, 100)
 
       Spacer()
 
@@ -176,6 +177,7 @@ struct CaptureOverlayView: View {
       }
       .frame(maxWidth: .infinity)
       .opacity(shouldShowTutorial ? 0 : 1)  // Keeps tutorial view centered.
+      .padding(.bottom, 20)
       .onChange(of: selectedURL) { oldValue, newValue in
         if oldValue != newValue {
           // Action

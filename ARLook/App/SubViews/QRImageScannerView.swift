@@ -19,11 +19,21 @@ struct QRImageScannerView: View {
 
   var body: some View {
     ZStack {
-      VStack(spacing: 0) {
-        infoView
-        menuItemsView
-        scannedTextView
-        Spacer()
+      ScrollView(showsIndicators: false) {
+        VStack(spacing: 0) {
+          ZStack {
+            Image(.importQRBar)
+              .resizable()
+              .aspectRatio(contentMode: .fit)
+
+            infoView
+          }
+          .padding(.bottom, 24)
+          menuItemsView
+//          scannedTextView
+          Spacer()
+        }
+        .padding(.bottom, 100)
       }
     }
     .sheet(isPresented: $isShowPicker) {
@@ -53,9 +63,9 @@ struct QRImageScannerView: View {
 
   private var infoView: some View {
     Text(LocString.shareDescription)
+      .dynamicFont(size: 24, weight: .bold)
+      .foregroundStyle(.white)
       .multilineTextAlignment(.center)
-      .dynamicFont(size: 20, weight: .medium)
-      .padding(.top, 20)
       .padding(.horizontal, 20)
   }
 
@@ -75,7 +85,8 @@ struct QRImageScannerView: View {
       ShareMenuItemsView(
         isDefaultImage: $isDefaultImage,
         scannedText: $scannedText,
-        selectedImage: $selectedImage
+        selectedImage: $selectedImage,
+        isMenu: false
       ) {
         isShowPicker = true
       }

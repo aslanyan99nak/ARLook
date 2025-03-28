@@ -54,6 +54,7 @@
 				"App/Extensions/Int+Ext.swift",
 				"App/Extensions/Optional+Ext.swift",
 				"App/Extensions/String+Ext.swift",
+				"App/Extensions/UIApplication+Ext.swift",
 				"App/Extensions/UIDevice+Ext.swift",
 				"App/Extensions/View+Ext.swift",
 				App/Helpers/AccentColorType.swift,

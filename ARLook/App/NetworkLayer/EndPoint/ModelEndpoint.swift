@@ -114,7 +114,7 @@ extension ModelEndpoint: MultiTargetType {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let destinationURL = documentsDirectory
           .appendingPathComponent(id)
-          .appendingPathComponent(name + ".usdz")
+          .appendingPathComponent(name.replaceSpacesWithHyphens + ".usdz")
         return (destinationURL, [.removePreviousFile, .createIntermediateDirectories])
       }
     default: return .requestParameters(parameters: parameters, encoding: JSONEncoding())

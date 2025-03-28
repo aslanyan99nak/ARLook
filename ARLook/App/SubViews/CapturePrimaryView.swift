@@ -43,6 +43,7 @@ struct CapturePrimaryView: View {
       .ignoresSafeArea()
       if shouldShowOverlayView {
         CaptureOverlayView(showInfo: $showInfo, session: session)
+          .ignoresSafeArea()
       }
     }
     .sheet(isPresented: $showInfo) {

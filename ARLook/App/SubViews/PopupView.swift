@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PopupView: View {
   
+  @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
   @Environment(\.colorScheme) private var colorScheme
 
   let action: () -> Void
@@ -21,7 +22,7 @@ struct PopupView: View {
     VStack(spacing: 20) {
       icon
       titleView
-      button
+      okButton
     }
     .padding()
     .background(.regularMaterial)
@@ -44,7 +45,7 @@ struct PopupView: View {
       .foregroundStyle(isDarkMode ? .white : .black)
   }
   
-  private var button: some View {
+  private var okButton: some View {
     Button {
       action()
     } label: {
@@ -53,7 +54,7 @@ struct PopupView: View {
         .foregroundStyle(.white)
         .padding(.vertical, 8)
         .frame(minWidth: 100, idealWidth: 100, maxWidth: 140)
-        .background(Color.purple)
+        .background(accentColorType.color)
         .clipShape(Capsule())
     }
   }

@@ -11,51 +11,60 @@ struct UploadModelScreen: View {
 
   @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
   @StateObject private var viewModel = UploadViewModel()
+  var url: URL?
 
   private let modelManager: ModelManager = .shared
 
   var body: some View {
     contentView
-    .sheet(isPresented: $viewModel.isShowModelPicker) {
-      DocumentPicker { url in
-        viewModel.selectedURL = url
+      .sheet(isPresented: $viewModel.isShowModelPicker) {
+        DocumentPicker { url in
+          viewModel.selectedURL = url
+        }
       }
-    }
-    .sheet(isPresented: $viewModel.isShowImagePicker) {
-      ImagePicker(
-        image: $viewModel.image,
-        isShowPicker: $viewModel.isShowImagePicker
-      )
-    }
-    .onChange(of: viewModel.selectedURL) { oldValue, newValue in
-      if newValue.isNotNil {
-        if let url = newValue {
-          modelManager.thumbnail(
-            for: url,
-            size: CGSize(width: 512, height: 512)
-          ) { image in
-            viewModel.image = image
+      .sheet(isPresented: $viewModel.isShowImagePicker) {
+        ImagePicker(
+          image: $viewModel.image,
+          isShowPicker: $viewModel.isShowImagePicker
+        )
+      }
+      .onChange(of: viewModel.selectedURL) { oldValue, newValue in
+        if newValue.isNotNil {
+          if let url = newValue {
+            modelManager.thumbnail(
+              for: url,
+              size: CGSize(width: 512, height: 512)
+            ) { image in
+              viewModel.image = image
+            }
           }
         }
       }
-    }
   }
-  
+
   private var contentView: some View {
     ScrollView(.vertical, showsIndicators: false) {
-      VStack(spacing: 16) {
+      Image(.uploadModelBar)
+        .resizable()
+      VStack(spacing: 0) {
         showModelPickerButton
-          .padding(.bottom, 40)
         HStack(alignment: .center, spacing: 16) {
           modelThumbnail
           modelNameTextField
         }
+        .padding(.bottom, 16)
         modelDescriptionTextView
+          .padding(.bottom, 16)
         uploadButton
+          .padding(.bottom, 16)
         Spacer()
       }
-      .padding()
-      .padding(.top, 20)
+      .padding(.horizontal, 16)
+    }
+    .onLoad {
+      if let url {
+        viewModel.selectedURL = url
+      }
     }
   }
 
@@ -63,10 +72,7 @@ struct UploadModelScreen: View {
     Button {
       viewModel.isShowModelPicker = true
     } label: {
-      Image(._3Dm)
-        .renderingMode(.template)
-        .resizable()
-        .frame(width: 100, height: 100)
+      Image(.import3DModelButton)
     }
   }
 
@@ -97,13 +103,19 @@ struct UploadModelScreen: View {
         Image(uiImage: image)
           .resizable()
       } else {
-        Image(systemName: Image.photo)
+        Image(.imagePlaceholder)
           .renderingMode(.template)
           .resizable()
           .foregroundStyle(accentColorType.color)
+          .padding(4)
+          .background(
+            RoundedRectangle(cornerRadius: 20)
+              .stroke(Color.gray, lineWidth: 1)
+              .padding(2)
+          )
       }
     }
-    .frame(width: 100, height: 100)
+    .frame(width: 80, height: 80)
     .clipShape(RoundedRectangle(cornerRadius: 24))
     .onTapGesture {
       viewModel.isShowImagePicker = true
@@ -125,14 +137,14 @@ struct UploadModelScreen: View {
     }
     .disabled(viewModel.isLoading)
   }
-  
+
   private var uploadButtonContent: some View {
     HStack(spacing: 0) {
       Spacer()
       Text(LocString.upload)
         .foregroundStyle(.white)
         .dynamicFont(size: 20, weight: .medium)
-      
+
       if viewModel.isLoading, viewModel.loadingProgress != 1 {
         ActivityProgressView(
           progress: Float(viewModel.loadingProgress),
@@ -149,7 +161,7 @@ struct UploadModelScreen: View {
           .padding(.leading, 16)
           .foregroundStyle(.white)
       }
-      
+
       Spacer()
     }
     .padding()

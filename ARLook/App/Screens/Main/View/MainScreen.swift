@@ -16,7 +16,8 @@ extension MainScreen {
     case modelScanner
     case importQR
     case look
-    case uploadModel
+    case uploadModel(url: URL?)
+    case qrScanner
 
   }
 
@@ -58,11 +59,29 @@ struct MainScreen: View {
               }
             }
           case .look: LookScreen()
-          case .uploadModel: UploadModelScreen()
+          case let .uploadModel(url): UploadModelScreen(url: url)
+          case .qrScanner:
+            scanner
+              .ignoresSafeArea()
+              .toolbar(.hidden, for: .navigationBar)
+              .onAppear {
+                withAnimation(.easeInOut(duration: 0.1)) {
+                  popupVM.isShowTabBar = false
+                }
+              }
+              .onDisappear {
+                withAnimation(.easeInOut(duration: 0.1)) {
+                  popupVM.isShowTabBar = true
+                }
+              }
           }
         }
-        .ignoresSafeArea()
-        .navigationTitle(LocString.arLook)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+          ToolbarItem(placement: .principal) {
+            Image(.arLook)
+          }
+        }
     }
     .sheet(isPresented: $viewModel.isShowPicker) {
       DocumentPicker { url in
@@ -75,35 +94,51 @@ struct MainScreen: View {
   private var contentView: some View {
     ZStack {
       ScrollView(showsIndicators: false) {
-        VStack(spacing: 10) {
+        VStack(spacing: 0) {
           // fileInfoDebugView
+          Image(.mainScreenBar)
+            .resizable()
           modelScannerButton
           qrCodeView
           uploadButton
+            .padding(.vertical, 10)
           if viewModel.scannedCode.isNotNil || viewModel.selectedURL.isNotNil {
             showModelButton
+              .padding(.bottom, 10)
           }
           scanButton
           importQRButton
+            .padding(.top, 10)
           chooseButton
+            .padding(.vertical, 10)
           lookButton
+          Spacer()
         }
-        .padding(.top, 150)
         .padding(.bottom, 150)
       }
 
-      if viewModel.isShowScanner {
-        scanner
-          .toolbar(.hidden, for: .navigationBar)
-          .toolbar(.hidden, for: .tabBar)
-          .transition(.scale)
-      }
+//      if viewModel.isShowScanner {
+//        scanner
+//          .ignoresSafeArea()
+//          .toolbar(.hidden, for: .navigationBar)
+////          .onAppear {
+////            withAnimation {
+////              popupVM.isShowTabBar = false
+////            }
+////          }
+//          .onDisappear {
+//            withAnimation {
+//              popupVM.isShowTabBar = true
+//            }
+//          }
+//          .transition(.scale)
+//      }
     }
   }
 
   private var uploadButton: some View {
     Button {
-      navigationPath.append(Destination.uploadModel)
+      navigationPath.append(Destination.uploadModel(url: nil))
     } label: {
       ItemRow(
         image: viewModel.savedFilePath.isNil
@@ -129,9 +164,14 @@ struct MainScreen: View {
 
   private var scanButton: some View {
     Button {
-      withAnimation(.easeInOut(duration: 0.3)) {
-        viewModel.isShowScanner = true
-      }
+      navigationPath.append(Destination.qrScanner)
+//      withAnimation(completionCriteria: .logicallyComplete) {
+//        popupVM.isShowTabBar = false
+//      } completion: {
+//        withAnimation(.easeInOut(duration: 1)) {
+//          viewModel.isShowScanner = true
+//        }
+//      }
     } label: {
       ItemRow(
         image: Image(systemName: Image.qrCodeScanner),
@@ -188,6 +228,9 @@ struct MainScreen: View {
 
   private var lookButton: some View {
     Button {
+      withAnimation(.easeInOut(duration: 0.1)) {
+        popupVM.isShowTabBar = false
+      }
       navigationPath.append(Destination.look)
     } label: {
       ItemRow(
@@ -207,7 +250,7 @@ struct MainScreen: View {
           scannedText: $viewModel.scannedCode,
           selectedImage: $viewModel.image
         )
-        .padding(.bottom, 20)
+        .padding(.bottom, 10)
       }
     }
     .padding(.horizontal, 16)
@@ -230,11 +273,8 @@ struct MainScreen: View {
         }
       }
     } label: {
-      Image(.capture3D)
-        .resizable()
-        .frame(width: 100, height: 100)
+      Image(.capture3DButton)
     }
-    .padding(.top, 16)
   }
 
   private var popupView: some View {

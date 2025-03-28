@@ -21,6 +21,7 @@ struct ReconstructionProgressView: View {
   @State private var isCancelling: Bool = false
   @State private var isProgressCompeted: Bool = false
   @State private var isAnimate: Bool = false
+  @State private var isShowUpload: Bool = false
   @Binding var completed: Bool
   @Binding var cancelled: Bool
 
@@ -61,6 +62,9 @@ struct ReconstructionProgressView: View {
       Spacer()
     }
     .frame(maxWidth: .infinity)
+    .sheet(isPresented: $isShowUpload) {
+      UploadModelScreen(url: outputFile)
+    }
     .alert(
       LocString.failed + (error.isNotNil ? " \(String(describing: error!))" : ""),
       isPresented: $gotError
@@ -127,7 +131,7 @@ struct ReconstructionProgressView: View {
 
   private var uploadButton: some View {
     Button {
-      print("Upload Action")
+      isShowUpload = true
     } label: {
       HStack(spacing: 8) {
         Spacer()

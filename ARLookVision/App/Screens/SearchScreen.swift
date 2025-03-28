@@ -48,7 +48,7 @@ struct SearchScreen: View {
 
   @EnvironmentObject var lookAroundViewModel: LookAroundImmersiveViewModel
   @StateObject var viewModel = SearchViewModel()
-  
+
   var isInImmersive: Bool = false
 
   private var columns: [GridItem] {
@@ -140,11 +140,13 @@ struct SearchScreen: View {
       .background(.ultraThickMaterial)
       .clipShape(Capsule())
 
-      SwitchButton(isList: $viewModel.isList)
-        .frame(width: 120, height: 40)
-        .background(.ultraThickMaterial)
-        .clipShape(Capsule())
-        .padding(.horizontal, 16)
+      SwitchButton(
+        isList: $viewModel.isList,
+        size: .init(width: 120, height: 40)
+      )
+      .background(.ultraThickMaterial)
+      .clipShape(Capsule())
+      .padding(.horizontal, 16)
     }
     .frame(height: 40)
   }

@@ -12,31 +12,31 @@ extension SearchScreen {
 
   enum ModelType: String, CaseIterable {
 
-    case recent
-    case favorite
     case all
+    case favorite
+    case recent
 
     var name: String {
       switch self {
-      case .recent: LocString.recent
-      case .favorite: LocString.favorite
       case .all: LocString.all
+      case .favorite: LocString.favorite
+      case .recent: LocString.recent
       }
     }
 
     var icon: Image? {
       switch self {
-      case .recent: Image(systemName: Image.recent)
-      case .favorite: Image(systemName: Image.favorite)
       case .all: nil
+      case .favorite: Image(systemName: Image.favorite)
+      case .recent: Image(systemName: Image.recent)
       }
     }
 
     var id: Int {
       switch self {
-      case .recent: 0
+      case .all: 0
       case .favorite: 1
-      case .all: 2
+      case .recent: 2
       }
     }
 
@@ -55,8 +55,12 @@ struct SearchScreen: View {
   var body: some View {
     NavigationStack {
       contentView
-        .navigationTitle(LocString.search3D)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+          ToolbarItem(placement: .principal) {
+            Image(.arLook)
+          }
+        }
     }
     .searchable(text: $viewModel.searchText)
   }
@@ -120,7 +124,7 @@ struct SearchScreen: View {
           }
         }
       }
-      .padding(.bottom, 40)
+      .padding(.bottom, 100)
       .padding(.top, 20)
       .padding(.horizontal, 16)
     }
@@ -141,8 +145,10 @@ struct SearchScreen: View {
           )
           .padding(.trailing, 16)
 
-          SwitchButton(isList: $viewModel.isList)
-            .frame(width: 80, height: 34)
+          SwitchButton(
+            isList: $viewModel.isList,
+            size: .init(width: 80, height: 40)
+          )
         }
       }
     }

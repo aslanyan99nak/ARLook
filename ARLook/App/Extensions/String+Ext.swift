@@ -18,6 +18,10 @@ extension String {
   var localized: String {
     NSLocalizedString(self, comment: "")
   }
+  
+  var replaceSpacesWithHyphens: String {
+    self.replacingOccurrences(of: " ", with: "_")
+  }
 
   var trimmedVersion: String? {
     let prefix = "/v1"

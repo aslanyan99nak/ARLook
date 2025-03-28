@@ -10,6 +10,7 @@ import SwiftUI
 
 struct QRCodeScanner: View {
 
+  @Environment(\.dismiss) var dismiss
   @State private var isShow: Bool = false
   @State private var scannedCode: String?
   @Binding var fileURL: URL?
@@ -65,6 +66,7 @@ struct QRCodeScanner: View {
               isShowScanner = false
             } completion: {
               scannedCodeCompletion(scannedCode)
+              dismiss()
             }
           }
         }
@@ -95,6 +97,7 @@ struct QRCodeScanner: View {
           scannedCode = nil
           scannedCodeCompletion(nil)
         }
+        dismiss()
       }
     } label: {
       Image(systemName: Image.xMark)

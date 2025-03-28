@@ -40,17 +40,13 @@ struct ModelItemView: View {
   private var contentView: some View {
     modelContent
       .frame(height: isList ? 120 : 180)
-      .padding(16)
+      .padding(.horizontal, 16)
       .background(.regularMaterial)
       .background(isDarkMode ? Color.gray.opacity(0.15) : Color.white)
       .clipShape(RoundedRectangle(cornerRadius: 24))
-      .shadow(radius: 10)
-      .overlay(alignment: .topTrailing) {
-        if !isList {
-          favoriteButton
-            .padding(.top, 8)
-            .padding(.trailing, 8)
-        }
+      .if(!isDarkMode) { view in
+        view
+          .shadow(color: .gray.opacity(0.4), radius: 2, x: 0, y: 2)
       }
   }
 
@@ -66,51 +62,66 @@ struct ModelItemView: View {
 
   private var contentViewForList: some View {
     HStack(alignment: .top, spacing: 4) {
-      VStack(spacing: 0) {
-        modelView
-        Spacer()
-        viewCount
-      }
-
-      VStack(alignment: .leading, spacing: 8) {
-        HStack(spacing: 0) {
+      modelView
+      HStack(spacing: 8) {
+        VStack(alignment: .leading, spacing: 8) {
           modelNameView
-          if favoriteAction.isNotNil {
+          modelDescriptionView
+          Spacer()
+          HStack(spacing: 0) {
+            viewCount
             Spacer()
-            favoriteButton
+            modelFileSizeView
+            Spacer()
           }
         }
+        .padding(.leading, 16)
 
-        modelDescriptionView
-        Text(model.fileSizeString)
-          .multilineTextAlignment(.leading)
-          .dynamicFont()
-          .foregroundStyle(isDarkMode ? .white : .black)
+        if favoriteAction.isNotNil {
+          VStack(alignment: .trailing, spacing: 0) {
+            favoriteButton
+            Spacer()
+            Image(.arIcon)
+          }
+        }
       }
-      .padding(.leading, 16)
     }
+    .frame(height: 90)
   }
 
   private var contentViewForGrid: some View {
-    HStack(spacing: 0) {
-      Spacer()
-      VStack(spacing: 0) {
+    VStack(spacing: 0) {
+      HStack(spacing: 0) {
         modelView
-          .padding(.top, 8)
-        modelNameView
-          .padding(.vertical, 8)
-          .padding(.horizontal, 8)
-        HStack(spacing: 8) {
-          viewCount
-
-          Text(model.fileSizeString)
-            .multilineTextAlignment(.leading)
-            .dynamicFont()
-            .foregroundStyle(isDarkMode ? .white : .black)
+        Spacer()
+        VStack(alignment: .trailing, spacing: 0) {
+          favoriteButton
+          Spacer()
+          Image(.arIcon)
+            .resizable()
+            .frame(width: 40, height: 40)
         }
       }
-      Spacer()
+      .frame(height: 80)
+
+      HStack(spacing: 0) {
+        modelNameView
+        Spacer()
+      }
+      .padding(.vertical, 8)
+      HStack(spacing: 8) {
+        viewCount
+        Spacer()
+        modelFileSizeView
+      }
     }
+  }
+
+  private var modelFileSizeView: some View {
+    Text(model.fileSizeString)
+      .multilineTextAlignment(.leading)
+      .dynamicFont()
+      .foregroundStyle(isDarkMode ? .white : .black.opacity(0.3))
   }
 
   @MainActor
@@ -142,7 +153,7 @@ struct ModelItemView: View {
         )
       }
     }
-    .frame(width: 90, height: 90)
+    .frame(width: isList ? 90 : 80, height: isList ? 90 : 80)
   }
 
   private var viewCount: some View {
@@ -151,12 +162,12 @@ struct ModelItemView: View {
         .renderingMode(.template)
         .resizable()
         .frame(width: 20, height: 12)
-        .foregroundStyle(isDarkMode ? .white : .black)
+        .foregroundStyle(isDarkMode ? .white : .black.opacity(0.3))
 
       Text(model.viewCountString)
         .multilineTextAlignment(.leading)
         .dynamicFont()
-        .foregroundStyle(isDarkMode ? .white : .black)
+        .foregroundStyle(isDarkMode ? .white : .black.opacity(0.3))
     }
   }
 
@@ -172,14 +183,14 @@ struct ModelItemView: View {
     Text(description)
       .multilineTextAlignment(.leading)
       .dynamicFont(size: 14, weight: .regular, design: .rounded)
-      .foregroundStyle(isDarkMode ? .white : .black)
+      .foregroundStyle(isDarkMode ? .white : .black.opacity(0.3))
   }
 
   private var favoriteButton: some View {
     Button {
       favoriteAction?()
     } label: {
-      if model.isLoading {
+      if model.isFavoriteLoading {
         CircularProgressView(tintColor: accentColorType.color)
       } else {
         Image(systemName: (model.isFavorite ?? false) ? "heart.fill" : "heart")
@@ -187,11 +198,8 @@ struct ModelItemView: View {
           .resizable()
           .aspectRatio(contentMode: .fit)
           .frame(width: 20)
-          .foregroundStyle(accentColorType.color)
-          .padding(10)
-          .background(isDarkMode ? Color.white.opacity(0.1) : Color.black.opacity(0.1))
-          .background(.regularMaterial)
-          .clipShape(Circle())
+          .foregroundStyle(
+            (model.isFavorite ?? false) ? accentColorType.color : isDarkMode ? .white : .black.opacity(0.3))
       }
     }
   }
@@ -211,12 +219,13 @@ struct ModelItemView: View {
 }
 
 #Preview {
-  @Previewable @State var isList: Bool = false
+  @Previewable @State var isList: Bool = true
 
-  ModelItemView(
-    isList: $isList,
-    model: Model.mockModel
-  ) {}
-  .frame(width: 150, height: 200)
-  .padding()
+  HStack(spacing: 0) {
+    ModelItemView(
+      isList: $isList,
+      model: Model.mockModel
+    ) {}
+    .padding()
+  }
 }

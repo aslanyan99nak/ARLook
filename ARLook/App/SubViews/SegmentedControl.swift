@@ -100,7 +100,7 @@ struct SegmentedControl: View {
           .resizable()
           .frame(width: 16, height: 16)
           .foregroundStyle(textColor)
-          .offset(x: modelType == .recent ? 4 : 0)
+          .offset(x: modelType == .recent ? -4 : 0)
       }
 
       if modelType == .all || !isSmall {
@@ -108,7 +108,7 @@ struct SegmentedControl: View {
           .multilineTextAlignment(.center)
           .fixedSize(horizontal: false, vertical: false)
           .foregroundStyle(textColor)
-          .offset(x: modelType == .all ? -4 : 0)
+          .offset(x: modelType == .all ? 4 : 0)
       }
     }
     .frame(width: width)

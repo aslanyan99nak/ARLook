@@ -147,7 +147,7 @@ class ARViewContainerCoordinator: NSObject, ARSessionDelegate {
       loadPlacedEntity(fileURL: fileURL, transform: finalTransform)
     }
   }
-  
+
   private func loadPlacedEntity(fileURL: URL, transform: float4x4) {
     let modelEntityRequest = Entity.loadAsync(contentsOf: fileURL)
     if arrowEntity.isNil {
@@ -181,7 +181,7 @@ class ARViewContainerCoordinator: NSObject, ARSessionDelegate {
       }
       .store(in: &cancellables)
   }
-  
+
   private func addExistingEntity(_ modelEntity: Entity, transform: float4x4) {
     modelEntity.scale = .init(x: 1, y: 1, z: 1)
     modelEntity.transform.rotation = .init(angle: 0, axis: [0, 0, 0])
@@ -270,9 +270,10 @@ class ARViewContainerCoordinator: NSObject, ARSessionDelegate {
     let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
     let panGesture = CustomPanGesture(target: self, action: #selector(handleCustomPan(_:)), entity: entity)
     let pinchGesture = CustomPinchGesture(target: self, action: #selector(handleCustomPinch(_:)), entity: entity)
-    let rotationGesture = CustomPanGesture(target: self, action: #selector(handleTwoFingerPan(_:)), entity: entity)
-    rotationGesture.minimumNumberOfTouches = 2
-    rotationGesture.maximumNumberOfTouches = 2
+    let rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotation(_:)))
+    //    let rotationGesture = CustomPanGesture(target: self, action: #selector(handleTwoFingerPan(_:)), entity: entity)
+    //    rotationGesture.minimumNumberOfTouches = 2
+    //    rotationGesture.maximumNumberOfTouches = 2
 
     arView.addGestureRecognizer(tapGesture)
     arView.addGestureRecognizer(panGesture)
@@ -288,6 +289,18 @@ class ARViewContainerCoordinator: NSObject, ARSessionDelegate {
     addHighlightForEntity(for: entity)
     enableGestures(arView: parent.arView, for: entity)
     selectedEntity = entity
+  }
+
+  @objc func handleRotation(_ gesture: UIRotationGestureRecognizer) {
+    let touchLocation = gesture.location(in: parent.arView)
+    guard let entity = parent.arView.entity(at: touchLocation) else { return }
+    if gesture.state == .began || gesture.state == .changed {
+      let rotationX = simd_quatf(angle: Float(gesture.rotation), axis: [1, 0, 0])
+      let rotationY = simd_quatf(angle: Float(gesture.rotation), axis: [0, 1, 0])
+      let currentRotation = entity.transform.rotation
+      entity.transform.rotation = currentRotation * rotationX * rotationY
+      gesture.rotation = 0
+    }
   }
 
   private func deleteHighlightedForEntity() {

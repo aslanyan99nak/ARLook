@@ -7,15 +7,35 @@
 
 import SwiftUI
 
-extension MainTabBar {
+enum TabItem: String, CaseIterable, Hashable {
 
-  enum TabItem: Hashable {
+  case home
+  //    case list
+  case search
+  case settings
 
-    case home
-//    case list
-    case search
-    case settings
+  var icon: Image {
+    switch self {
+    case .home: Image(.scanner)
+    case .search: Image(systemName: Image.search)
+    case .settings: Image(systemName: Image.settings)
+    }
+  }
 
+  var id: Int {
+    switch self {
+    case .home: 0
+    case .search: 1
+    case .settings: 2
+    }
+  }
+
+  var name: String {
+    switch self {
+    case .home: LocString.scanner
+    case .search: LocString.search
+    case .settings: LocString.settings
+    }
   }
 
 }
@@ -26,6 +46,20 @@ struct MainTabBar: View {
   @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
   @StateObject private var popupVM = PopupViewModel()
   @State private var selectedTab: TabItem = .home
+  @State private var midPoint: CGFloat = 1.0
+  @Namespace private var animation
+
+  init() {
+    let app = UITabBarAppearance()
+    app.backgroundEffect = .none
+    app.shadowColor = .clear
+    UITabBar.appearance().standardAppearance = app
+    UITabBar.appearance().isHidden = true
+  }
+
+  private let iconH: CGFloat = 60
+  private let screenWidth: CGFloat = UIApplication.shared.screenWidth
+  private var tabWidth: CGFloat { screenWidth / 3 }
 
   var body: some View {
     contentView
@@ -35,10 +69,17 @@ struct MainTabBar: View {
     ZStack {
       TabView(selection: $selectedTab) {
         mainScreen
-//        modelsListScreen
         searchScreen
         settingsScreen
       }
+      .overlay(alignment: .bottom) {
+        CustomTabBar(
+          selectedTab: $selectedTab,
+          animation: animation
+        )
+        .offset(y: popupVM.isShowTabBar ? -20 : 150)
+      }
+      .ignoresSafeArea(.all)
       .accentColor(accentColorType.color)
       .blur(radius: popupVM.isShowPopup ? 5 : 0)
       .disabled(popupVM.isShowPopup)
@@ -61,59 +102,21 @@ struct MainTabBar: View {
   private var mainScreen: some View {
     MainScreen()
       .tag(TabItem.home)
-      .tabItem {
-        VStack(spacing: 0) {
-          Image(.scanner)
-            .renderingMode(.template)
-            .foregroundStyle(selectedTab == .home ? accentColorType.color : Color.gray)
-
-          Text(LocString.scanner)
-            .foregroundStyle(.blue)
-            .dynamicFont()
-        }
-      }
   }
 
-//  private var modelsListScreen: some View {
-//    ModelsListScreen()
-//      .tag(TabItem.list)
-//      .tabItem {
-//        VStack(spacing: 0) {
-//          Image(systemName: Image.list)
-//
-//          Text(LocString.list)
-//            .foregroundStyle(.blue)
-//            .dynamicFont()
-//        }
-//      }
-//  }
+  //  private var modelsListScreen: some View {
+  //    ModelsListScreen()
+  //      .tag(TabItem.list)
+  //  }
 
   private var searchScreen: some View {
     SearchScreen()
       .tag(TabItem.search)
-      .tabItem {
-        VStack(spacing: 0) {
-          Image(systemName: Image.search)
-
-          Text(LocString.search)
-            .foregroundStyle(.blue)
-            .dynamicFont()
-        }
-      }
   }
 
   private var settingsScreen: some View {
     SettingsScreen()
       .tag(TabItem.settings)
-      .tabItem {
-        VStack(spacing: 0) {
-          Image(systemName: Image.settings)
-
-          Text(LocString.settings)
-            .foregroundStyle(.blue)
-            .dynamicFont()
-        }
-      }
   }
 
 }

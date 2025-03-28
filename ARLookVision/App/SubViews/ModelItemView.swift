@@ -181,7 +181,7 @@ struct ModelItemView: View {
     Button {
       favoriteAction()
     } label: {
-      if model.isLoading {
+      if model.isFavoriteLoading {
         CircularProgressView(tintColor: accentColorType.color)
       } else {
         Image(systemName: (model.isFavorite ?? false) ? "heart.fill" : "heart")

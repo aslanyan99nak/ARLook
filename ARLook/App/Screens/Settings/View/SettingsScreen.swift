@@ -26,10 +26,21 @@ struct SettingsScreen: View {
   var body: some View {
     NavigationStack {
       ScrollView {
+        if !UIDevice.isVision {
+          ZStack {
+            Image(.settingsBar)
+              .resizable()
+            
+            Text(LocString.settings)
+              .dynamicFont(size: 24, weight: .bold)
+              .foregroundStyle(.white)
+          }
+          .padding(.bottom, 16)
+        }
         LazyVStack(alignment: .leading, spacing: 16) {
           Text(LocString.appearance)
             .dynamicFont()
-            .foregroundStyle(UIDevice.isVision ? .white : .gray)
+            .foregroundStyle(UIDevice.isVision ? .white : .black)
             .padding(.leading, 8)
 
           themeList
@@ -41,7 +52,12 @@ struct SettingsScreen: View {
         }
         .padding(.horizontal, 16)
       }
-      .navigationTitle(LocString.settings)
+      .navigationBarTitleDisplayMode(.inline)
+      .toolbar {
+        ToolbarItem(placement: .principal) {
+          Image(.arLook)
+        }
+      }
     }
   }
 

@@ -10,8 +10,9 @@ import SwiftUI
 
 struct ObjectScannerScreen: View {
 
-  @StateObject var appModel: AppDataModel = AppDataModel.instance
   @AppStorage(CustomColorScheme.defaultKey) var colorScheme = CustomColorScheme.defaultValue
+  @EnvironmentObject private var popupVM: PopupViewModel
+  @StateObject var appModel: AppDataModel = AppDataModel.instance
   @State private var showReconstructionView: Bool = false
   @State private var showErrorAlert: Bool = false
 
@@ -27,7 +28,6 @@ struct ObjectScannerScreen: View {
 
   var body: some View {
     contentView
-      .toolbar(.hidden, for: .tabBar)
       .onChange(of: appModel.state) { _, newState in
         appStateChanged(newState)
       }
@@ -49,10 +49,16 @@ struct ObjectScannerScreen: View {
       .onAppear {
         appModel.objectCaptureSession = .init()
         appModel.state = .ready
+        withAnimation(.easeInOut(duration: 0.1)) {
+          popupVM.isShowTabBar = false
+        }
       }
       .onDisappear {
         appModel.objectCaptureSession?.pause()
         appModel.objectCaptureSession = nil
+        withAnimation(.easeInOut(duration: 0.1)) {
+          popupVM.isShowTabBar = true
+        }
       }
   }
 

@@ -10,99 +10,97 @@ import SwiftUI
 struct SwitchButton: View {
 
   @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
+  @AppStorage(CustomColorScheme.defaultKey) var customColorScheme = CustomColorScheme.defaultValue
   @Environment(\.colorScheme) var colorScheme
+
   @Binding var isList: Bool
 
+  private let size: CGSize
+
+  private var offsetX: CGFloat {
+    let offset = calculateSegmentOffset(size)
+    return isList ? offset + 4 : offset - 4
+  }
+
+  private var iconOffsetX: CGFloat {
+    return isSmall ? (isList ? 4 : -4) : 0
+  }
+
+  private var isDarkMode: Bool {
+    customColorScheme == .dark || customColorScheme == .system && colorScheme == .dark
+  }
+
+  private var capsuleColor: Color { isDarkMode ? .black : .white }
+
+  private var isSmall: Bool { size.width < 320 }
+
+  public init(isList: Binding<Bool>, size: CGSize) {
+    self._isList = isList
+    self.size = size
+  }
+
   var body: some View {
-    content
-  }
-
-  @ViewBuilder
-  private var content: some View {
-    if UIDevice.isVision {
-      visionContent
-    } else {
-      iOSContent
+    ZStack(alignment: .leading) {
+      bigCapsuleView
+      smallCapsuleView
+      segmentedItemView
     }
   }
 
-  private var visionContent: some View {
+  private var bigCapsuleView: some View {
+    Capsule()
+      .frame(width: abs(size.width), height: abs(size.height))
+      .foregroundStyle(.gray)
+      .opacity(0.2)
+  }
+
+  private var smallCapsuleView: some View {
+    Capsule()
+      .fill(Color.clear)
+      .if(UIDevice.isVision) { view in
+        view
+          .background(.ultraThinMaterial)
+      }
+      .if(!UIDevice.isVision) { view in
+        view
+          .background(capsuleColor)
+      }
+      .frame(width: segmentWidth(size), height: size.height - 6)
+      .clipShape(Capsule())
+      .offset(x: offsetX)
+      .animation(.easeInOut(duration: 0.3), value: isList)
+  }
+
+  private var segmentedItemView: some View {
     HStack(spacing: 0) {
       listButton
-
-      Divider()
-        .overlay { Color.white }
-
       gridButton
     }
-    .clipShape(Capsule())
-    .background(
-      Capsule()
-        .stroke(lineWidth: 0.5)
-        .fill(Color.white)
-    )
-  }
-
-  private var iOSContent: some View {
-    HStack(spacing: 0) {
-      listButton
-
-      Divider()
-        .overlay { colorScheme == .dark ? Color.white : Color.black }
-
-      gridButton
-    }
-    .clipShape(RoundedRectangle(cornerRadius: 8))
-    .background(
-      RoundedRectangle(cornerRadius: 8)
-        .stroke(lineWidth: 0.5)
-        .fill(colorScheme == .dark ? Color.white : Color.black)
-    )
   }
 
   private var listButton: some View {
-    ZStack {
-      Color.gray.opacity(isList ? 0.3 : 0.1)
-
-      Image(systemName: Image.row)
-        .resizable()
-        .aspectRatio(contentMode: .fit)
-        .frame(width: 20)
-        .scaleHoverEffect()
-        .if(isList) { view in
-          view
-            .foregroundStyle(accentColorType.color)
-        }
-        .if(!isList) { view in
-          view
-            .foregroundStyle(Color.gray.opacity(0.5))
-        }
-    }
+    Image(systemName: "rectangle.grid.1x2")
+      .resizable()
+      .frame(width: 16, height: 16)
+      .foregroundStyle(isList ? accentColorType.color : .gray)
+      .frame(width: segmentWidth(size))
+      .scaleHoverEffect()
+    .offset(x: 4)
     .onTapGesture {
       withAnimation(.easeInOut(duration: 0.5)) {
         isList = true
       }
     }
   }
-
+  
   private var gridButton: some View {
-    ZStack {
-      Color.gray.opacity(isList ? 0.1 : 0.3)
-
-      Image(systemName: Image.grid)
-        .resizable()
-        .aspectRatio(contentMode: .fit)
-        .frame(width: 20)
-        .scaleHoverEffect()
-        .if(isList) { view in
-          view
-            .foregroundStyle(Color.gray.opacity(0.5))
-        }
-        .if(!isList) { view in
-          view
-            .foregroundStyle(accentColorType.color)
-        }
-    }
+    Image(systemName: Image.grid)
+      .resizable()
+      .frame(width: 16, height: 16)
+      .foregroundStyle(!isList ? accentColorType.color : .gray)
+      .frame(width: segmentWidth(size))
+      .scaleHoverEffect()
+    .offset(x: -4)
     .onTapGesture {
       withAnimation(.easeInOut(duration: 0.5)) {
         isList = false
@@ -110,11 +108,25 @@ struct SwitchButton: View {
     }
   }
 
+  private func segmentWidth(_ mainSize: CGSize) -> CGFloat {
+    var width = (mainSize.width / 2)
+    if width < 0 {
+      width = 0
+    }
+    return width
+  }
+
+  private func calculateSegmentOffset(_ mainSize: CGSize) -> CGFloat {
+    segmentWidth(mainSize) * (isList ? 0 : 1)
+  }
+
 }
 
 #Preview {
   @Previewable @State var isList: Bool = false
-  
-  SwitchButton(isList: $isList)
-    .frame(width: 200, height: 100)
+
+  SwitchButton(
+    isList: $isList,
+    size: .init(width: 80, height: 34)
+  )
 }

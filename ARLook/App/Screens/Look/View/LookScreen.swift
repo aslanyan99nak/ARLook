@@ -14,6 +14,7 @@ import SwiftUI
 struct LookScreen: View {
 
   @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
+  @EnvironmentObject private var popupVM: PopupViewModel
   @StateObject private var searchViewModel = SearchViewModel()
   @StateObject private var viewModel = LookViewModel()
   @Environment(\.colorScheme) var colorScheme
@@ -36,13 +37,17 @@ struct LookScreen: View {
 
       overlayContent
     }
-    .toolbar(.hidden, for: .tabBar)
     .sheet(isPresented: $viewModel.isShowPicker) {
       MenuScreen(
         isShowPicker: $viewModel.isShowPicker,
         fileURL: $viewModel.fileURL,
         selectedModel: $viewModel.selectedModel
       )
+    }
+    .onDisappear {
+      withAnimation(.easeInOut(duration: 0.1)) {
+        popupVM.isShowTabBar = true
+      }
     }
   }
 
@@ -53,7 +58,7 @@ struct LookScreen: View {
 
         if let selectedModel = viewModel.selectedModel, viewModel.isShowSelectedModel {
           ModelItemView(isList: .constant(false), model: selectedModel)
-            .frame(width: 150, height: viewModel.isShowSelectedModel ? 200 : 40)
+            .frame(width: 150, height: viewModel.isShowSelectedModel ? 190 : 40)
             .padding(.trailing, 8)
         }
 

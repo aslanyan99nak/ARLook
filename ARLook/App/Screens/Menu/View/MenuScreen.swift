@@ -101,8 +101,10 @@ struct MenuScreen: View {
           )
           .padding(.trailing, 16)
 
-          SwitchButton(isList: $viewModel.isList)
-            .frame(width: 80, height: 34)
+          SwitchButton(
+            isList: $viewModel.isList,
+            size: .init(width: 80, height: 40)
+          )
         }
       }
     }
