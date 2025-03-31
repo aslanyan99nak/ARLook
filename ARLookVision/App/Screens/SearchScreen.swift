@@ -8,41 +8,41 @@
 import QuickLook
 import SwiftUI
 
-extension SearchScreen {
-
-  enum ModelType: String, CaseIterable {
-
-    case recent
-    case favorite
-    case all
-
-    var name: String {
-      switch self {
-      case .recent: LocString.recent
-      case .favorite: LocString.favorite
-      case .all: LocString.all
-      }
-    }
-
-    var icon: Image? {
-      switch self {
-      case .recent: Image(systemName: Image.recent)
-      case .favorite: Image(systemName: Image.favorite)
-      case .all: nil
-      }
-    }
-
-    var id: Int {
-      switch self {
-      case .recent: 0
-      case .favorite: 1
-      case .all: 2
-      }
-    }
-
-  }
-
-}
+//extension SearchScreen {
+//
+//  enum ModelType: String, CaseIterable {
+//
+//    case recent
+//    case favorite
+//    case all
+//
+//    var name: String {
+//      switch self {
+//      case .recent: LocString.recent
+//      case .favorite: LocString.favorite
+//      case .all: LocString.all
+//      }
+//    }
+//
+//    var icon: Image? {
+//      switch self {
+//      case .recent: Image(systemName: Image.recent)
+//      case .favorite: Image(systemName: Image.favorite)
+//      case .all: nil
+//      }
+//    }
+//
+//    var id: Int {
+//      switch self {
+//      case .recent: 0
+//      case .favorite: 1
+//      case .all: 2
+//      }
+//    }
+//
+//  }
+//
+//}
 
 struct SearchScreen: View {
 

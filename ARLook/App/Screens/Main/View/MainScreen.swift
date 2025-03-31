@@ -54,6 +54,12 @@ struct MainScreen: View {
           case .importQR:
             QRImageScannerView { code in
               viewModel.scannedCode = code
+              guard let code = viewModel.scannedCode?.convertedFileNameFromURLString, !code.isEmpty else { return }
+              viewModel.modelManager.checkFileExists(fileName: code) { isExists, url in
+                if let url, isExists {
+                  viewModel.selectedURL = url
+                }
+              }
               if !navigationPath.isEmpty {
                 navigationPath.removeLast(navigationPath.count)
               }
@@ -117,22 +123,22 @@ struct MainScreen: View {
         .padding(.bottom, 150)
       }
 
-//      if viewModel.isShowScanner {
-//        scanner
-//          .ignoresSafeArea()
-//          .toolbar(.hidden, for: .navigationBar)
-////          .onAppear {
-////            withAnimation {
-////              popupVM.isShowTabBar = false
-////            }
-////          }
-//          .onDisappear {
-//            withAnimation {
-//              popupVM.isShowTabBar = true
-//            }
-//          }
-//          .transition(.scale)
-//      }
+      //      if viewModel.isShowScanner {
+      //        scanner
+      //          .ignoresSafeArea()
+      //          .toolbar(.hidden, for: .navigationBar)
+      ////          .onAppear {
+      ////            withAnimation {
+      ////              popupVM.isShowTabBar = false
+      ////            }
+      ////          }
+      //          .onDisappear {
+      //            withAnimation {
+      //              popupVM.isShowTabBar = true
+      //            }
+      //          }
+      //          .transition(.scale)
+      //      }
     }
   }
 
@@ -165,13 +171,13 @@ struct MainScreen: View {
   private var scanButton: some View {
     Button {
       navigationPath.append(Destination.qrScanner)
-//      withAnimation(completionCriteria: .logicallyComplete) {
-//        popupVM.isShowTabBar = false
-//      } completion: {
-//        withAnimation(.easeInOut(duration: 1)) {
-//          viewModel.isShowScanner = true
-//        }
-//      }
+      //      withAnimation(completionCriteria: .logicallyComplete) {
+      //        popupVM.isShowTabBar = false
+      //      } completion: {
+      //        withAnimation(.easeInOut(duration: 1)) {
+      //          viewModel.isShowScanner = true
+      //        }
+      //      }
     } label: {
       ItemRow(
         image: Image(systemName: Image.qrCodeScanner),

@@ -43,6 +43,7 @@ struct Model: Codable, Hashable, Identifiable {
     let fileURL = documentsDirectory
       .appendingPathComponent("\(id)")
       .appendingPathComponent("\((name ?? "Model").replaceSpacesWithHyphens).usdz")
+    print("🖇️ LocalFileURL: \(fileURL)")
     return fileManager.fileExists(atPath: fileURL.path()) ? fileURL : nil
   }
   

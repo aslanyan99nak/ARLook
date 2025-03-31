@@ -62,6 +62,7 @@
 				App/Helpers/DocumentPicker.swift,
 				App/Helpers/LocString.swift,
 				App/Helpers/ModelManager.swift,
+				App/Helpers/ModelType.swift,
 				App/Models/Model.swift,
 				App/Models/UploadDataModel.swift,
 				App/NetworkLayer/EndPoint/ModelEndpoint.swift,

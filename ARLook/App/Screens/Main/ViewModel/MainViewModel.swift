@@ -38,6 +38,7 @@ class MainViewModel: ObservableObject {
   func setupDocument() {
     guard let scannedCode else { return }
     let doc = try? QRCode.Document(utf8String: "arlook://" + scannedCode)
+    print("ScannedCode is: \(scannedCode)")
     doc?.design.shape.eye = QRCode.EyeShape.RoundedPointingIn()
 
     doc?.design.shape.onPixels = QRCode.PixelShape.Horizontal(
@@ -81,5 +82,25 @@ class MainViewModel: ObservableObject {
       print("Can't get models")
     }
   }
+  
+//  func getFileURL(from scannedCode: String) -> URL? {
+//    let fileManager = FileManager.default
+//    guard let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+//    else { return nil }
+//    guard let fileName = scannedCode.convertedFileNameFromURLString,
+//          !fileName.isEmpty
+//    else { return nil }
+//    
+////    viewModel.modelManager.checkFileExists(fileName: code) { isExists, url in
+////      if let url, isExists {
+////        viewModel.fileURL = url
+////        viewModel.scannedCode = code
+////      }
+////    }
+//    
+//    let fileURL = documentsDirectory
+//      .appendingPathComponent("\(scannedCode)")
+//    return fileManager.fileExists(atPath: fileURL.path()) ? fileURL : nil
+//  }
   
 }

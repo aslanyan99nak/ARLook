@@ -9,7 +9,7 @@ import SwiftUI
 
 class ModelsListViewModel: ObservableObject {
   
-  @Published var selectedModelType = SearchScreen.ModelType.all
+  @Published var selectedModelType = ModelType.all
   @Published var isList: Bool = true
   @Published var previewURL: URL? = nil
   @Published var selectedURL: URL?

@@ -46,6 +46,11 @@ struct MainScreen: View {
           }
         }
       }
+      .onChange(of: viewModel.scannedCode) { oldValue, newValue in
+        if oldValue != newValue {
+          viewModel.setupDocument()
+        }
+      }
     } detail: {
       selectedDetailView
     }
@@ -61,6 +66,12 @@ struct MainScreen: View {
       case .importQR:
         QRImageScannerView { code in
           viewModel.scannedCode = code
+          guard let code = viewModel.scannedCode?.convertedFileNameFromURLString, !code.isEmpty else { return }
+          viewModel.modelManager.checkFileExists(fileName: code) { isExists, url in
+            if let url, isExists {
+              viewModel.selectedURL = url
+            }
+          }
         }
       case .file:
         FileScreen { url in

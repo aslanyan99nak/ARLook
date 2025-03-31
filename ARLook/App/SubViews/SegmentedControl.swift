@@ -12,20 +12,20 @@ struct SegmentedControl: View {
   @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
   @AppStorage(CustomColorScheme.defaultKey) var customColorScheme = CustomColorScheme.defaultValue
   @Environment(\.colorScheme) var colorScheme
-  @Binding var selection: SearchScreen.ModelType
+  @Binding var selection: ModelType
 
   private let size: CGSize
 
   private var offsetX: CGFloat {
-    let isFirst = selection == SearchScreen.ModelType.allCases.first
-    let isLast = selection == SearchScreen.ModelType.allCases.last
+    let isFirst = selection == ModelType.allCases.first
+    let isLast = selection == ModelType.allCases.last
     let offset = calculateSegmentOffset(size)
     return isFirst ? offset + 4 : isLast ? offset - 4 : offset
   }
 
   private var iconOffsetX: CGFloat {
-    let isFirst = selection == SearchScreen.ModelType.allCases.first
-    let isLast = selection == SearchScreen.ModelType.allCases.last
+    let isFirst = selection == ModelType.allCases.first
+    let isLast = selection == ModelType.allCases.last
     return isSmall ? (isFirst ? 4 : isLast ? -4 : 0) : 0
   }
 
@@ -37,7 +37,7 @@ struct SegmentedControl: View {
 
   private var isSmall: Bool { size.width < 320 }
 
-  public init(selection: Binding<SearchScreen.ModelType>, size: CGSize) {
+  public init(selection: Binding<ModelType>, size: CGSize) {
     self._selection = selection
     self.size = size
   }
@@ -76,7 +76,7 @@ struct SegmentedControl: View {
 
   private var segmentedItemView: some View {
     HStack(spacing: 0) {
-      ForEach(SearchScreen.ModelType.allCases, id: \.self) { modelType in
+      ForEach(ModelType.allCases, id: \.self) { modelType in
         segmentLabelView(
           modelType: modelType,
           textColor: selection == modelType ? accentColorType.color : .gray,
@@ -90,7 +90,7 @@ struct SegmentedControl: View {
   }
 
   private func segmentLabelView(
-    modelType: SearchScreen.ModelType,
+    modelType: ModelType,
     textColor: Color,
     width: CGFloat
   ) -> some View {
@@ -116,7 +116,7 @@ struct SegmentedControl: View {
   }
 
   private func segmentWidth(_ mainSize: CGSize) -> CGFloat {
-    var width = (mainSize.width / CGFloat(SearchScreen.ModelType.allCases.count))
+    var width = (mainSize.width / CGFloat(ModelType.allCases.count))
     if width < 0 {
       width = 0
     }
@@ -130,7 +130,7 @@ struct SegmentedControl: View {
 }
 
 #Preview {
-  @Previewable @State var selection: SearchScreen.ModelType = .all
+  @Previewable @State var selection: ModelType = .all
 
   SegmentedControl(
     selection: $selection,
