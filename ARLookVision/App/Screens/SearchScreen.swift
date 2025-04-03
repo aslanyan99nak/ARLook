@@ -8,42 +8,6 @@
 import QuickLook
 import SwiftUI
 
-//extension SearchScreen {
-//
-//  enum ModelType: String, CaseIterable {
-//
-//    case recent
-//    case favorite
-//    case all
-//
-//    var name: String {
-//      switch self {
-//      case .recent: LocString.recent
-//      case .favorite: LocString.favorite
-//      case .all: LocString.all
-//      }
-//    }
-//
-//    var icon: Image? {
-//      switch self {
-//      case .recent: Image(systemName: Image.recent)
-//      case .favorite: Image(systemName: Image.favorite)
-//      case .all: nil
-//      }
-//    }
-//
-//    var id: Int {
-//      switch self {
-//      case .recent: 0
-//      case .favorite: 1
-//      case .all: 2
-//      }
-//    }
-//
-//  }
-//
-//}
-
 struct SearchScreen: View {
 
   @EnvironmentObject var lookAroundViewModel: LookAroundImmersiveViewModel
@@ -52,23 +16,32 @@ struct SearchScreen: View {
   var isInImmersive: Bool = false
 
   private var columns: [GridItem] {
-    viewModel.isList
-      ? [GridItem(.flexible(), spacing: 40), GridItem(.flexible(), spacing: 40)]
+    isList
+      ? [
+        GridItem(.flexible(), spacing: 40)
+        //        GridItem(.flexible(), spacing: 40)
+      ]
       : [GridItem(.flexible()), GridItem(.flexible())]
   }
+
+  private var isList: Bool { viewModel.selectedDisplayMode == .list }
 
   var body: some View {
     NavigationStack {
       contentView
-        .navigationTitle(LocString.search3D)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
         .toolbar {
           ToolbarItem(placement: .bottomOrnament) {
             segmentedControlView
           }
         }
+        .navigationTitle(LocString.search)
     }
-    .searchable(text: $viewModel.searchText)
+    .searchable(
+      text: $viewModel.searchText,
+      placement: .navigationBarDrawer(displayMode: .always),
+      prompt: LocString.search3D
+    )
   }
 
   private var contentView: some View {
@@ -87,7 +60,7 @@ struct SearchScreen: View {
         count: max(Int(geometry.size.width / 300), 1)
       )
 
-      let columns = viewModel.isList ? self.columns : flexibleColumns
+      let columns = isList ? self.columns : flexibleColumns
       ScrollView(showsIndicators: false) {
         LazyVGrid(columns: columns, spacing: 40) {
           ForEach(viewModel.searchResults, id: \.self) { model in
@@ -108,7 +81,7 @@ struct SearchScreen: View {
 
   private func makeModelContentView(_ model: Model) -> some View {
     ModelItemView(
-      isList: $viewModel.isList,
+      displayMode: $viewModel.selectedDisplayMode,
       model: model
     ) {
       if !model.isFavoriteLoading {
@@ -117,7 +90,7 @@ struct SearchScreen: View {
         }
       }
     }
-    .scaleHoverEffect(scale: viewModel.isList ? 1.1 : 1.2)
+    .scaleHoverEffect(scale: isList ? 1.02 : 1.1)
     .quickLookPreview($viewModel.previewURL)
     .onTapGesture {
       modelItemTapAction(model)
@@ -141,7 +114,7 @@ struct SearchScreen: View {
       .clipShape(Capsule())
 
       SwitchButton(
-        isList: $viewModel.isList,
+        selection: $viewModel.selectedDisplayMode,
         size: .init(width: 120, height: 40)
       )
       .background(.ultraThickMaterial)

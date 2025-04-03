@@ -128,8 +128,16 @@ struct QRScannerView: View {
         }
       }
     } label: {
-      Text(appModel.immersiveSpaceId != nil ? "Dismiss QR Scanner" : "Show QR Scanner")
+      HStack(spacing: 0) {
+        Image(appModel.immersiveSpaceId != nil ? .dismissImmersive : .showImmersive)
+
+        Spacer()
+        Text(appModel.immersiveSpaceId != nil ? "Dismiss Immersive Space" : "Show Immersive Space")
+        Spacer()
+      }
+      .frame(height: 50)
     }
+    .linearGradientBackground()
   }
   
 }

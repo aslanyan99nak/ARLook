@@ -5,8 +5,8 @@
 //  Created by Narek on 07.03.25.
 //
 
-import SwiftUI
 import NukeUI
+import SwiftUI
 
 struct ModelItemView: View {
 
@@ -14,7 +14,7 @@ struct ModelItemView: View {
   @Environment(\.colorScheme) private var colorScheme
   @State private var loadedImage: UIImage?
   @State private var isLoading: Bool = false
-  @Binding var isList: Bool
+  @Binding var displayMode: DisplayMode
 
   let model: Model
   var favoriteAction: () -> Void
@@ -23,6 +23,7 @@ struct ModelItemView: View {
   private var title: String { model.name ?? "" }
   private var description: String { model.description ?? "" }
   private var url: URL? { model.localFileURL }
+  private var isList: Bool { displayMode == .list }
 
   var body: some View {
     contentView
@@ -38,72 +39,85 @@ struct ModelItemView: View {
 
   private var contentView: some View {
     modelContent
-      .padding(16)
-      .background(.regularMaterial)
-      .clipShape(RoundedRectangle(cornerRadius: 24))
+      .padding(10)
+      .linearGradientBackground(
+        shapeType: .roundedRectangle(cornerRadius: 26)
+      )
+      .if(!isList) { view in
+        view
+          .frame(width: 180)
+          .overlay(alignment: .bottomTrailing) {
+            favoriteButton
+              .offset(x: 16, y: 16)
+          }
+      }
+      .if(isList) { view in
+        view
+          .frame(height: 120)
+      }
   }
 
+  @ViewBuilder
   private var modelContent: some View {
-    VStack {
-      if isList {
-        contentViewForList
-      } else {
-        contentViewForGrid
-      }
+    if isList {
+      contentViewForList
+    } else {
+      contentViewForGrid
     }
   }
 
   private var contentViewForList: some View {
     HStack(alignment: .top, spacing: 16) {
-      VStack(spacing: 0) {
-        modelView
-        Spacer()
-        viewCount
-      }
+      modelView
 
-      VStack(alignment: .leading, spacing: 8) {
-        HStack(spacing: 0) {
-          modelNameView
-          Spacer()
-          favoriteButton
-        }
+      VStack(alignment: .leading, spacing: 0) {
+        modelNameView
+          .padding(.bottom, 8)
         modelDescriptionView
-        Text(model.fileSizeString)
-          .multilineTextAlignment(.leading)
-          .dynamicFont()
-          .foregroundStyle(.white)
+          .padding(.bottom, 8)
+        Spacer()
+        HStack(spacing: 30) {
+          viewCount
+          fileSizeView
+          Spacer()
+        }
       }
       .padding(.leading, 16)
+      .frame(height: 100)
 
       Spacer()
+
+      Image(.arIcon)
+        .renderingMode(.template)
+        .resizable()
+        .foregroundStyle(.gray)
+        .frame(width: 100, height: 100)
+
+      VStack(alignment: .trailing, spacing: 0) {
+        favoriteButton
+        Spacer()
+      }
     }
   }
 
   private var contentViewForGrid: some View {
-    VStack(spacing: 8) {
+    VStack(alignment: .leading, spacing: 8) {
       modelView
-      HStack(spacing: 0) {
-        modelNameView
-        Spacer()
-        favoriteButton
-      }
-      HStack(spacing: 0) {
-        modelDescriptionView
-        Spacer()
-      }
-      HStack(spacing: 0) {
-        ownerView
-        Spacer()
+      modelNameView
+      modelDescriptionView
+      HStack(spacing: 20) {
         viewCount
-
-        Text(model.fileSizeString)
-          .multilineTextAlignment(.leading)
-          .dynamicFont()
-          .foregroundStyle(.white)
-          .padding(.leading, 8)
+        fileSizeView
       }
     }
     .padding(.horizontal, 8)
+  }
+
+  private var fileSizeView: some View {
+    Text(model.fileSizeString)
+      .multilineTextAlignment(.leading)
+      .dynamicFont()
+      .foregroundStyle(.gray)
   }
 
   @MainActor
@@ -135,7 +149,21 @@ struct ModelItemView: View {
         )
       }
     }
-    .frame(width: 90, height: 90)
+    .frame(
+      width: isList ? 100 : 160,
+      height: isList ? 100 : 160
+    )
+    .overlay(alignment: .topTrailing) {
+      if !isList {
+        Image(.arIcon)
+          .renderingMode(.template)
+          .resizable()
+          .foregroundStyle(.gray)
+          .frame(width: 30, height: 30)
+          .padding(.top, 10)
+          .padding(.trailing, 10)
+      }
+    }
   }
 
   private var viewCount: some View {
@@ -144,14 +172,13 @@ struct ModelItemView: View {
         .renderingMode(.template)
         .resizable()
         .frame(width: 20, height: 12)
-        .foregroundStyle(.white)
+        .foregroundStyle(.gray)
 
       Text(model.viewCountString)
         .multilineTextAlignment(.leading)
         .dynamicFont()
-        .foregroundStyle(.white)
+        .foregroundStyle(.gray)
     }
-    .padding(.horizontal, 8)
   }
 
   private var modelNameView: some View {
@@ -166,7 +193,7 @@ struct ModelItemView: View {
     Text(description)
       .lineLimit(2)
       .multilineTextAlignment(.leading)
-      .dynamicFont(size: 14, weight: .regular, design: .rounded)
+      .dynamicFont(size: 10, weight: .regular, design: .rounded)
       .foregroundStyle(.white)
   }
 
@@ -184,14 +211,21 @@ struct ModelItemView: View {
       if model.isFavoriteLoading {
         CircularProgressView(tintColor: accentColorType.color)
       } else {
-        Image(systemName: (model.isFavorite ?? false) ? "heart.fill" : "heart")
+        Image(systemName: "heart")
           .renderingMode(.template)
           .resizable()
           .aspectRatio(contentMode: .fit)
           .frame(width: 20)
-          .foregroundStyle(accentColorType.color)
+          .foregroundStyle(.white)
           .padding(10)
-          .background(.regularMaterial)
+          .if(model.isFavorite ?? false) { view in
+            view
+              .background(accentColorType.color)
+          }
+          .if(!(model.isFavorite ?? false)) { view in
+            view
+              .background(.ultraThinMaterial)
+          }
           .scaleHoverEffect(scale: 1.2)
           .clipShape(Circle())
       }
@@ -214,14 +248,14 @@ struct ModelItemView: View {
 }
 
 #Preview {
-  @Previewable @State var isList: Bool = false
+  @Previewable @State var displayMode: DisplayMode = .list
 
   ZStack {
-    Color.red.ignoresSafeArea()
     ModelItemView(
-      isList: $isList,
+      displayMode: $displayMode,
       model: Model.mockModel
     ) {}
     .padding()
+    .frame(width: 600, height: 120)
   }
 }

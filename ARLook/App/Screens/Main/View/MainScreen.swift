@@ -148,7 +148,7 @@ struct MainScreen: View {
     } label: {
       ItemRow(
         image: viewModel.savedFilePath.isNil
-          ? Image(systemName: Image.upload) : Image(systemName: Image.checkMarkCircle),
+          ? Image(.upload) : Image(systemName: Image.checkMarkCircle),
         title: viewModel.savedFilePath.isNil
           ? LocString.upload : LocString.uploaded,
         description: viewModel.savedFilePath.isNil

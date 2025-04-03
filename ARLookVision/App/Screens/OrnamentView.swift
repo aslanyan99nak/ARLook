@@ -11,6 +11,8 @@ import SwiftUI
 
 struct OrnamentView: View {
 
+  @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
+
   var body: some View {
     TabView {
       mainScreen
@@ -22,21 +24,30 @@ struct OrnamentView: View {
   private var mainScreen: some View {
     MainScreen()
       .tabItem {
-        Label(LocString.scanner, image: .scanner)
+        Label(
+          LocString.scanner,
+          image: .scanner
+        )
       }
   }
 
   private var searchScreen: some View {
     SearchScreen()
       .tabItem {
-        Label(LocString.search, systemImage: Image.search)
+        Label(
+          LocString.search,
+          systemImage: Image.search
+        )
       }
   }
 
   private var settingsScreen: some View {
     SettingsScreen()
       .tabItem {
-        Label(LocString.settings, systemImage: Image.settings)
+        Label(
+          LocString.settings,
+          systemImage: Image.settings
+        )
       }
   }
 

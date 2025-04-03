@@ -25,10 +25,11 @@ struct LookAroundScreen: View {
       if isHandTrackingEnabled,
         appModel.immersiveSpaceId == ShowCase.lookAround.immersiveSpaceId
       {
-        addEntityButton
+        // addEntityButton
         selectEntityButton
       }
     }
+    .frame(width: 300)
     .onChange(of: lookAroundViewModel.selectedModel) { oldValue, newValue in
       if newValue.isNotNil {
         guard appModel.windowId.isNotNil,
@@ -55,8 +56,16 @@ struct LookAroundScreen: View {
         }
       }
     } label: {
-      Text(appModel.immersiveSpaceId != nil ? "Dismiss Immersinve" : "Show Immersive")
+      HStack(spacing: 0) {
+        Image(appModel.immersiveSpaceId != nil ? .dismissImmersive : .showImmersive)
+
+        Spacer()
+        Text(appModel.immersiveSpaceId != nil ? "Dismiss Immersive Space" : "Show Immersive Space")
+        Spacer()
+      }
+      .frame(height: 50)
     }
+    .linearGradientBackground()
   }
 
   private var addEntityButton: some View {
@@ -70,6 +79,7 @@ struct LookAroundScreen: View {
     } label: {
       Text("Add Entity")
     }
+    .linearGradientBackground()
   }
 
   private var selectEntityButton: some View {
@@ -86,6 +96,7 @@ struct LookAroundScreen: View {
     } label: {
       Text("Choose Entity")
     }
+    .linearGradientBackground()
   }
 
 }

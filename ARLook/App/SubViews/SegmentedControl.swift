@@ -34,7 +34,7 @@ struct SegmentedControl: View {
   }
 
   private var capsuleColor: Color { isDarkMode ? .black : .white }
-
+  private var tintColor: Color { UIDevice.isVision ? .white : accentColorType.color }
   private var isSmall: Bool { size.width < 320 }
 
   public init(selection: Binding<ModelType>, size: CGSize) {
@@ -79,7 +79,7 @@ struct SegmentedControl: View {
       ForEach(ModelType.allCases, id: \.self) { modelType in
         segmentLabelView(
           modelType: modelType,
-          textColor: selection == modelType ? accentColorType.color : .gray,
+          textColor: selection == modelType ? tintColor : .gray,
           width: segmentWidth(size)
         )
         .onTapGesture {
@@ -97,9 +97,10 @@ struct SegmentedControl: View {
     HStack(spacing: 8) {
       if let icon = modelType.icon {
         icon
+          .renderingMode(.template)
           .resizable()
           .frame(width: 16, height: 16)
-          .foregroundStyle(textColor)
+          .foregroundStyle(modelType == selection ? tintColor : .gray)
           .offset(x: modelType == .recent ? -4 : 0)
       }
 
@@ -107,7 +108,7 @@ struct SegmentedControl: View {
         Text(modelType.name)
           .multilineTextAlignment(.center)
           .fixedSize(horizontal: false, vertical: false)
-          .foregroundStyle(textColor)
+          .foregroundStyle(modelType == selection ? tintColor : .gray)
           .offset(x: modelType == .all ? 4 : 0)
       }
     }
@@ -134,6 +135,6 @@ struct SegmentedControl: View {
 
   SegmentedControl(
     selection: $selection,
-    size: .init(width: 300, height: 40)
+    size: .init(width: 700, height: 40)
   )
 }

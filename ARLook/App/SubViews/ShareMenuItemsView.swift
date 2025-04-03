@@ -25,7 +25,11 @@ struct ShareMenuItemsView: View {
   }
 
   var body: some View {
-    menuItemsView
+    if UIDevice.isVision {
+      visionContentView
+    } else {
+      menuItemsView
+    }
   }
 
   @ViewBuilder
@@ -56,7 +60,7 @@ struct ShareMenuItemsView: View {
         }
         .if(isMenu) { view in
           Menu {
-            sharelinkView
+            shareLinkView
             shareImageView
             if chooseFromGalleryAction.isNotNil {
               galleryButton
@@ -75,7 +79,7 @@ struct ShareMenuItemsView: View {
               view
             }
             HStack(spacing: 30) {
-              sharelinkView
+              shareLinkView
               shareImageView
             }
           }
@@ -84,7 +88,7 @@ struct ShareMenuItemsView: View {
   }
 
   @ViewBuilder
-  private var sharelinkView: some View {
+  private var shareLinkView: some View {
     if let selectedImage, let scannedText, let url = URL(string: scannedText) {
       let preview = SharePreview(
         url.absoluteString,
@@ -93,28 +97,65 @@ struct ShareMenuItemsView: View {
       )
 
       ShareLink(item: url, preview: preview) {
-        if isMenu {
-          HStack(spacing: 4) {
-            Text(LocString.shareLink)
-              .dynamicFont()
+        shareLinkContentView
+      }
+      .if(UIDevice.isVision) { view in
+        view
+          .linearGradientBackground()
+      }
+    }
+  }
 
-            Image(systemName: Image.link)
-          }
-        } else {
-          ZStack {
-            Capsule()
-              .fill(accentColorType.color)
-              .frame(width: 100, height: 70)
+  @ViewBuilder
+  private var shareLinkContentView: some View {
+    if isMenu {
+      HStack(spacing: 4) {
+        Text(LocString.shareLink)
+          .dynamicFont()
 
-            Image(.share)
-              .renderingMode(.template)
-              .resizable()
-              .frame(width: 34, height: 34)
-              .foregroundStyle(.white)
-          }
+        Image(systemName: Image.link)
+      }
+    } else {
+      if UIDevice.isVision {
+        shareLinkVisionContentView
+      } else {
+        ZStack {
+          Capsule()
+            .fill(accentColorType.color)
+            .frame(width: 100, height: 70)
+
+          Image(.share)
+            .renderingMode(.template)
+            .resizable()
+            .frame(width: 34, height: 34)
+            .foregroundStyle(.white)
         }
       }
     }
+  }
+
+  private var shareLinkVisionContentView: some View {
+    HStack(spacing: 0) {
+      Image(.share)
+        .padding(.trailing, 24)
+
+      Text(LocString.shareLink)
+        .dynamicFont()
+    }
+    .padding(.horizontal, 40)
+    .frame(height: 80)
+  }
+
+  private var shareImageVisionContentView: some View {
+    HStack(spacing: 0) {
+      Image(.shareImageIcon)
+        .padding(.trailing, 24)
+
+      Text(LocString.shareImage)
+        .dynamicFont()
+    }
+    .padding(.horizontal, 40)
+    .frame(height: 80)
   }
 
   @ViewBuilder
@@ -127,31 +168,44 @@ struct ShareMenuItemsView: View {
       )
 
       ShareLink(item: Image(uiImage: selectedImage), preview: preview) {
-        if isMenu {
-          HStack(spacing: 4) {
-            Text(LocString.shareImage)
-              .dynamicFont()
+        shareImageContentView
+      }
+      .if(UIDevice.isVision) { view in
+        view
+          .linearGradientBackground()
+      }
+    }
+  }
 
-            Image(systemName: Image.qrCode)
-              .resizable()
-              .frame(width: 16, height: 16)
-          }
-        } else {
-          //          Image(.shareImageButton)
-          ZStack {
-            Capsule()
-              .fill(accentColorType.color)
-              .frame(width: 100, height: 70)
+  @ViewBuilder
+  private var shareImageContentView: some View {
+    if isMenu {
+      HStack(spacing: 4) {
+        Text(LocString.shareImage)
+          .dynamicFont()
 
-            Image(.paperClip)
-              .renderingMode(.template)
-              .resizable()
-              .frame(width: 34, height: 34)
-              .foregroundStyle(.white)
-          }
+        Image(systemName: Image.qrCode)
+          .resizable()
+          .frame(width: 16, height: 16)
+      }
+    } else {
+      if UIDevice.isVision {
+        shareImageVisionContentView
+      } else {
+        ZStack {
+          Capsule()
+            .fill(accentColorType.color)
+            .frame(width: 100, height: 70)
+
+          Image(.paperClip)
+            .renderingMode(.template)
+            .resizable()
+            .frame(width: 34, height: 34)
+            .foregroundStyle(.white)
         }
       }
     }
+
   }
 
   private var galleryButton: some View {
@@ -169,13 +223,46 @@ struct ShareMenuItemsView: View {
     }
   }
 
+  @ViewBuilder
+  private var visionContentView: some View {
+    if let selectedImage {
+      Image(uiImage: selectedImage)
+        .renderingMode(isDefaultImage ? .template : .original)
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .frame(width: 125, height: 125)
+        .padding(50)
+        .scaleHoverEffect()
+        .if(isDefaultImage) { view in
+          view
+            .foregroundStyle(.white)
+        }
+        .if(!isMenu) { view in
+          VStack(spacing: 30) {
+            Button {
+              chooseFromGalleryAction?()
+            } label: {
+              view
+            }
+            .linearGradientBackground(shapeType: .circle)
+            .padding()
+
+            HStack(spacing: 30) {
+              shareLinkView
+              shareImageView
+            }
+          }
+        }
+    }
+  }
+
 }
 
 #Preview {
   ShareMenuItemsView(
     isDefaultImage: .constant(true),
-    scannedText: .constant(nil),
+    scannedText: .constant("dsf"),
     selectedImage: .constant(UIImage(named: Image.qrEmpty)),
-    chooseFromGalleryAction: {}
+    isMenu: false, chooseFromGalleryAction: {}
   )
 }

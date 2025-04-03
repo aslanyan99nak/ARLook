@@ -36,6 +36,13 @@
 			);
 			target = 2489E2D32D4BB97A00BBDB34 /* ARLook */;
 		};
+		CE43A8622D9D914A00A67BEA /* Exceptions for "ARLookVision" folder in "ARLook" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				App/SubViews/LinearGradientBackgroundView.swift,
+			);
+			target = 2489E2D32D4BB97A00BBDB34 /* ARLook */;
+		};
 		CE957A822D771912005BC4BD /* Exceptions for "ARLookVision" folder in "ARLookVision" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -74,7 +81,6 @@
 				App/Screens/Settings/View/SettingsScreen.swift,
 				App/Screens/Upload/ViewModel/UploadViewModel.swift,
 				App/SubViews/Buttons/CircleButton.swift,
-				App/SubViews/Buttons/SwitchButton.swift,
 				App/SubViews/Picker/ColorPicker.swift,
 				App/SubViews/Picker/ImagePicker.swift,
 				App/SubViews/ProgressView/ActivityProgressView.swift,
@@ -107,6 +113,7 @@
 		CE957A732D771910005BC4BD /* ARLookVision */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				CE43A8622D9D914A00A67BEA /* Exceptions for "ARLookVision" folder in "ARLook" target */,
 				CE957A822D771912005BC4BD /* Exceptions for "ARLookVision" folder in "ARLookVision" target */,
 			);
 			path = ARLookVision;

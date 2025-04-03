@@ -7,6 +7,22 @@
 
 import SwiftUI
 
+enum ShapeType {
+
+  case capsule
+  case roundedRectangle(cornerRadius: CGFloat)
+  case circle
+
+  var shape: any Shape {
+    switch self {
+    case .capsule: Capsule()
+    case .roundedRectangle(let cornerRadius): RoundedRectangle(cornerRadius: cornerRadius)
+    case .circle: Circle()
+    }
+  }
+
+}
+
 extension View {
 
   @ViewBuilder func `if`<Content: View>(
@@ -59,6 +75,25 @@ extension View {
           view
         #endif
       }
+  }
+
+}
+
+extension View {
+
+  func linearGradientBackground(shapeType: ShapeType = .capsule) -> some View {
+    self
+      .background(
+        LinearGradientBackgroundView()
+          .background(.ultraThinMaterial)
+      )
+      .clipShape(
+        AnyShape(shapeType.shape)
+      )
+      .background(
+        AnyShape(shapeType.shape)
+          .stroke(Color.white.opacity(0.1), lineWidth: 1)
+      )
   }
 
 }

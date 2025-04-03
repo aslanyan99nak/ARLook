@@ -21,14 +21,28 @@ struct QRImageScannerView: View {
     ZStack {
       ScrollView(showsIndicators: false) {
         VStack(spacing: 0) {
-          ZStack {
-            Image(.importQRBar)
-              .resizable()
-              .aspectRatio(contentMode: .fit)
-
-            infoView
+          if !UIDevice.isVision {
+            ZStack {
+              Image(.importQRBar)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+              
+              infoView
+            }
+            .padding(.bottom, 24)
+          } else {
+            HStack(spacing: 0) {
+              Text(LocString.importQRTitle)
+                .dynamicFont(size: 32, weight: .bold)
+                .foregroundStyle(.white)
+                .multilineTextAlignment(.center)
+              
+              Spacer()
+            }
+            .padding(.horizontal, 40)
+            .padding(.bottom, 52)
+            .padding(.top, 24)
           }
-          .padding(.bottom, 24)
           menuItemsView
 //          scannedTextView
           Spacer()
@@ -98,4 +112,5 @@ struct QRImageScannerView: View {
 
 #Preview {
   QRImageScannerView { _ in }
+    .background(.ultraThickMaterial)
 }

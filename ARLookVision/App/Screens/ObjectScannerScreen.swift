@@ -29,10 +29,19 @@ enum ObjectScannerType: String, CaseIterable {
     }
   }
 
+  var image: Image {
+    switch self {
+    case .meshes: Image(.mesh)
+    case .planeClassification: Image(.plane)
+    case .roomClassification: Image(.room)
+    }
+  }
+
 }
 
 struct ObjectScannerScreen: View {
 
+  @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
   @EnvironmentObject var model: WorldScaningTrackingModel
   @EnvironmentObject var planeClassificationModel: PlaneClassificationTrackingModel
   @EnvironmentObject var appModel: AppModel
@@ -51,17 +60,20 @@ struct ObjectScannerScreen: View {
     VStack(spacing: 40) {
       segmentedPickerView
         .padding(.top, 40)
-      openDismissImmersiveSpaceButton
-      if selectedObjectScannerType != .planeClassification {
-        exportButton
-        previewButton
+      VStack(spacing: 40) {
+        openDismissImmersiveSpaceButton
+        if selectedObjectScannerType != .planeClassification {
+          exportButton
+          previewButton
+        }
+        if selectedObjectScannerType == .meshes {
+          selectMaterialButton
+        }
+        if selectedObjectScannerType == .roomClassification {
+          wallScannerView
+        }
       }
-      if selectedObjectScannerType == .meshes {
-        selectMaterialButton
-      }
-      if selectedObjectScannerType == .roomClassification {
-        wallScannerView
-      }
+      .frame(width: 300)
       Spacer()
     }
     .onDisappear {
@@ -95,8 +107,16 @@ struct ObjectScannerScreen: View {
         }
       }
     } label: {
-      Text(appModel.immersiveSpaceId != nil ? "Dismiss Immersive Space" : "Show Immersive Space")
+      HStack(spacing: 0) {
+        Image(appModel.immersiveSpaceId != nil ? .dismissImmersive : .showImmersive)
+
+        Spacer()
+        Text(appModel.immersiveSpaceId != nil ? "Dismiss Immersive Space" : "Show Immersive Space")
+        Spacer()
+      }
+      .frame(height: 50)
     }
+    .linearGradientBackground()
   }
 
   private var exportButton: some View {
@@ -111,8 +131,15 @@ struct ObjectScannerScreen: View {
         roomClassificationTrackingModel.saveModelEntity()
       }
     } label: {
-      Text("Export File")
+      HStack(spacing: 0) {
+        Image(.exportusdz)
+        Spacer()
+        Text("Export USDZ File")
+        Spacer()
+      }
+      .frame(height: 50)
     }
+    .linearGradientBackground()
   }
 
   private var previewButton: some View {
@@ -129,9 +156,16 @@ struct ObjectScannerScreen: View {
         previewURL = url
       }
     } label: {
-      Text("View as a 3D")
+      HStack(spacing: 0) {
+        Image(.viewAs3D)
+        Spacer()
+        Text("View as a 3D")
+        Spacer()
+      }
+      .frame(height: 50)
     }
     .quickLookPreview($previewURL)
+    .linearGradientBackground()
   }
 
   private var selectMaterialButton: some View {
@@ -145,8 +179,15 @@ struct ObjectScannerScreen: View {
         openWindow(id: WindowCase.changeMaterialColor.rawValue)
       }
     } label: {
-      Text("Select Material")
+      HStack(spacing: 0) {
+        Image(.selectMaterial)
+        Spacer()
+        Text("Select Material")
+        Spacer()
+      }
+      .frame(height: 50)
     }
+    .linearGradientBackground()
   }
 
   var wallScannerView: some View {

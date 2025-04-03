@@ -13,6 +13,7 @@ class SearchViewModel: ObservableObject {
 
   @Published var searchText = ""
   @Published var selectedModelType = ModelType.all
+  @Published var selectedDisplayMode = DisplayMode.list
   @Published var isList: Bool = true
   @Published var previewURL: URL? = nil
   @Published var selectedURL: URL?

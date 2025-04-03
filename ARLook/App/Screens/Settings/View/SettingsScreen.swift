@@ -30,7 +30,7 @@ struct SettingsScreen: View {
           ZStack {
             Image(.settingsBar)
               .resizable()
-            
+
             Text(LocString.settings)
               .dynamicFont(size: 24, weight: .bold)
               .foregroundStyle(.white)
@@ -38,10 +38,12 @@ struct SettingsScreen: View {
           .padding(.bottom, 16)
         }
         LazyVStack(alignment: .leading, spacing: 16) {
-          Text(LocString.appearance)
-            .dynamicFont()
-            .foregroundStyle(UIDevice.isVision ? .white : .black)
-            .padding(.leading, 8)
+          if !UIDevice.isVision {
+            Text(LocString.appearance)
+              .dynamicFont()
+              .foregroundStyle(.gray)
+              .padding(.leading, 8)
+          }
 
           themeList
           accentColorRow
@@ -55,7 +57,13 @@ struct SettingsScreen: View {
       .navigationBarTitleDisplayMode(.inline)
       .toolbar {
         ToolbarItem(placement: .principal) {
-          Image(.arLook)
+          if UIDevice.isVision {
+            Text(LocString.settings)
+              .dynamicFont(size: 32)
+              .foregroundStyle(.white)
+          } else {
+            Image(.arLook)
+          }
         }
       }
     }

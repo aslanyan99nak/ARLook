@@ -19,6 +19,7 @@ struct FileScreen: View {
     } label: {
       Text("Show Document Picker")
     }
+    .linearGradientBackground()
     .sheet(isPresented: $isShowPicker) {
       DocumentPicker { url in
         pickedURLCompletion(url)
@@ -29,4 +30,8 @@ struct FileScreen: View {
     }
   }
 
+}
+
+#Preview(windowStyle: .automatic) {
+  FileScreen { _ in }
 }

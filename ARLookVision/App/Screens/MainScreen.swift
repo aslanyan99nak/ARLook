@@ -21,30 +21,11 @@ struct MainScreen: View {
       )
       .toolbar {
         ToolbarItem(placement: .principal) {
-          HStack(spacing: 16) {
-            Spacer()
-            Image(.appIcon)
-              .resizable()
-              .frame(width: 40, height: 40)
-            Text("ARLook")
-              .font(.title)
-              .fontWeight(.bold)
-            Spacer()
-          }
+          navigationBar
         }
       }
       .onChange(of: viewModel.selectedURL) { oldValue, newValue in
-        if newValue.isNil {
-          guard let index = viewModel.sideMenuItems.firstIndex(of: .view3DMode) else { return }
-          viewModel.sideMenuItems.remove(at: index)
-        } else {
-          if oldValue != newValue {
-            guard !viewModel.sideMenuItems.contains(.view3DMode),
-              let index = viewModel.sideMenuItems.firstIndex(of: .file)
-            else { return }
-            viewModel.sideMenuItems.insert(.view3DMode, at: index + 1)
-          }
-        }
+        selectedURLChanged(oldValue, newValue)
       }
       .onChange(of: viewModel.scannedCode) { oldValue, newValue in
         if oldValue != newValue {
@@ -63,28 +44,59 @@ struct MainScreen: View {
       case .objectScanner: ObjectScannerScreen()
       case .upload: UploadModelScreen()
 //      case .qrCodeScanner: QRScannerView()
-      case .importQR:
-        QRImageScannerView { code in
-          viewModel.scannedCode = code
-          guard let code = viewModel.scannedCode?.convertedFileNameFromURLString, !code.isEmpty else { return }
-          viewModel.modelManager.checkFileExists(fileName: code) { isExists, url in
-            if let url, isExists {
-              viewModel.selectedURL = url
-            }
-          }
-        }
-      case .file:
-        FileScreen { url in
-          viewModel.selectedURL = url
-        }
+      case .importQR: importQRScreen
+      case .file: fileScreen
       case .lookAround: LookAroundScreen()
-      case .view3DMode:
-        View3DScreen(previewURL: $viewModel.previewURL) {
-          viewModel.previewURL = viewModel.selectedURL
-        }
+      case .view3DMode: view3DScreen
       }
     } else {
-      ContentUnavailableView("Select an element from the sidebar", systemImage: "doc.text.image.fill")
+      SidebarEmptyView()
+    }
+  }
+  
+  private var view3DScreen: some View {
+    View3DScreen(previewURL: $viewModel.previewURL) {
+      viewModel.previewURL = viewModel.selectedURL
+    }
+  }
+  
+  private var fileScreen: some View {
+    FileScreen { url in
+      viewModel.selectedURL = url
+    }
+  }
+  
+  private var importQRScreen: some View {
+    QRImageScannerView { code in
+      viewModel.scannedCode = code
+      guard let code = viewModel.scannedCode?.convertedFileNameFromURLString, !code.isEmpty else { return }
+      viewModel.modelManager.checkFileExists(fileName: code) { isExists, url in
+        if let url, isExists {
+          viewModel.selectedURL = url
+        }
+      }
+    }
+  }
+  
+  private var navigationBar: some View {
+    HStack(spacing: 0) {
+      Spacer()
+      Image(.arLookVision)
+      Spacer()
+    }
+  }
+  
+  private func selectedURLChanged(_ oldValue: URL?, _ newValue: URL?) {
+    if newValue.isNil {
+      guard let index = viewModel.sideMenuItems.firstIndex(of: .view3DMode) else { return }
+      viewModel.sideMenuItems.remove(at: index)
+    } else {
+      if oldValue != newValue {
+        guard !viewModel.sideMenuItems.contains(.view3DMode),
+          let index = viewModel.sideMenuItems.firstIndex(of: .file)
+        else { return }
+        viewModel.sideMenuItems.insert(.view3DMode, at: index + 1)
+      }
     }
   }
 

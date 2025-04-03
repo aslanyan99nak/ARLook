@@ -14,9 +14,9 @@ enum Env: String {
 
   var baseURL: String {
     switch self {
-    case .production: "http://192.168.11.58:8080"
-    case .development: "http://192.168.11.58:8080"
-    case .local: "http://192.168.11.58:8080"
+    case .production: "http://192.168.11.64:8080"
+    case .development: "http://192.168.11.64:8080"
+    case .local: "http://192.168.11.64:8080"
     }
   }
   

@@ -42,90 +42,98 @@ struct UploadModelScreen: View {
 
   private var contentView: some View {
     VStack(spacing: 0) {
-      Text(LocString.uploadDescription)
-        .font(.extraLargeTitle)
-        .padding(20)
+      HStack(spacing: 0) {
+        Text(LocString.uploadDescription)
+          .font(.extraLargeTitle)
+
+        Spacer()
+      }
+      .padding(40)
 
       ScrollView(.vertical, showsIndicators: false) {
         VStack(alignment: .leading, spacing: 16) {
-          HStack(alignment: .top, spacing: 16) {
+          HStack(alignment: .top, spacing: 46) {
             showModelPickerButton
             VStack(alignment: .leading, spacing: 40) {
               modelNameTextField
               modelDescriptionTextView
             }
-            .padding(.top, 50)
           }
 
-          HStack(alignment: .top, spacing: 16) {
-            modelThumbnail
+          HStack(alignment: .top, spacing: 46) {
+            modelThumbnailButton
             Text(
-              "Select a cover image for your 3D model. This image will be displayed as a preview before loading the full 3D model."
+              """
+              Select a cover image for your 3D model.
+              This image will be displayed as a preview before loading the full 3D model.
+              """
             )
             .font(.title)
             .padding(.top, 50)
           }
           uploadButton
         }
-        .padding(20)
+        .padding(40)
         .padding(.top, 20)
       }
     }
   }
 
   private var showModelPickerButton: some View {
-    Button {
-      viewModel.isShowModelPicker = true
-    } label: {
-      Image(._3Dm)
-        .renderingMode(.template)
-        .resizable()
-        .frame(width: 150, height: 150)
-        .foregroundStyle(accentColorType.color)
-        .padding(40)
-    }
-    .buttonStyle(PlainButtonStyle())
+    Image(.vision3DFile)
+      .renderingMode(.template)
+      .aspectRatio(contentMode: .fit)
+      .foregroundStyle(.white)
+      .padding(40)
+      .frame(width: 180, height: 180)
+      .scaleHoverEffect()
+      .linearGradientBackground(
+        shapeType: .roundedRectangle(cornerRadius: 36)
+      )
+      .onTapGesture {
+        viewModel.isShowModelPicker = true
+      }
   }
 
   private var modelNameTextField: some View {
     TextField(LocString.modelName, text: $viewModel.modelName)
       .padding()
-      .frame(height: 50)
-      .background(
-        RoundedRectangle(cornerRadius: 24)
-          .stroke(Color.white, lineWidth: 1)
-      )
+      .frame(height: 60)
+      .background(.ultraThickMaterial)
+      .clipShape(RoundedRectangle(cornerRadius: 10))
+      .overlay(textFieldBackgroundEffect)
   }
 
   private var modelDescriptionTextView: some View {
     TextField(LocString.modelDescription, text: $viewModel.modelDescription, axis: .vertical)
       .padding()
       .frame(minHeight: 80)
-      .background(
-        RoundedRectangle(cornerRadius: 24)
-          .stroke(Color.white, lineWidth: 1)
-      )
+      .background(.ultraThickMaterial)
+      .clipShape(RoundedRectangle(cornerRadius: 10))
+      .overlay(textFieldBackgroundEffect)
   }
 
-  private var modelThumbnail: some View {
-    Button {
-      viewModel.isShowImagePicker = true
-    } label: {
-      ZStack {
-        if let image = viewModel.image {
-          Image(uiImage: image)
-            .resizable()
-        } else {
-          Image(systemName: Image.photo)
-            .renderingMode(.template)
-            .resizable()
-            .foregroundStyle(accentColorType.color)
-        }
+  private var modelThumbnailButton: some View {
+    ZStack {
+      if let image = viewModel.image {
+        Image(uiImage: image)
+          .resizable()
+      } else {
+        Image(.imagePlaceholder)
+          .renderingMode(.template)
+          .resizable()
+          .foregroundStyle(.white)
       }
-      .frame(width: 150, height: 150)
-      .padding(40)
     }
-    .buttonStyle(PlainButtonStyle())
+    .padding(40)
+    .frame(width: 180, height: 180)
+    .scaleHoverEffect()
+    .linearGradientBackground(
+      shapeType: .roundedRectangle(cornerRadius: 36)
+    )
+    .onTapGesture {
+      viewModel.isShowImagePicker = true
+    }
   }
 
   private var uploadButton: some View {
@@ -161,9 +169,11 @@ struct UploadModelScreen: View {
         )
         .padding(.leading, 16)
       } else {
-        Image(systemName: Image.upload)
+        Image(.upload)
+          .renderingMode(.template)
           .resizable()
           .aspectRatio(contentMode: .fit)
+          .foregroundStyle(.white)
           .frame(height: 24)
           .padding(.leading, 16)
       }
@@ -171,8 +181,32 @@ struct UploadModelScreen: View {
       Spacer()
     }
     .padding()
+    .frame(height: 80)
     .background(accentColorType.color)
     .clipShape(Capsule())
+  }
+
+  private var textFieldBackgroundEffect: some View {
+    RoundedRectangle(cornerRadius: 10)
+      .stroke(Color.black, lineWidth: 1)
+      .blur(radius: 1)
+      .offset(x: 1, y: 1)
+      .mask(
+        RoundedRectangle(cornerRadius: 10)
+          .fill(
+            LinearGradient(
+              colors: [Color.black, Color.clear], startPoint: .top, endPoint: .bottom))
+      )
+      .overlay {
+        RoundedRectangle(cornerRadius: 10)
+          .stroke(Color.white.opacity(0.7), lineWidth: 0.5)
+          .mask(
+            RoundedRectangle(cornerRadius: 10)
+              .fill(
+                LinearGradient(
+                  colors: [Color.white, Color.clear], startPoint: .bottom, endPoint: .top))
+          )
+      }
   }
 
 }

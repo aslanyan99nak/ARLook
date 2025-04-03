@@ -72,9 +72,6 @@
         }
       }
     },
-    "ARLook" : {
-
-    },
     "background_color" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -245,6 +242,9 @@
         }
       }
     },
+    "Choose a tool from the sidebar" : {
+
+    },
     "Choose Entity" : {
 
     },
@@ -373,13 +373,7 @@
     "Disable Hand Tracking" : {
 
     },
-    "Dismiss Immersinve" : {
-
-    },
     "Dismiss Immersive Space" : {
-
-    },
-    "Dismiss QR Scanner" : {
 
     },
     "done" : {
@@ -606,7 +600,7 @@
         }
       }
     },
-    "Export File" : {
+    "Export USDZ File" : {
 
     },
     "failed" : {
@@ -1535,6 +1529,9 @@
         }
       }
     },
+    "Ready to explore?" : {
+
+    },
     "recent" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1756,10 +1753,7 @@
         }
       }
     },
-    "Select a cover image for your 3D model. This image will be displayed as a preview before loading the full 3D model." : {
-
-    },
-    "Select an element from the sidebar" : {
+    "Select a cover image for your 3D model.\nThis image will be displayed as a preview before loading the full 3D model." : {
 
     },
     "Select Material" : {
@@ -1853,13 +1847,7 @@
     "Show Document Picker" : {
 
     },
-    "Show Immersive" : {
-
-    },
     "Show Immersive Space" : {
-
-    },
-    "Show QR Scanner" : {
 
     },
     "skip" : {

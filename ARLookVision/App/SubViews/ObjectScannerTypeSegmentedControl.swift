@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ObjectScannerTypeSegmentedControl: View {
 
-  @AppStorage(AccentColorType.defaultKey) var accentColorType = AccentColorType.defaultValue
   @AppStorage(CustomColorScheme.defaultKey) var customColorScheme = CustomColorScheme.defaultValue
   @Environment(\.colorScheme) var colorScheme
   @Binding var selection: ObjectScannerType
@@ -28,7 +27,7 @@ struct ObjectScannerTypeSegmentedControl: View {
   }
 
   private var capsuleColor: Color { isDarkMode ? .black : .white }
-  private var isSmall: Bool { size.width < 320 }
+  private var isSmall: Bool { size.width < 800 }
 
   public init(selection: Binding<ObjectScannerType>, size: CGSize) {
     self._selection = selection
@@ -72,7 +71,7 @@ struct ObjectScannerTypeSegmentedControl: View {
       ForEach(ObjectScannerType.allCases, id: \.self) { modelType in
         segmentLabelView(
           modelType: modelType,
-          textColor: selection == modelType ? accentColorType.color : .gray,
+          textColor: selection == modelType ? .white : .gray,
           width: segmentWidth(size)
         )
         .onTapGesture {
@@ -87,12 +86,18 @@ struct ObjectScannerTypeSegmentedControl: View {
     textColor: Color,
     width: CGFloat
   ) -> some View {
-    HStack(spacing: 8) {
-      Text(modelType.name)
-        .multilineTextAlignment(.center)
-        .fixedSize(horizontal: false, vertical: false)
-        .foregroundStyle(textColor)
-        .offset(x: modelType == ObjectScannerType.allCases.last ? -4 : 0)
+    HStack(spacing: 16) {
+      modelType.image
+        .renderingMode(.template)
+        .foregroundStyle(modelType == selection ? .white : .gray)
+
+      if !isSmall {
+        Text(modelType.name)
+          .multilineTextAlignment(.center)
+          .fixedSize(horizontal: false, vertical: false)
+          .foregroundStyle(textColor)
+          .offset(x: modelType == ObjectScannerType.allCases.last ? -4 : 0)
+      }
     }
     .frame(width: width)
     .scaleHoverEffect()
@@ -113,8 +118,11 @@ struct ObjectScannerTypeSegmentedControl: View {
 }
 
 #Preview {
+  @Previewable @State var selection: ObjectScannerType = .meshes
+  
   ObjectScannerTypeSegmentedControl(
-    selection: .constant(.meshes),
-    size: .init(width: 400, height: 80)
+    selection: $selection,
+    size: .init(width: 800, height: 80)
   )
+  .background(.red)
 }

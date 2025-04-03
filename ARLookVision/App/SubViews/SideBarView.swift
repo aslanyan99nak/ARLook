@@ -15,7 +15,7 @@ enum SideMenuItem: String, Identifiable, CaseIterable {
 
   case objectScanner
   case upload
-//  case qrCodeScanner
+  //  case qrCodeScanner
   case importQR
   case file
   case view3DMode
@@ -24,8 +24,8 @@ enum SideMenuItem: String, Identifiable, CaseIterable {
   var icon: Image {
     switch self {
     case .objectScanner: Image(systemName: Image.visionPro)
-    case .upload: Image(systemName: Image.upload)
-//    case .qrCodeScanner: Image(systemName: Image.qrCodeScanner)
+    case .upload: Image(.upload)
+    //    case .qrCodeScanner: Image(systemName: Image.qrCodeScanner)
     case .importQR: Image(systemName: Image.qrCode)
     case .file: Image(.openFile)
     case .view3DMode: Image(systemName: Image.arkit)
@@ -37,7 +37,7 @@ enum SideMenuItem: String, Identifiable, CaseIterable {
     switch self {
     case .objectScanner: ""
     case .upload: LocString.upload
-//    case .qrCodeScanner: LocString.qrCodeScannerTitle
+    //    case .qrCodeScanner: LocString.qrCodeScannerTitle
     case .importQR: LocString.importQRTitle
     case .file: LocString.fileManagmentTitle
     case .view3DMode: LocString.view3DMode
@@ -49,7 +49,7 @@ enum SideMenuItem: String, Identifiable, CaseIterable {
     switch self {
     case .objectScanner: ""
     case .upload: LocString.uploadDescription
-//    case .qrCodeScanner: LocString.qrCodeScannerDescription
+    //    case .qrCodeScanner: LocString.qrCodeScannerDescription
     case .importQR: LocString.importQRDescription
     case .file: LocString.fileManagmentDescription
     case .view3DMode: LocString.viewModelDescription
@@ -67,17 +67,22 @@ struct SideBarView: View {
   @Binding var sideMenuItems: [SideMenuItem]
 
   var body: some View {
-    List(sideMenuItems) { item in
-      Button {
-        selectedItem = item
-      } label: {
-        if item == .objectScanner {
-          objectScannerContent
-        } else {
-          makeItemContent(item)
+    ScrollView(showsIndicators: false) {
+      VStack(spacing: 16) {
+        ForEach(sideMenuItems) { item in
+          Button {
+            selectedItem = item
+          } label: {
+            if item == .objectScanner {
+              objectScannerContent
+            } else {
+              makeItemContent(item)
+            }
+          }
+          .buttonStyle(.plain)
+          .padding(.horizontal, 16)
         }
       }
-      .buttonStyle(PlainButtonStyle())
     }
   }
 
@@ -91,35 +96,32 @@ struct SideBarView: View {
         .foregroundStyle(accentColorType.color)
 
       Text(item.title)
+
+      Spacer()
     }
     .padding(.horizontal, 16)
-    .padding()
-    .hoverEffect(ScaleHoverEffect())
+    .frame(height: 80)
+    .scaleHoverEffect(scale: 1.05)
   }
 
   var objectScannerContent: some View {
-    HStack(spacing: 0) {
-      Spacer()
-      
-      SideMenuItem.objectScanner.icon
-        .renderingMode(.template)
-        .resizable()
-        .aspectRatio(contentMode: .fit)
-        .frame(width: 100)
-        .foregroundStyle(accentColorType.color)
-        .padding(.horizontal, 16)
-        .padding()
-        .hoverEffect(ScaleHoverEffect())
-
-      Spacer()
-    }
+    SideMenuItem.objectScanner.icon
+      .renderingMode(.template)
+      .resizable()
+      .aspectRatio(contentMode: .fit)
+      .frame(width: 100)
+      .foregroundStyle(accentColorType.color)
+      .padding(.horizontal, 16)
+      .padding()
+      .frame(height: 80)
+      .scaleHoverEffect(scale: 1.05)
   }
 
 }
 
 #Preview {
   SideBarView(
-    selectedItem: .constant(nil),
+    selectedItem: .constant(.objectScanner),
     sideMenuItems: .constant(SideMenuItem.allCases)
   )
 }

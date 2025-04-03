@@ -38,3 +38,24 @@ enum ModelType: String, CaseIterable {
   }
 
 }
+
+enum DisplayMode: String, CaseIterable {
+
+  case list
+  case grid
+
+  var icon: Image {
+    switch self {
+    case .list: Image(systemName: "rectangle.grid.1x2")
+    case .grid: Image(systemName: Image.grid)
+    }
+  }
+
+  var id: Int {
+    switch self {
+    case .list: 0
+    case .grid: 1
+    }
+  }
+
+}

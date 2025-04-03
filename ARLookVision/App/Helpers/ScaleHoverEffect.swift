@@ -15,7 +15,7 @@ struct ScaleHoverEffect: CustomHoverEffect {
   func body(content: Content) -> some CustomHoverEffect {
     content.hoverEffect { effect, isActive, proxy in
       effect.animation(.easeOut) {
-        $0.scaleEffect(isActive ? scale : 1, anchor: .top)
+        $0.scaleEffect(isActive ? scale : 1, anchor: .center)
       }
     }
   }

@@ -136,7 +136,7 @@ struct ReconstructionProgressView: View {
       HStack(spacing: 8) {
         Spacer()
 
-        Image(systemName: Image.upload)
+        Image(.upload)
           .renderingMode(.template)
           .resizable()
           .frame(width: 16, height: 16)
